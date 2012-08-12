@@ -23,8 +23,9 @@ her [BootstrapWP](http://rachelbaker.me/bootstrapwp-theme-twitter-bootstrap-for-
 320press [WordPress Bootstrap]( http://320press.com/wpbs/),
 [wpboostrap]( http://wpbootstrap.iubenda.com/),
 [Bootstrap-Wordpress]( http://github.com/envex/Bootstrap-WordPress),
-[Bootstrap-for-WordPress]( http://github.com/enile8/Bootstrap-for-WordPress) and
-[Roots](http://www.rootstheme.com/).
+[Bootstrap-for-WordPress]( http://github.com/enile8/Bootstrap-for-WordPress),
+[Roots](http://www.rootstheme.com/) and
+[Ascensor](http://bragthemes.com/theme/ascensorpress/).
 
 Each had its goods and its little things that I wished were different.
 
@@ -38,7 +39,9 @@ PHP Wordpress coders.
 Releases
 ========
 
-* 0.1  Initial functional upload to Github
+*  0.1
+
+  *  Initial functional upload to Github
 
 Get Involved
 ============

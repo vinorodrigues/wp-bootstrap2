@@ -1,0 +1,392 @@
+/* 
+Theme Name: Bootstrap2
+Author: Vino Rodrigues
+
+This file contains general styles that fit WordPress into Bootstrap.
+
+Your custom CSS should not be written into this file - rather edit ../style.css
+*/
+
+/* HTML & HTML 5 */
+
+figure { margin: 0; display: table; }
+figure img, figure figcaption { display: table-row; }
+figure figcaption { background-color: rgba(0, 0, 0, 0.1); padding: 0.5em }
+figure img { padding: 0; }
+figure figcaption p { margin: 0; }
+
+textarea,
+input[type="text"], input[type="password"], input[type="datetime"],
+input[type="datetime-local"], input[type="date"], input[type="month"],
+input[type="time"], input[type="week"], input[type="number"],
+input[type="email"], input[type="url"], input[type="search"],
+input[type="tel"], input[type="color"] {
+	max-width: 100%;
+}
+
+/* Alignment */
+
+.alignleft {
+	display: inline;
+	float: left;
+	margin-right: 1.5em;
+}
+.alignright {
+	display: inline;
+	float: right;
+	margin-left: 1.5em;
+}
+.aligncenter {
+	clear: both;
+	display: block;
+	margin: 0 auto;
+}
+
+/* Text meant only for screen readers */
+
+.assistive-text {
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+	clip: rect(1px, 1px, 1px, 1px);
+	position: absolute !important;
+}
+
+
+/* =Content
+----------------------------------------------- */
+
+.sticky { }
+.hentry {
+	margin: 0 0 1.5em;
+}
+.entry-meta {
+	clear: both;
+}
+.entry-meta span {
+	display: inline-block;
+	margin: 0.25em;
+}
+.byline {
+	display: none;
+}
+.single .byline,
+.group-blog .byline {
+	display: inline;
+}
+.entry-content,
+.entry-summary {
+	margin: 1.5em 0 0;
+}
+.page-links {
+	clear: both;
+	margin: 0 0 1.5em;
+}
+.attachment {
+	margin: 0 0 1.5em;
+}
+
+.widget #searchsubmit {
+	display: none;
+}
+
+/* =Asides
+----------------------------------------------- */
+
+.blog .format-aside .entry-title,
+.archive .format-aside .entry-title {
+	display: none;
+}
+
+
+/* =Branding
+----------------------------------------------- */
+
+#leader {
+	margin-bottom: 1em;
+}
+
+.site-logo img {
+	max-width: 100%;
+}
+
+.site-image {
+	padding-bottom: 1em;
+}
+
+#headimg img {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,.25), inset 0 -1px 0 rgba(0,0,0,.1);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
+}
+
+.brand .space {
+	margin-right: 0.25em;
+}
+
+.site-info {
+	color: #888;
+}
+
+#site-generator, #site-generator a {
+	color: #888;
+}
+#site-generator a:hover, #site-generator:focus {
+	color: inherit;
+	text-decoration: none;
+}
+
+#site-generator .wordpress {
+	background: url("../img/wordpress.png") no-repeat scroll left center transparent;
+	display: inline-block;
+	padding-left: 20px;
+}
+#site-generator .bootstrap {
+	background: url("../img/bootstrap.png") no-repeat scroll left center transparent;
+	display: inline-block;
+	padding-left: 20px;
+}
+
+.page404 {
+	background-color: rgba(0, 0, 0, .1);
+}
+.page404 .not-found {
+	background: url("../img/404.png") no-repeat scroll left bottom transparent;
+}
+
+
+/* =Media
+----------------------------------------------- */
+
+.site-header img,
+.entry-content img,
+.comment-content img,
+.widget img {
+	max-width: 100%; /* Fluid images for posts, comments, and widgets */
+}
+.site-header img,
+.entry-content img,
+img[class*="align"],
+img[class*="wp-image-"] {
+	height: auto; /* Make sure images with WordPress-added height and width attributes are scaled correctly */
+}
+.site-header img,
+.entry-content img,
+img.size-full {
+	max-width: 100%;
+	width: auto; /* Prevent stretching of full-size images with height and width attributes in IE8 */
+}
+.entry-content img.wp-smiley,
+.comment-content img.wp-smiley {
+	border: none;
+	margin-bottom: 0;
+	margin-top: 0;
+	padding: 0;
+}
+.wp-caption {
+	border: 1px solid #ccc;
+	max-width: 100%;
+}
+.wp-caption.aligncenter,
+.wp-caption.alignleft,
+.wp-caption.alignright {
+	margin-bottom: 1.5em;
+}
+.wp-caption img {
+	display: block;
+	margin: 1.2% auto 0;
+	max-width: 98%;
+}
+.wp-caption-text {
+	text-align: center;
+}
+.wp-caption .wp-caption-text {
+	margin: 0.8075em 0;
+}
+#content .gallery {
+	margin-bottom: 1.5em;
+}
+.gallery-caption {
+}
+#content .gallery a img {
+	border: none;
+	height: auto;
+	max-width: 90%;
+}
+#content .gallery dd {
+	margin: 0;
+}
+#content .gallery-columns-4 .gallery-item {
+}
+#content .gallery-columns-4 .gallery-item img {
+}
+
+/* Make sure embeds and iframes fit their containers */
+embed,
+iframe,
+object {
+	max-width: 100%;
+}
+
+
+/* =Comments
+------------------------------------------------ */
+
+ul.commentlist li.comment {
+	margin-bottom: 0.75em;
+}
+
+/* =Widgets
+------------------------------------------------ */
+
+.widget {
+	margin: 0 0 1.5em;
+}
+
+/* =Page styles
+------------------------------------------------ */
+
+.entry-attachment figure {
+	display: table;
+	margin: 0 auto;
+}
+
+/* #comment, .thumbnail {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+} */
+
+/* =Page layout
+------------------------------------------------ */
+
+#wrapper {
+	padding: 1em;
+}
+#header {
+	padding-bottom: 1em;
+}
+#header .navbar { margin-bottom: 0; }
+#footer {
+	padding-top: 1em;
+}
+
+/* =Full-Page layout */
+
+#header-band { padding: 0 1em; }
+#header-wrap {
+	padding: 1em 0;
+}
+#header-wrap .navbar { margin-bottom: 0; }
+#home-band { padding: 0 1em; }
+#home-wrap {
+	padding: 1em 0;
+}
+#main-band { padding: 0 1em; }
+#main-wrap {
+	padding: 1em 0;
+}
+#footer-band { padding: 0 1em; }
+#footer-wrap {
+	padding: 1em 0;
+}
+
+/* =Common */
+#banner {}
+#sidebar-1, #sidebar-2,
+#sidebar-4, #sidebar-5, #sidebar-6, #sidebar-7, #sidebar-8, #sidebar-9 {
+	margin-bottom: 1em;
+}
+
+#sidebar-10 {
+	margin-bottom: 0;
+}
+
+/* =Fotter menu
+(Based on code from http://www.vileworks.com/simple-css-footer-menu )
+------------------------------------------------ */
+
+.nav-footer {
+	margin: 0;
+	padding: 0;
+}
+.nav-footer li {
+	float: left;
+	list-style: none; /* Makes the list items go horizontally in lieu of default vertical display */
+}
+.nav-footer li:after {
+	content: "·"; /* Or go Facebook style and use "·" (the interpunct character) for separators */
+	color: #999; /* You may want to make the separators a bit more subtle than the base text color */
+}
+.nav-footer li:last-child:after {
+	content:""; /* No separator for the last item in the list */
+}
+.nav-footer li a {
+	margin: 0 0.5em;
+	color: inherit;
+}
+.nav-footer li a:hover, .nav-footer li a:focus {
+	text-decoration: none;
+}
+
+.nav-footer li:first-child a {
+	margin-left: 0;
+}
+
+
+/* =Bootstrap care */
+
+body.fixed-top {
+	padding-top: 40px;
+}
+
+/* =Bootstrap overrides
+------------------------------------------------ */
+
+.navbar {
+	margin-bottom: 0;
+}
+
+.nav, .pager { margin-bottom: 1em; }
+.pagination  a { background-color: #FFF; }
+
+figure .thumbnail {
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	-webkit-border-bottom-left-radius: 0;
+	-webkit-border-bottom-right-radius: 0;
+	-moz-border-radius-bottomleft: 0;
+	-moz-border-radius-bottomright: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+figure figcaption {
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-top: 0;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+/* =Comment list */
+
+ul.commentlist { list-style: none; margin: 0 0 1em; padding: 0; text-indent: 0; }
+ul.commentlist li.comment { padding: 0.5em; margin: 0 0 0.5em 0; }
+ul.commentlist li.comment:last-child { margin-bottom: 0; }
+ul.commentlist li.comment p { margin: 0.5em 0 0 0; }
+ul.commentlist li.comment .reply { margin-top: 0.5em; }
+ul.commentlist li.comment ul { list-style: none; margin: 0; }
+ul.commentlist li.comment ul.children { list-style: none; margin: 1em 0 0 0; text-indent: 0; }
+ul.commentlist li.even {}
+ul.commentlist li.odd {}
+ul.commentlist li.parent {}
+ul.commentlist li.thread-alt {}
+ul.commentlist li.thread-even {}
+ul.commentlist li.thread-odd {}
+ul.commentlist .commentmetadata .btn {}
