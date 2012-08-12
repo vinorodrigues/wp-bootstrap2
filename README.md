@@ -1,6 +1,3 @@
-WP-Bootstrap2
-=============
-
 Introduction
 ============
 
@@ -13,7 +10,8 @@ I stumbled upon
 [Skeleton]( http://github.com/simplethemes/skeleton_wp)
 and loved them both... so I ran with that for a while. A few weeks on and happen upon
 Konstantin Obenland's [The-Bootstrap]( http://en.wp.obenland.it/the-bootstrap/),
-liked it _\(alot - even tried to contribute to it\)_, researched the core framework; [Twitter's Bootstrap]( http://github.com/twitter/bootstrap/) and I was hooked!
+liked it _\(alot - even tried to contribute to it\)_, researched the core framework;
+[Twitter's Bootstrap]( http://github.com/twitter/bootstrap/) and I was hooked!
 
 But, like politics, the software realm is rife with stubborn positions based on personal opinions.
 Me, I started coding in the 80's - so I may well be right up there in the ranking of block headed code churners
@@ -33,7 +31,9 @@ And so - like most coders out there - I thought I could do better myself... and 
 Automattic's [_S](http://github.com/Automattic/_s)
 this is the result _\(read bit about opinions above again - I'm probably the only person who thinks this code is any good at all\)_.
 
-Use it as you wish _\(you're probably restricted to Bootstrap's \([`Apache2`](http://www.apache.org/licenses/LICENSE-2.0)\) and Worpress' \([`GPLv2`](http://www.gnu.org/licenses/gpl-2.0.html)\) licences\)_, but its intent is to be out there as a learning aid for aspiring
+Use it as you wish _\(you're probably restricted to Bootstrap's \([`Apache2`](http://www.apache.org/licenses/LICENSE-2.0)\)
+and Worpress' \([`GPLv2`](http://www.gnu.org/licenses/gpl-2.0.html)\) licences\)_,
+but its intent is to be out there as a learning aid for aspiring
 PHP Wordpress coders.
 
 Releases
