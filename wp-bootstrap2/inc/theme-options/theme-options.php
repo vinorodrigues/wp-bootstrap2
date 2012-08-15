@@ -190,7 +190,6 @@ function bootstrap2_sidebars() {
 function bootstrap2_get_theme_options() {
 	$saved = (array) get_option( 'bootstrap2_theme_options' );
 	$defaults = apply_filters( 'bootstrap2_default_theme_options', array(
-		//'sample_textarea' => '',
 		'fluid' => 0,
 		'page' => 'fp',
 		'sidebars' => 'cs',
@@ -205,8 +204,6 @@ function bootstrap2_get_theme_options() {
 		'inhibit_image_comments' => 0,
 		//'swatch' => '',
 	) );
-
-	$defaults = apply_filters( 'bootstrap2_default_theme_options', $defaults );
 
 	$options = wp_parse_args( $saved, $defaults );
 	$options = array_intersect_key( $options, $defaults );
@@ -402,7 +399,7 @@ function _bootstrap2_settings_field_image($name = 'image', $value = '', $help = 
 			jQuery('#upload_<?php echo $name; ?>_button').click(function() {
 				uploadID = jQuery('#<?php echo $name; ?>');
 				formfield = uploadID.attr('name');
-				tb_show('', 'media-upload.php?type=image&post_id=0&TB_iframe=true');
+				tb_show('', 'media-upload.php?type=file&post_id=0&TB_iframe=true');
 				return false;
 			});
 

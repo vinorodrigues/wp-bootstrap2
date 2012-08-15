@@ -149,6 +149,8 @@ add_action( 'widgets_init', 'bootstrap2_widgets_init' );
 function bootstrap2_scripts() {
 	global $post;
 
+	// ---------- CSS
+
 	$min = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min';
 
 	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . "/css/bootstrap{$min}.css" );
@@ -159,6 +161,11 @@ function bootstrap2_scripts() {
 
 	wp_enqueue_style( 'app-style', get_template_directory_uri() . "/css/app.css" );  // TODO : app.min.css
 	wp_enqueue_style( 'style', get_stylesheet_uri() );
+	
+	if ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG )
+		wp_enqueue_style( 'bootstrap2_debug', get_template_directory_uri() . "/css/debug.css" );
+
+	// ---------- JS
 
 	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.js', array( 'jquery' ), '2.0.4', true );
 

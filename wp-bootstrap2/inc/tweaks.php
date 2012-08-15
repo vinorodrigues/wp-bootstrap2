@@ -122,7 +122,7 @@ add_filter( 'spam_comment_link', 'bootstrap2_spam_comment_link' );
 function bootstrap2_post_comments_feed_link_html( $html ) {
 	return str_replace(
 		array("<a href='", "'>"),
-		array("<a title='" . __('Subscribe to Comments via RSS', 'bootstrap2') . "' class='btn btn-mini btn-info' href='", "'><i class='icon-eye-open icon-white'></i> "),
+		array("<a title='" . __('Subscribe to Comments via RSS', 'bootstrap2') . "' class='btn btn-mini btn-info' href='", "'><i class='icon-rss-white'></i> "),
 		$html);
 }
 add_filter( 'post_comments_feed_link_html', 'bootstrap2_post_comments_feed_link_html' );

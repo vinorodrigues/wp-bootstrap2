@@ -52,6 +52,9 @@ $bodyclass = 'navbar-normal';
 		echo ' | ' . sprintf( __( 'Page %s', 'bootstrap2' ), max( $paged, $page ) );
 
 	?></title>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="<?php echo apply_filters( 'apple_mobile_web_app_status_bar_style', 'black-translucent' ) ?>" />
+<meta name="viewport" content="initial-scale= 1.0, width=device-width" />
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 <!--[if lt IE 9]>
@@ -71,9 +74,7 @@ $bodyclass = 'navbar-normal';
  *
  * Ideas from example layouts at:
  * http://www1.sherzod.me/bootstrap/
- */
-
-?>
+ */ ?>
 
 <?php if ($build == 'p') echo '<div id="wrapper' . $fluid . '" class="page container' . $fluid . '" role="region">'; ?>
 
@@ -107,7 +108,7 @@ $bodyclass = 'navbar-normal';
 
 		endif; ?>
 		<?php if (is_active_sidebar( 'sidebar-3' )) : ?>
-		<div id="sidebar-3" class="pull-right">
+		<div id="sidebar-3" class="widget-area pull-right">
 			<?php
 				do_action( 'tha_headerbar_top' );
 				dynamic_sidebar( 'sidebar-3' );

@@ -5,7 +5,7 @@ Author: Vino Rodrigues
 Author URI: http://vinorodrigues.com
 Description: A responsive theme based on Twitter's Bootstrap.
 
-Version: 0.1
+Version: 0.2
 License: GNU General Public License
 License URI: license.txt
 Tags: bootstrap, white
@@ -14,15 +14,6 @@ This theme, like WordPress, is licensed under the GPL.
 Based on the Automattic's starter theme '_s' [underscores](http://github.com/Automattic/_s)
 Uses stylings from Twitter's [Bootstrap](http://twitter.github.com/bootstrap)
 */
-
-/* =Debug */
-
-/*
-.container { outline: 2px dashed black; }
-.span1, .span2, .span3, .span4, .span5, .span6, .span7, .span8, .span9, .span10, .span11, .span12 { outline: 1px dotted blue; }
-.row, .row-fluid { outline: 1px dotted red; }
-#header-band, #main-band, #footer-band { outline: 1px dotted green; }
-/**/
 
 /* =Frames  */
 

@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * Bootstrap2 Child Theme functions
  */
 
  

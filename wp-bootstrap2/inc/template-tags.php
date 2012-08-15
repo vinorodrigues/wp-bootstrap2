@@ -143,7 +143,7 @@ function bootstrap2_comment( $comment, $args, $depth ) {
 				<?php comment_reply_link( array_merge( $args, array(
 					'depth' => $depth,
 					'max_depth' => $args['max_depth'],
-					'reply_text' => __( '<i class="icon-hand-down icon-white"></i> Reply', 'bootstrap2'),
+					'reply_text' => __( '<i class="icon-comment icon-white"></i> Reply', 'bootstrap2'),
 				) ) ); ?>
 				<?php
 					edit_comment_link( __( 'Edit', 'bootstrap2' ), ' ' );

@@ -10,4 +10,4 @@
  */
 
 bootstrap2_set_theme_option_sidebars('ssc');
-include( get_template_directory() . '/single.php' ); 
+include( get_template_directory() . '/page.php' );

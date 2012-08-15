@@ -35,23 +35,21 @@ $has_f_menu = has_nav_menu( 'footer-menu' );
 		$copyright = '&copy; ' . date('Y') . ' ' . get_bloginfo( 'name' );
 		$copyright = apply_filters( 'bootstrap2_site_info', $copyright );
 
-		$generator = apply_filters( 'bootstrap2_site_generator', '' );
-		if ( empty( $generator ) ) {
-			$generator = '<a href="' . esc_url( __( 'http://wordpress.org/', 'bootstrap2' ) ) .
-				'" title="' . esc_attr( 'Semantic Personal Publishing Platform', 'bootstrap2' ) .
-				'" rel="generator" class="wordpress">' . sprintf( __( 'Proudly powered by %s', 'bootstrap2' ), 'WordPress' ) .
-				'</a>';
-			$generator .= ' ' . __( 'and', 'bootstrap2' ) . ' ';
-			$generator .= '<a href="' . esc_url( __( 'http://twitter.github.com/bootstrap/', 'bootstrap2' ) ) .
-				'" rel="generator" class="bootstrap">Bootstrap</a>';
-		}
-
+		$generator = '<a href="' . esc_url( __( 'http://wordpress.org/', 'bootstrap2' ) ) .
+			'" title="' . esc_attr( 'Semantic Personal Publishing Platform', 'bootstrap2' ) .
+			'" rel="generator" class="wordpress">' . sprintf( __( 'Proudly powered by %s', 'bootstrap2' ), 'WordPress' ) .
+			'</a>';
+		$generator .= ' ' . __( 'and', 'bootstrap2' ) . ' ';
+		$generator .= '<a href="' . esc_url( __( 'http://twitter.github.com/bootstrap/', 'bootstrap2' ) ) .
+			'" rel="generator" class="bootstrap">Bootstrap</a>';
+		$generator = apply_filters( 'bootstrap2_site_generator', $generator );
 	?>
 	<div id="citation" class="row<?php echo $fluid; ?>">
 		<div class="site-info <?php echo $has_f_menu ? 'span8' : 'span6'; ?>">
 			<?php
 				if ($has_f_menu) :
-
+					if ( ! empty($copyright) )
+						$copyright = '<li class="nav-footer"><a href="#">' . $copyright . '</a></li>';
 					wp_nav_menu( array(
 						'container' => 'nav',
 						'container_class' => 'subnav',
@@ -60,7 +58,7 @@ $has_f_menu = has_nav_menu( 'footer-menu' );
 						'depth' => 1,
 						'fallback_cb' => false,
 						'walker' => new Bootstrap2_Nav_Walker,
-						'items_wrap' => '<ul id="%1$s" class="%2$s"><li class="nav-header"><a href="#">' . $copyright . '</a></li>%3$s</ul>',
+						'items_wrap' => '<ul id="%1$s" class="%2$s">' . $copyright . '%3$s</ul>',
 					) );
 
 				else :
