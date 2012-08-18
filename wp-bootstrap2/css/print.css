@@ -1,0 +1,21 @@
+/*
+Theme Name: Bootstrap2
+Author: Vino Rodrigues
+
+This file contains printing styles that fit WordPress into Bootstrap.
+
+Your custom CSS should not be written into this file - rather edit ../style.css
+*/
+
+body {
+	background-color: white;
+}
+
+#sidebar-1, #sidebar-2,
+#sidebar-3, #sidebar-4,
+#sidebar-5, #sidebar-6,
+#sidebar-7, #sidebar-8,
+#sidebar-9, #sidebar-10,
+#header, #footer {
+	display: none;
+}

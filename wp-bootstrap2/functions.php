@@ -160,7 +160,9 @@ function bootstrap2_scripts() {
 		wp_enqueue_style( 'bootstrap-swatch', get_template_directory_uri() . "/css/swatch/{$swatch}{$min}.css" );
 
 	wp_enqueue_style( 'app-style', get_template_directory_uri() . "/css/app.css" );  // TODO : app.min.css
-	wp_enqueue_style( 'style', get_stylesheet_uri() );
+	wp_enqueue_style( 'style', get_stylesheet_uri(), 'app-style' );
+	wp_enqueue_style( 'print-style', get_template_directory_uri() . "/css/print.css", 'app-style', false, 'print' );
+
 	
 	if ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG )
 		wp_enqueue_style( 'bootstrap2_debug', get_template_directory_uri() . "/css/debug.css" );
