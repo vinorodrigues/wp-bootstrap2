@@ -1,5 +1,9 @@
+WP-Bootstrap2 Theme
+===================
+
+
 Introduction
-============
+------------
 
 This project comes with a story:
 
@@ -37,13 +41,17 @@ but its intent is to be out there as a learning aid for aspiring
 PHP Wordpress coders.
 
 Releases
-========
+--------
 
 *  0.1
 
   *  Initial functional upload to Github
+  
+*  0.2
+
+  *  A few UI bug fixes
 
 Get Involved
-============
+------------
 
 Contribute as much as you want.  And if your intent is to teach without personal gain I'll add you to the contributors list.
