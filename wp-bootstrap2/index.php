@@ -20,34 +20,34 @@ get_top_sidebar();
 <div id="primary" class="site-content <?php bootstrap2_column_class(); ?>">
 	<?php tha_content_before(); ?>
 	<div id="content" role="main">
-	<?php tha_content_top(); ?>
+		<?php tha_content_top(); ?>
 
-	<?php if ( have_posts() ) : ?>
+		<?php if ( have_posts() ) : ?>
 
-		<?php /*bootstrap2_content_nav( 'nav-above' );*/ ?>
+			<?php /*bootstrap2_content_nav( 'nav-above' );*/ ?>
 
-		<?php /* Start the Loop */ ?>
-		<?php while ( have_posts() ) : the_post(); ?>
-			<?php tha_entry_before(); ?>
-			<?php
-				/* Include the Post-Format-specific template for the content.
-				 * If you want to overload this in a child theme then include a file
-				 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-				 */
-				get_template_part( 'part/content', get_post_format() );
-			?>
-			<?php tha_entry_after(); ?>
-		<?php endwhile; ?>
+			<?php /* Start the Loop */ ?>
+			<?php while ( have_posts() ) : the_post(); ?>
+				<?php tha_entry_before(); ?>
+				<?php
+					/* Include the Post-Format-specific template for the content.
+					 * If you want to overload this in a child theme then include a file
+					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
+					 */
+					get_template_part( 'part/content', get_post_format() );
+				?>
+				<?php tha_entry_after(); ?>
+			<?php endwhile; ?>
 
-		<?php bootstrap2_content_nav( 'nav-below' ); ?>
+			<?php bootstrap2_content_nav( 'nav-below' ); ?>
 
-	<?php elseif ( current_user_can( 'edit_posts' ) ) : ?>
+		<?php elseif ( current_user_can( 'edit_posts' ) ) : ?>
 
-		<?php get_template_part( 'part/no-results', 'index' ); ?>
+			<?php get_template_part( 'part/no-results', 'index' ); ?>
 
-	<?php endif; ?>
+		<?php endif; ?>
 
-	<?php tha_content_bottom(); ?>
+		<?php tha_content_bottom(); ?>
 	</div><?php /*<!-- #content -->*/ ?>
 	<?php tha_content_after(); ?>
 </div><?php /*<!-- #primary .site-content -->*/ ?>

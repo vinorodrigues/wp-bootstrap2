@@ -13,7 +13,9 @@ get_header();
 ?>
 
 <div id="primary" class="site-content span12">
+	<?php tha_content_before(); ?>
 	<div id="content" role="main" class="page404 well">
+		<?php tha_content_top(); ?>
 
 		<article id="post-0" class="post error404 not-found">
 			<header class="entry-header page-header">
@@ -29,7 +31,10 @@ get_header();
 			</div><div class="span3"></div></div>
 
 		</article>
+
+		<?php tha_content_bottom(); ?>
 	</div>
+	<?php tha_content_after(); ?>
 </div>
 
 </div><?php /*<!-- .row -->*/ ?><div class="row<?php echo $fluid; ?>">

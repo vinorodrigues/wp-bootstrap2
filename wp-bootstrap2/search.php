@@ -12,32 +12,38 @@ get_top_sidebar();
 ?>
 
 <section id="primary" class="site-content <?php bootstrap2_column_class(); ?>">
+	<?php tha_content_before(); ?>
 	<div id="content" role="main">
+		<?php tha_content_top(); ?>
 
-	<?php if ( have_posts() ) : ?>
+		<?php if ( have_posts() ) : ?>
 
-		<header class="page-header">
-			<h1 class="page-title"><?php printf( __( 'Search Results for: %s', 'bootstrap2' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
-		</header>
+			<header class="page-header">
+				<h1 class="page-title"><?php printf( __( 'Search Results for: %s', 'bootstrap2' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
+			</header>
 
-		<?php bootstrap2_content_nav( 'nav-above' ); ?>
+			<?php bootstrap2_content_nav( 'nav-above' ); ?>
 
-		<?php /* Start the Loop */ ?>
-		<?php while ( have_posts() ) : the_post(); ?>
+			<?php /* Start the Loop */ ?>
+			<?php while ( have_posts() ) : the_post(); ?>
+				<?php tha_entry_before(); ?>
 
-			<?php get_template_part( 'part/content', 'search' ); ?>
+				<?php get_template_part( 'part/content', 'search' ); ?>
 
-		<?php endwhile; ?>
+				<?php tha_entry_after(); ?>
+			<?php endwhile; ?>
 
-		<?php bootstrap2_content_nav( 'nav-below' ); ?>
+			<?php bootstrap2_content_nav( 'nav-below' ); ?>
 
-	<?php else : ?>
+		<?php else : ?>
 
-		<?php get_template_part( 'part/no-results', 'search' ); ?>
+			<?php get_template_part( 'part/no-results', 'search' ); ?>
 
-	<?php endif; ?>
+		<?php endif; ?>
 
+		<?php tha_content_bottom(); ?>
 	</div>
+	<?php tha_content_after(); ?>
 </section>
 
 <?php
