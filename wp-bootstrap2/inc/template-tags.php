@@ -318,21 +318,21 @@ function bootstrap2_column_class($content = true, $echo = true) {
 	$sidebars = bootstrap2_get_theme_option_sidebars();
 	if ($sidebars == 'c') {
 		// content only
-		$output = 'span12';
+		$output = 12;
 	} else {
 		$wide = in_array($sidebars, array('sc','cs'));
 
 		if ($content) {
 			if ($wide) {
-				$output = 'span9';
+				$output = 9;
 			} else {
-				$output = 'span6';
+				$output = 6;
 			}
 		} else {
 			if ($wide) {
-				$output = 'span3';
+				$output = 3;
 			} else {
-				$output = 'span3';
+				$output = 3;
 			}
 		}
 	}

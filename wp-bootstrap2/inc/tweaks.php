@@ -52,25 +52,6 @@ add_filter( 'attachment_link', 'bootstrap2_enhanced_image_navigation', 10, 2 );
 
 /**
  *
- */
-function bootstrap2_banner_after() {
-	?>
-	<script language="javascript" type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/jquery.equalheights.js"></script>
-	<script language="javascript" type="text/javascript">
-		(function($) {
-			$(document).ready(function() {
-				$(".banner").equalHeights();
-			});
-		})(jQuery);
-	</script>
-	<?php
-}
-add_action( 'tha_banner_after', 'bootstrap2_banner_after' );
-
-
-
-/**
- *
  * @param type $link
  * @param type $icon
  * @param string $btn

@@ -8,15 +8,15 @@ Shortcodes for specific Bootstrap UI Scaffolding and Components are included.
 
 ### Nesting columns
 
+use `[row]` to start a nested column group
 Use `[one_half]`, `[one_third]`, `[two_thirds]`, `[one_fourth]` & `[three_fourth]` to generate nested columns.
 
- - Attribute `first` is required for first column
- - Attribute `last` is required for last column
  - _Opptional_ attribute `class="yourownclass"` allows one to set a custom css class
 
 Example:
 	
-	[one_fourth first]
+	[row]
+	[one_fourth]
 
 	Content narrow left
 
@@ -31,6 +31,7 @@ Example:
 	Content narrow right
 
 	[/one_fourth]
+	[/row]
 
 
 ### Responsive visibility

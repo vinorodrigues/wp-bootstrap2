@@ -11,7 +11,7 @@
 /**
  * Define the version, in case it becomes useful down the road.
  */
-define( 'BOOTSTRAP2_VERSION', '0.1' );
+define( 'BOOTSTRAP2_VERSION', '0.2' );
 
 define( 'BOOTSTRAP2_SEPERATE_NAVBAND', true );
 
@@ -178,6 +178,10 @@ function bootstrap2_scripts() {
 	if ( is_singular() && wp_attachment_is_image( $post->ID ) ) {
 		wp_enqueue_script( 'keyboard-image-navigation', get_template_directory_uri() . '/js/keyboard-image-navigation.js', array( 'jquery' ), '20120202' );
 	}
+
+	wp_enqueue_script( 'app-js', get_template_directory_uri() . '/js/app.js', array( 'jquery', 'bootstrap' ), false, true );
+
+	wp_register_script( 'equalheights', get_template_directory_uri() . '/js/jquery.equalheights.js', array( 'jquery' ), false, true );
 }
 add_action( 'wp_enqueue_scripts', 'bootstrap2_scripts' );
 
@@ -190,6 +194,7 @@ require( get_template_directory() . '/inc/custom-header.php' );
  * Custom background
  */
 require( get_template_directory() . '/inc/custom-background.php' );
+
 
 // ----------------------------------------------------------------------------
 // ----- Page Help -----
@@ -215,15 +220,21 @@ function get_bottom_sidebar() {
 // ===== Helper functions =====
 // ============================================================================
 
+
+require_once( get_template_directory() . '/inc/raw-scripts.php' );
+require( get_template_directory() . '/inc/equal-heights.php' );
+
+
 /**
  * wp_add_inline_style() exists since 3.3, this is the fallback
  * @param type $handle
  * @param type $data
  */
-if (!function_exists('wp_add_inline_style')) {
+if (!function_exists('wp_add_inline_style')) :
 function wp_add_inline_style( $handle, $data ) {
 	echo "<!-- {$handle} -->\n<style type=\"text/css\">\n{$data}\n</style>\n";
-}}
+}
+endif;
 
 
 /* eof */

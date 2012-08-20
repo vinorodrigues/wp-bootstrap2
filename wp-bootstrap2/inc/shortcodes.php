@@ -39,20 +39,20 @@ function _bootstrap2_fix_atts($atts, $defaults = NULL) {
 }
 
 function _bootstrap2_getclass($atts, $class = '') {
-	if (isset($atts['first']) && $atts['first']) $class .= ' first';
-	if (isset($atts['last']) && $atts['last']) $class .= ' last';
 	if (isset($atts['class'])) $class .= ' ' . $atts['class'];
 	return ltrim($class, ' ');
 }
 
-function _bootstrap2_do_div($class, $content) {
+function _bootstrap2_do_($tag, $class, $content) {
 	if (is_null($content)) $content = '';
-	return '<div class="' . $class . '">' . do_shortcode($content) . '</div>';
+	return '<' . $tag . ' class="' . $class . '">' . do_shortcode($content) . '</' . $tag . '>';
+}
+function _bootstrap2_do_div($class, $content) {
+	return _bootstrap2_do_( 'div', $class, $content );
 }
 
 function _bootstrap2_do_span($class, $content) {
-	if (is_null($content)) $content = '';
-	return '<span class="' . $class . '">' . do_shortcode($content) . '</span>';
+	return _bootstrap2_do_( 'span', $class, $content );
 }
 
 
@@ -61,50 +61,70 @@ function _bootstrap2_do_span($class, $content) {
  */
 
 
-function _bootstrap2_first($atts) {
-	if (isset($atts['first']) && $atts['first']) {
-		return '<div class="row-fluid">';
-	} else
-		return '';
-}
+function bootstrap2_row($atts, $content = null) {
+	global $_bootstrap2_in_row;
 
-function _bootstrap2_last($atts) {
-	if (isset($atts['last']) && $atts['last']) {
-		return '</div>';
-	} else
-		return '';
+	$_bootstrap2_in_row = true;
+	$content = do_shortcode($content);
+	$_bootstrap2_in_row = false;
+
+	$atts = _bootstrap2_fix_atts($atts);
+	$class = _bootstrap2_getclass($atts, 'row');
+
+	return '<div class="' . $class . '">' . $content . '</div>';
 }
 
 function bootstrap2_one_half($atts, $content = null) {
+	global $_bootstrap2_in_row;
+	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row )) return;
+
+	$s = intval( bootstrap2_column_class(true, false) / 2);
 	$atts = _bootstrap2_fix_atts($atts);
-	$class = _bootstrap2_getclass($atts, 'span6');
-	return _bootstrap2_first($atts) . _bootstrap2_do_div($class, $content) . _bootstrap2_last($atts);
+	$class = _bootstrap2_getclass($atts, 'span' . $s);
+	return _bootstrap2_do_div($class, $content);
 }
 
 function bootstrap2_one_third($atts, $content = null) {
+	global $_bootstrap2_in_row;
+	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row )) return;
+
+	$s = intval( bootstrap2_column_class(true, false) / 3);
 	$atts = _bootstrap2_fix_atts($atts);
-	$class = _bootstrap2_getclass($atts, 'span4');
-	return _bootstrap2_first($atts) . _bootstrap2_do_div($class, $content) . _bootstrap2_last($atts);
+	$class = _bootstrap2_getclass($atts, 'span' . $s);
+	return _bootstrap2_do_div($class, $content);
 }
 
 function bootstrap2_two_thirds($atts, $content = null) {
+	global $_bootstrap2_in_row;
+	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row )) return;
+
+	$s = intval( bootstrap2_column_class(true, false) / 3) * 2;
 	$atts = _bootstrap2_fix_atts($atts);
-	$class = _bootstrap2_getclass($atts, 'span8');
-	return _bootstrap2_first($atts) . _bootstrap2_do_div($class, $content) . _bootstrap2_last($atts);
+	$class = _bootstrap2_getclass($atts, 'span' . $s);
+	return _bootstrap2_do_div($class, $content);
 }
 
 function bootstrap2_one_fourth($atts, $content = null) {
+	global $_bootstrap2_in_row;
+	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row )) return;
+
+	$s = intval( bootstrap2_column_class(true, false) / 4);
 	$atts = _bootstrap2_fix_atts($atts);
-	$class = _bootstrap2_getclass($atts, 'span3');
-	return _bootstrap2_first($atts) . _bootstrap2_do_div($class, $content) . _bootstrap2_last($atts);
+	$class = _bootstrap2_getclass($atts, 'span' . $s);
+	return _bootstrap2_do_div($class, $content);
 }
 
 function bootstrap2_three_fourths($atts, $content = null) {
+	global $_bootstrap2_in_row;
+	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row )) return;
+
+	$s = intval( bootstrap2_column_class(true, false) / 4) * 3;
 	$atts = _bootstrap2_fix_atts($atts);
-	$class = _bootstrap2_getclass($atts, 'span9');
-	return _bootstrap2_first($atts) . _bootstrap2_do_div($class, $content) . _bootstrap2_last($atts);
+	$class = _bootstrap2_getclass($atts, 'span' . $s);
+	return _bootstrap2_do_div($class, $content);
 }
 
+add_shortcode( 'row', 'bootstrap2_row' );
 add_shortcode( 'one_half', 'bootstrap2_one_half' );
 add_shortcode( 'half', 'bootstrap2_one_half' );  // lazy
 add_shortcode( 'one_third', 'bootstrap2_one_third' );
@@ -133,7 +153,7 @@ function bootstrap2_visible($atts, $content = null) {
 		default: $class = '';
 	}
 	$class = _bootstrap2_getclass($atts, $class);
-	return _bootstrap2_first($atts) . _bootstrap2_do_span($class, $content) . _bootstrap2_last($atts);
+	return _bootstrap2_do_span($class, $content);
 }
 
 function bootstrap2_hidden($atts, $content = null) {
@@ -149,7 +169,7 @@ function bootstrap2_hidden($atts, $content = null) {
 		default: $class = 'hidden';
 	}
 	$class = _bootstrap2_getclass($atts, $class);
-	return _bootstrap2_first($atts) . _bootstrap2_do_span($class, $content) . _bootstrap2_last($atts);
+	return _bootstrap2_do_span($class, $content);
 }
 
 add_shortcode( 'visible', 'bootstrap2_visible');
@@ -396,5 +416,30 @@ function bootstrap2_badge( $atts, $content = null ) {
 
 add_shortcode('label', 'bootstrap2_label');
 add_shortcode('badge', 'bootstrap2_badge');
+
+
+/*
+ * Equal Heights JS
+ */
+
+function bootstrap2_equalheights( $atts, $content = null ) {
+	$atts = _bootstrap2_fix_atts($atts, array(
+		'class' => '',
+		'id' => '',
+	));
+	if (!empty($atts['id'])) {
+		$what = '#' . $atts['id'];
+	} elseif (!empty($atts['class'])) {
+		$what = explode(' ', trim($atts['class']));
+		$what = '.' . $what[0];  // only the first class
+	} else {
+		$what = false;
+	}
+
+	ts_equal_heights($what);
+	return '';
+}
+
+add_shortcode('equalheights', 'bootstrap2_equalheights');
 
 /* eof */

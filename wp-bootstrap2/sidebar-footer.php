@@ -21,10 +21,13 @@ for ( $i = 4; $i <= 9; $i++)
 
 /* If none of the sidebars have widgets, then let's bail early.
  */
-if ( count($footerbars) == 0 ) {
+if ( 0 == count($footerbars) ) {
 	unset( $footerbars );
 	return;
 }
+
+if ( 1 < count($footerbars) )
+	ts_equal_heights('.banner');
 
 /*if (!isset($sidebars)) $sidebars = bootstrap2_get_theme_option_sidebars();*/
 

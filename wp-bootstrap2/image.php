@@ -11,7 +11,7 @@ get_header();
 get_top_sidebar();
 ?>
 
-<div id="primary" class="site-content image-attachment <?php bootstrap2_column_class(); ?>">
+<div id="primary" class="site-content image-attachment span<?php bootstrap2_column_class(); ?>">
 	<?php tha_content_before(); ?>
 	<div id="content" role="main">
 		<?php tha_content_top(); ?>
