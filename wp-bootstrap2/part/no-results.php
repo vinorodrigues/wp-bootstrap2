@@ -11,7 +11,7 @@
 ?>
 
 <article id="post-0" class="post no-results not-found">
-	<header class="entry-header">
+	<header class="entry-header page-header">
 		<h1 class="entry-title"><?php _e( 'Nothing Found', 'bootstrap2' ); ?></h1>
 	</header><!-- .entry-header -->
 

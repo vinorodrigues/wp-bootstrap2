@@ -5,6 +5,8 @@
  * @author Vino Rodrigues
  * @package WP-Bootstrap2
  * @since WP-Bootstrap2 0.1
+ *
+ * Kudos to David Gwyer, http://www.presscoders.com/2010/05/wordpress-settings-api-explained/
  */
 
 
@@ -34,11 +36,12 @@ function bootstrap2_theme_options_init() {
 	add_settings_field( 'fluid', __( 'Fluid layout', 'bootstrap2' ), 'bootstrap2_settings_field_fluid', 'theme_options', 'layout' );
 	add_settings_field( 'page', __( 'Page construction', 'bootstrap2' ), 'bootstrap2_settings_field_page', 'theme_options', 'layout' );
 	add_settings_field( 'sidebars', __( 'Content and sidebar positions', 'bootstrap2' ), 'bootstrap2_settings_field_sidebars', 'theme_options', 'layout' );
-	add_settings_field( 'well_w', __( 'Widgets are wells', 'bootstrap2' ), 'bootstrap2_settings_field_well_w', 'theme_options', 'layout' );
-	add_settings_field( 'well_s', __( 'Sticky\'s are wells', 'bootstrap2' ), 'bootstrap2_settings_field_well_s', 'theme_options', 'layout' );
+	add_settings_field( 'well_w', __( 'Widget areas', 'bootstrap2' ), 'bootstrap2_settings_field_well_w', 'theme_options', 'layout' );
+	add_settings_field( 'well_s', __( 'Sticky posts', 'bootstrap2' ), 'bootstrap2_settings_field_well_s', 'theme_options', 'layout' );
 
 	add_settings_field( 'logo', __( 'Logo', 'bootstrap2' ), 'bootstrap2_settings_field_logo', 'theme_options', 'branding' );
 
+	add_settings_field( 'darkbar', __( 'Dark Navbar', 'bootstrap2' ), 'bootstrap2_settings_field_darkbar', 'theme_options', 'navbar' );
 	add_settings_field( 'icon', __( 'Icon', 'bootstrap2' ), 'bootstrap2_settings_field_icon', 'theme_options', 'navbar' );
 	add_settings_field( 'name', __( 'Project Name', 'bootstrap2' ), 'bootstrap2_settings_field_name', 'theme_options', 'navbar' );
 	add_settings_field( 'search', __( 'Include search form', 'bootstrap2' ), 'bootstrap2_settings_field_search', 'theme_options', 'navbar' );
@@ -76,8 +79,8 @@ function bootstrap2_theme_options_add_page() {
 	$theme_page = add_theme_page(
 		__( 'Theme Options', 'bootstrap2' ),   // Name of page
 		__( 'Theme Options', 'bootstrap2' ),   // Label in menu
-		'edit_theme_options',                    // Capability required
-		'theme_options',                         // Menu slug, used to uniquely identify the page
+		'edit_theme_options',                  // Capability required
+		'theme_options',                       // Menu slug, used to uniquely identify the page
 		'bootstrap2_theme_options_render_page' // Function that renders the options page
 	);
 
@@ -156,6 +159,32 @@ function bootstrap2_sidebars() {
 	return $sidebars;
 }
 
+/**
+ *
+ */
+function bootstrap2_well_x() {
+	$well = array(
+		'unwell' => array(
+			'value' => 'unwell',
+			'label' => __( '(No well)', 'bootstrap2' ),
+		),
+		'well' => array(
+			'value' => 'well',
+			'label' => __( 'Well', 'bootstrap2' ),
+		),
+		'well well-large' => array(
+			'value' => 'well well-large',
+			'label' => __( 'Large well', 'bootstrap2' ),
+		),
+		'well well-small' => array(
+			'value' => 'well well-small',
+			'label' => __( 'Small well', 'bootstrap2' ),
+		),
+	);
+
+	return $well;
+}
+
 
 /**
  *
@@ -193,8 +222,9 @@ function bootstrap2_get_theme_options() {
 		'fluid' => 0,
 		'page' => 'fp',
 		'sidebars' => 'cs',
-		'well_w' => 1,
-		'well_s' => 1,
+		'well_w' => 'unwell',
+		'well_s' => 'unwell',
+		'darkbar' => 0,
 		'logo' => '',
 		'icon' => '',
 		'name' => '',
@@ -240,26 +270,25 @@ function bootstrap2_set_theme_option_sidebars($value, $default = 'cs') {
 		$__bootstrap2_get_theme_option_sidebars = $default;
 
 	if ( in_array( $value, array('sc', 'ssc', 'scs', 'css', 'cs', 'c') ) ) {
+		if ( $value != 'c' ) {
+			$ns1 = ! is_active_sidebar( 'sidebar-1' );
+			$ns2 = ! is_active_sidebar( 'sidebar-2' );
 
-		$ns1 = ! is_active_sidebar( 'sidebar-1' );
-		$ns2 = ! is_active_sidebar( 'sidebar-2' );
-
-		if ($ns1 && $ns2) :  // both
-			$value = bootstrap2_get_theme_option('inhibit_default_sidebar') ? 'c' : 'cs';
-		elseif ($ns1 || $ns2) :  // only one
-			switch ($value) :
-				case 'ssc' :
-				case 'scs' :
-					$value = 'sc';
-					break;
-				case 'css' :
-					$value = 'cs';
-					break;
-			endswitch;
-		endif;
-
+			if ($ns1 && $ns2 ) :  // both
+				$value = bootstrap2_get_theme_option('inhibit_default_sidebar') ? 'c' : 'cs';
+			elseif ($ns1 || $ns2) :  // only one
+				switch ($value) :
+					case 'ssc' :
+					case 'scs' :
+						$value = 'sc';
+						break;
+					case 'css' :
+						$value = 'cs';
+						break;
+				endswitch;
+			endif;
+		}
 		$__bootstrap2_get_theme_option_sidebars = $value;
-
 	}
 	return $__bootstrap2_get_theme_option_sidebars;
 }
@@ -279,7 +308,7 @@ function bootstrap2_get_theme_option_sidebars($default = 'cs') {
 }
 
 
-/* ------------------------------------------------------------------------ */
+/* ----- helper ----------------------------------------------------------- */
 
 
 /**
@@ -292,11 +321,26 @@ function _bootstrap2_settings_field_checkbox($name, $description='') {
 	?>
 	<label for="<?php echo $name; ?>">
 		<input type="checkbox" name="bootstrap2_theme_options[<?php echo $name; ?>]" id="<?php echo $name; ?>" <?php checked( '1', $options[$name] ); ?> />
-		<?php if ( ! empty($description) ) : ?><span class="description"><?php echo $description  ?></span><?php endif; ?>
+		<?php if ( ! empty($description) ) : ?> &nbsp; <span class="description"><?php echo $description  ?></span><?php endif; ?>
 	</label>
 	<?php
 }
 
+function _bootstrap2_settings_field_well_x($name, $description='') {
+	$options = bootstrap2_get_theme_options();
+	$items = bootstrap2_well_x();
+	echo "<select id=\"{$name}\" name=\"bootstrap2_theme_options[{$name}]\">";
+	foreach ($items as $item) {
+		$selected = ($options[$name] == $item['value']) ? ' selected="selected" ' : '';
+		echo "<option value=\"" . $item['value'] . "\"" . $selected . ">" . $item['label'] . "</option>";
+	}
+	echo "</select>";
+	if ( ! empty($description) ) : ?> &nbsp; <span class="description"><?php echo $description  ?></span><?php endif;
+}
+
+
+
+/* ------------------------------------------------------------------------ */
 
 /**
  *
@@ -334,15 +378,15 @@ function bootstrap2_settings_field_page() {
  */
 function bootstrap2_settings_field_sidebars() {
 	$options = bootstrap2_get_theme_options();
-
-	foreach ( bootstrap2_sidebars() as $sidebars ) {
+	$sidebars = bootstrap2_sidebars();
+	foreach ( $sidebars as $sidebar ) {
 	?>
 	<div class="layout">
 		<label class="image-radio-option">
-			<input type="radio" name="bootstrap2_theme_options[sidebars]" value="<?php echo esc_attr( $sidebars['value'] ); ?>" <?php checked( $options['sidebars'], $sidebars['value'] ); ?> />
+			<input type="radio" name="bootstrap2_theme_options[sidebars]" value="<?php echo esc_attr( $sidebar['value'] ); ?>" <?php checked( $options['sidebars'], $sidebar['value'] ); ?> />
 			<span class="image-radio-label">
-				<img src="<?php echo esc_url( $sidebars['thumbnail'] ); ?>" width="68" height="61" title="<?php echo $sidebars['label']; ?>" />
-				<span class="description"><?php echo $sidebars['description']; ?></span>
+				<img src="<?php echo esc_url( $sidebar['thumbnail'] ); ?>" width="68" height="61" title="<?php echo $sidebar['label']; ?>" />
+				<span class="description"><?php echo $sidebar['description']; ?></span>
 			</span>
 		</label>
 	</div>
@@ -355,7 +399,7 @@ function bootstrap2_settings_field_sidebars() {
  *
  */
 function bootstrap2_settings_field_well_w() {
-	_bootstrap2_settings_field_checkbox( 'well_w',
+	_bootstrap2_settings_field_well_x( 'well_w',
 		__( 'Use the <code>.well</code> class for sidebars', 'bootstrap2' ) );
 }
 
@@ -364,7 +408,7 @@ function bootstrap2_settings_field_well_w() {
  *
  */
 function bootstrap2_settings_field_well_s() {
-	_bootstrap2_settings_field_checkbox( 'well_s',
+	_bootstrap2_settings_field_well_x( 'well_s',
 		__( 'Append the <code>.well</code> class for sticky posts', 'bootstrap2' ) );
 }
 
@@ -420,6 +464,15 @@ function _bootstrap2_settings_field_image($name = 'image', $value = '', $help = 
 /**
  *
  */
+function bootstrap2_settings_field_darkbar() {
+	_bootstrap2_settings_field_checkbox( 'darkbar',
+		__( 'Use the dark navbar', 'bootstrap2' ) );
+}
+
+
+/**
+ *
+ */
 function bootstrap2_settings_field_logo() {
 	$options = bootstrap2_get_theme_options();
 
@@ -465,13 +518,8 @@ function bootstrap2_settings_field_name() {
  *
  */
 function bootstrap2_settings_field_search() {
-	$options = bootstrap2_get_theme_options();
-	?>
-	<label for="search">
-		<input type="checkbox" name="bootstrap2_theme_options[search]" id="search" <?php checked( '1', $options['search'] ); ?> />
-		<span class="description"><?php _e( 'Right-most search form', 'bootstrap2' );  ?></span>
-	</label>
-	<?php
+	_bootstrap2_settings_field_checkbox( 'search',
+		__( 'Search form on the right of the navbar', 'bootstrap2' ) );
 }
 
 function bootstrap2_settings_field_inhibit_default_menu() { _bootstrap2_settings_field_checkbox( 'inhibit_default_menu' ); }
@@ -527,9 +575,13 @@ function bootstrap2_theme_options_validate( $input ) {
 	if ( isset( $input['sidebars'] ) && array_key_exists( $input['sidebars'], bootstrap2_sidebars() ) )
 		$output['sidebars'] = $input['sidebars'];
 
-	$output['well_w'] = isset( $input['well_w'] ) ? 1 : 0;
+	if ( isset( $input['well_w'] ) && array_key_exists( $input['well_w'], bootstrap2_well_x() ) )
+		$output['well_w'] = $input['well_w'];
 	
-	$output['well_s'] = isset( $input['well_s'] ) ? 1 : 0;
+	if ( isset( $input['well_s'] ) && array_key_exists( $input['well_s'], bootstrap2_well_x() ) )
+		$output['well_s'] = $input['well_s'];
+
+	$output['darkbar'] = isset( $input['darkbar'] ) ? 1 : 0;
 
 	if ( isset( $input['logo'] ) )
 		$output['logo'] = $input['logo'];
@@ -540,8 +592,7 @@ function bootstrap2_theme_options_validate( $input ) {
 	if ( isset( $input['name'] ) && ! empty( $input['name'] ) )
 		$output['name'] = wp_filter_nohtml_kses( $input['name'] );
 
-	if ( isset( $input['search'] ) )
-		$output['search'] = 1;
+	$output['search'] = isset( $input['search'] ) ? 1 : 0;
 	
 	$output['inhibit_default_menu'] = isset( $input['inhibit_default_menu'] ) ? 1 : 0;
 
@@ -559,12 +610,12 @@ function bootstrap2_theme_options_validate( $input ) {
 /**
  * @see: http://wordpress.org/support/topic/howto-integrate-the-media-library-into-a-plugin
  */
-function bootsrap2_admin_scripts() {
+function bootstrap2_admin_scripts() {
 	wp_enqueue_script('media-upload');
 	wp_enqueue_script('thickbox');
 	wp_enqueue_script('jquery');
 }
-add_action('admin_print_scripts', 'bootsrap2_admin_scripts');
+add_action('admin_print_scripts', 'bootstrap2_admin_scripts');
 
 
 function bootstrap2_admin_styles() {

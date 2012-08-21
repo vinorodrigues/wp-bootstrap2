@@ -12,7 +12,7 @@ if ( ! is_active_sidebar( 'sidebar-2' ))
 	return;
 
 $class = (in_array($sidebars, array('sc', 'ssc')) ? 'left' : 'right');
-$class .= ' ' . ( bootstrap2_get_theme_option('well_w', true) ? '' : 'un' ) . 'well';
+$class .= ' ' . bootstrap2_get_theme_option('well_w');
 
 ?>
 

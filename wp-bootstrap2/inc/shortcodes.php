@@ -418,28 +418,4 @@ add_shortcode('label', 'bootstrap2_label');
 add_shortcode('badge', 'bootstrap2_badge');
 
 
-/*
- * Equal Heights JS
- */
-
-function bootstrap2_equalheights( $atts, $content = null ) {
-	$atts = _bootstrap2_fix_atts($atts, array(
-		'class' => '',
-		'id' => '',
-	));
-	if (!empty($atts['id'])) {
-		$what = '#' . $atts['id'];
-	} elseif (!empty($atts['class'])) {
-		$what = explode(' ', trim($atts['class']));
-		$what = '.' . $what[0];  // only the first class
-	} else {
-		$what = false;
-	}
-
-	ts_equal_heights($what);
-	return '';
-}
-
-add_shortcode('equalheights', 'bootstrap2_equalheights');
-
 /* eof */

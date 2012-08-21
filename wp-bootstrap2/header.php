@@ -26,7 +26,10 @@ $has_nav_bar = has_nav_menu( 'primary' ) ||
 $bodyclass = 'navbar-normal';
 
 ?><!DOCTYPE html>
-<html <?php language_attributes(); ?>>
+<!--[if lt IE 7 ]><html class="ie ie6" <?php language_attributes(); ?>> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" <?php language_attributes(); ?>> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" <?php language_attributes(); ?>> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html <?php language_attributes(); ?>> <!--<![endif]-->
 <head>
 <?php tha_head_top(); ?>
 <meta charset="<?php bloginfo( 'charset' ); ?>" />
@@ -130,7 +133,7 @@ $bodyclass = 'navbar-normal';
 	<?php if ( $has_nav_bar ) : ?>
 	<nav role="navigation" class="site-navigation main-navigation" id="access">
 		<div class="assistive-text skip-link"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'bootstrap2' ); ?>"><?php _e( 'Skip to content', 'bootstrap2' ); ?></a></div>
-		<div class="navbar"><div class="navbar-inner"><div class="container">
+		<div class="navbar<?php echo bootstrap2_get_theme_option('darkbar', false) ? ' navbar-inverse' : ''; ?>"><div class="navbar-inner"><div class="container">
 		<?php /*<!-- .btn-navbar is used as the toggle for collapsed navbar content -->*/ ?>
 		<?php if ($icon || $name) { ?>
 		<a class="brand" href="<?php echo home_url( '/' ); ?>"><?php if ($icon) echo '<img src="' . $icon . '" />'; ?><?php if ($icon && $name) echo '<span class="space"></span>'; ?><?php if ($name) echo $name; ?></a>

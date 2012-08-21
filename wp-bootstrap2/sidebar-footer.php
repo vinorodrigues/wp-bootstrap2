@@ -45,8 +45,6 @@ switch (count( $footerbars )) {
 
 if (!isset($fluid)) $fluid = bootstrap2_get_theme_option('fluid', false) ? '-fluid' : '';
 
-$well_w = bootstrap2_get_theme_option('well_w', true);
-
 ?>
 
 <?php do_action('tha_banner_before');  ?>
@@ -56,7 +54,7 @@ $well_w = bootstrap2_get_theme_option('well_w', true);
 		for ($i = 0; $i < $j; $i++) :
 			$class = 'banner ' . $class_list[$i];
 			if ( $i == ($j-1) ) $class .= ' last';
-			$class .= ' ' . ( $well_w ? '' : 'un' ) . 'well';
+			$class .= ' ' . bootstrap2_get_theme_option('well_w');
 			$class = apply_filters('the_banner_class', $class, $i, $j);
 			do_action( 'tha_banner_top' );
 	?>

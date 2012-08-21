@@ -11,7 +11,9 @@
 /**
  * Define the version, in case it becomes useful down the road.
  */
-define( 'BOOTSTRAP2_VERSION', '0.2' );
+define( 'BOOTSTRAP2_VERSION', '0.3' );
+
+define( 'BOOTSTRAP_VERSION', '2.1.0' );
 
 define( 'BOOTSTRAP2_SEPERATE_NAVBAND', true );
 
@@ -153,11 +155,12 @@ function bootstrap2_scripts() {
 
 	$min = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min';
 
-	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . "/css/bootstrap{$min}.css" );
+	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . "/css/bootstrap{$min}.css", array(), BOOTSTRAP_VERSION );
+	wp_enqueue_style( 'bootstrap-responsive', get_template_directory_uri() . "/css/bootstrap-responsive{$min}.css", array('bootstrap'), BOOTSTRAP_VERSION );
 
 	$swatch = bootstrap2_get_theme_option('swatch');
 	if (! empty($swatch))
-		wp_enqueue_style( 'bootstrap-swatch', get_template_directory_uri() . "/css/swatch/{$swatch}{$min}.css" );
+		wp_enqueue_style( 'bootstrap-swatch', get_template_directory_uri() . "/css/swatch/{$swatch}.css", array('bootstrap') );
 
 	wp_enqueue_style( 'app-style', get_template_directory_uri() . "/css/app.css" );  // TODO : app.min.css
 	wp_enqueue_style( 'style', get_stylesheet_uri(), 'app-style' );
@@ -169,7 +172,7 @@ function bootstrap2_scripts() {
 
 	// ---------- JS
 
-	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.js', array( 'jquery' ), '2.0.4', true );
+	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.js', array( 'jquery' ), BOOTSTRAP_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );

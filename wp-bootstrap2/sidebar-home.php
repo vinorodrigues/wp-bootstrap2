@@ -12,7 +12,7 @@ if ( ! is_active_sidebar( 'sidebar-10' ) )
 
 $build = bootstrap2_get_theme_option('page', 'fp');
 $fluid = bootstrap2_get_theme_option('fluid', false) ? '-fluid' : '';
-$class = ( bootstrap2_get_theme_option('well_w', true) ? '' : 'un' ) . 'well';
+$class = bootstrap2_get_theme_option('well_w');
 ?>
 
 <div id="home<?php if ($build != 'p') echo '-band'; ?>" role="region">
