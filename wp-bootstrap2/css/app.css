@@ -138,8 +138,10 @@ small {
 	color: #888;
 }
 
-#citation .site-info {
+#citation #site-info,
+#citation #site-generator {
 	border-top: 1px dotted #DDD;
+	padding-top: 0.5em;
 }
 
 #citation .to-top {

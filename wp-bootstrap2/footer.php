@@ -45,12 +45,12 @@ $generator = apply_filters( 'bootstrap2_site_generator', $generator );
 		if ( ! is_404() ) get_sidebar( 'footer' );
 	?>
 	<div id="citation" class="row<?php echo $fluid; ?>">
-		<div class="site-info <?php if (empty($generator)) echo 'span12 centered'; else echo ($has_f_menu ? 'span8' : 'span6'); ?>">
+		<div id="site-info" class="<?php if (empty($generator)) echo 'span12 centered'; else echo ($has_f_menu ? 'span8' : 'span6'); ?>">
 			<?php
 				echo '<span class="copyright">' . 
 					$copyright .
 					'</span> <a class="to-top" href="#" title="' . __( 'Top of Page', 'bootstrap2' ) . '">&uarr;</a>';
-
+	
 				if ($has_f_menu) :
 					wp_nav_menu( array(
 						'container' => 'nav',
@@ -61,7 +61,7 @@ $generator = apply_filters( 'bootstrap2_site_generator', $generator );
 						'fallback_cb' => false,
 						'walker' => new Bootstrap2_Nav_Walker,
 						// 'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-					) );
+						) );
 
 				endif;
 			?>
