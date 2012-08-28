@@ -57,7 +57,7 @@ function _bootstrap2_do_span($class, $content) {
 
 
 /*
- * Bootstrap fluid grid system
+ * Bootstrap grid system
  */
 
 
@@ -76,9 +76,11 @@ function bootstrap2_row($atts, $content = null) {
 
 function bootstrap2_one_half($atts, $content = null) {
 	global $_bootstrap2_in_row;
-	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row )) return;
+	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row ))
+		return do_shortcode( $content );
 
 	$s = intval( bootstrap2_column_class(true, false) / 2);
+
 	$atts = _bootstrap2_fix_atts($atts);
 	$class = _bootstrap2_getclass($atts, 'span' . $s);
 	return _bootstrap2_do_div($class, $content);
@@ -86,7 +88,8 @@ function bootstrap2_one_half($atts, $content = null) {
 
 function bootstrap2_one_third($atts, $content = null) {
 	global $_bootstrap2_in_row;
-	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row )) return;
+	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row ))
+		return do_shortcode( $content );
 
 	$s = intval( bootstrap2_column_class(true, false) / 3);
 	$atts = _bootstrap2_fix_atts($atts);
@@ -96,7 +99,8 @@ function bootstrap2_one_third($atts, $content = null) {
 
 function bootstrap2_two_thirds($atts, $content = null) {
 	global $_bootstrap2_in_row;
-	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row )) return;
+	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row ))
+		return do_shortcode( $content );
 
 	$s = intval( bootstrap2_column_class(true, false) / 3) * 2;
 	$atts = _bootstrap2_fix_atts($atts);
@@ -106,7 +110,8 @@ function bootstrap2_two_thirds($atts, $content = null) {
 
 function bootstrap2_one_fourth($atts, $content = null) {
 	global $_bootstrap2_in_row;
-	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row )) return;
+	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row ))
+		return do_shortcode( $content );
 
 	$s = intval( bootstrap2_column_class(true, false) / 4);
 	$atts = _bootstrap2_fix_atts($atts);
@@ -116,7 +121,8 @@ function bootstrap2_one_fourth($atts, $content = null) {
 
 function bootstrap2_three_fourths($atts, $content = null) {
 	global $_bootstrap2_in_row;
-	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row )) return;
+	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row ))
+		return do_shortcode( $content );
 
 	$s = intval( bootstrap2_column_class(true, false) / 4) * 3;
 	$atts = _bootstrap2_fix_atts($atts);
@@ -354,13 +360,16 @@ add_shortcode('break', 'bootstrap2_break');
  * Hero unit & well
  */
 
- 
+
 function bootstrap2_hero( $atts, $content = null ) {
 	return _bootstrap2_do_div(_bootstrap2_getclass(_bootstrap2_fix_atts($atts), 'hero-unit'), $content);
 }
 
 function bootstrap2_well( $atts, $content = null ) {
-	return _bootstrap2_do_div(_bootstrap2_getclass(_bootstrap2_fix_atts($atts), 'well'), $content);
+	$atts = _bootstrap2_fix_atts($atts, array('size' => ''));
+	$class = 'well';
+	if (!empty($atts['size'])) $class .= ' well-' . $atts['size'];
+	return _bootstrap2_do_div(_bootstrap2_getclass($atts, $class), $content);
 }
 
 add_shortcode('hero', 'bootstrap2_hero');
