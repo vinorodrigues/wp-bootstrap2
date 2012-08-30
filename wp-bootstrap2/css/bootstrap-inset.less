@@ -1,0 +1,95 @@
+
+@import "variables.less";
+
+/* grid */
+
+.inset(@column: 1) {
+	margin-left: 0 - ((@gridColumnWidth * @column) + (@gridGutterWidth * (@column - 1)));
+}
+
+.inset1200(@column: 1) {
+	margin-left: 0 - ((@gridColumnWidth1200 * @column) + (@gridGutterWidth1200 * (@column - 1)));
+}
+
+.inset768(@column: 1) {
+	margin-left: 0 - ((@gridColumnWidth768 * @column) + (@gridGutterWidth768 * (@column - 1)));
+}
+
+.insetfluid(@column: 1) {
+	margin-left: -((@fluidGridColumnWidth * @column) + (@fluidGridGutterWidth * (@column - 1)));
+	*margin-left: -((@fluidGridColumnWidth * @column) + (@fluidGridGutterWidth * (@column - 1)) - (.5 / @gridRowWidth * 100 * 1%) - (.5 / @gridRowWidth * 100 * 1%));
+}
+
+.inset1 { .inset(1); }
+.inset2 { .inset(2); }
+.inset3 { .inset(3); }
+.inset4 { .inset(4); }
+.inset5 { .inset(5); }
+.inset6 { .inset(6); }
+.inset7 { .inset(7); }
+.inset8 { .inset(8); }
+.inset9 { .inset(9); }
+.inset10 { .inset(10); }
+.inset11 { .inset(11); }
+.inset12 { .inset(12); }
+
+
+@media (min-width: 1200px) {
+	.inset1 { .inset1200(1); }
+	.inset2 { .inset1200(2); }
+	.inset3 { .inset1200(3); }
+	.inset4 { .inset1200(4); }
+	.inset5 { .inset1200(5); }
+	.inset6 { .inset1200(6); }
+	.inset7 { .inset1200(7); }
+	.inset8 { .inset1200(8); }
+	.inset9 { .inset1200(9); }
+	.inset10 { .inset1200(10); }
+	.inset11 { .inset1200(11); }
+	.inset12 { .inset1200(12); }
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+	.inset1 { .inset768(1); }
+	.inset2 { .inset768(2); }
+	.inset3 { .inset768(3); }
+	.inset4 { .inset768(4); }
+	.inset5 { .inset768(5); }
+	.inset6 { .inset768(6); }
+	.inset7 { .inset768(7); }
+	.inset8 { .inset768(8); }
+	.inset9 { .inset768(9); }
+	.inset10 { .inset768(10); }
+	.inset11 { .inset768(11); }
+	.inset12 { .inset768(12); }
+}
+
+@media (max-width: 767px) {
+	[class*="span"] {
+		margin-left: 0;
+	}
+}
+
+/* fluid */
+
+.row-fluid .inset1 { .insetfluid(1); }
+.row-fluid .inset2 { .insetfluid(2); }
+.row-fluid .inset3 { .insetfluid(3); }
+.row-fluid .inset4 { .insetfluid(4); }
+.row-fluid .inset5 { .insetfluid(5); }
+.row-fluid .inset6 { .insetfluid(6); }
+.row-fluid .inset7 { .insetfluid(7); }
+.row-fluid .inset8 { .insetfluid(8); }
+.row-fluid .inset9 { .insetfluid(9); }
+.row-fluid .inset10 { .insetfluid(10); }
+.row-fluid .inset11 { .insetfluid(11); }
+.row-fluid .inset12 { .insetfluid(12); }
+
+@media (max-width: 767px) {
+	.row-fluid [class*="span"] {
+		margin-left: 0;
+	}
+	.row-fluid [class*="span"]:first-child {
+		margin-left: 0;
+	}
+}
