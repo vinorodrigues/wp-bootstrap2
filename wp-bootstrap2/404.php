@@ -11,7 +11,7 @@ if (!isset($fluid)) $fluid = bootstrap2_get_theme_option('fluid', false) ? '-flu
 
 get_header();
 ?>
-
+<!-- 404 -->
 <div id="primary" class="site-content span12">
 	<?php tha_content_before(); ?>
 	<div id="content" role="main" class="page404 well">

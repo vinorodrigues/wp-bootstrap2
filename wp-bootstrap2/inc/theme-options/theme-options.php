@@ -438,17 +438,16 @@ function _bootstrap2_settings_field_image($name = 'image', $value = '', $help = 
 		<input type="button" class="button" value="<?php _e( 'Clear', 'bootstrap2' ); ?>" onclick="jQuery('#<?php echo $name; ?>').val('')" />
 	</label>
 	<script language="JavaScript">
-		var uploadID = '';
 		jQuery(document).ready(function() {
 			jQuery('#upload_<?php echo $name; ?>_button').click(function() {
 				uploadID = jQuery('#<?php echo $name; ?>');
 				formfield = uploadID.attr('name');
-				tb_show('', 'media-upload.php?type=file&post_id=0&TB_iframe=true');
+				tb_show('', 'media-upload.php?type=image&amp;post_id=0&amp;TB_iframe=true');
 				return false;
 			});
 
 			window.send_to_editor = function(html) {
-				imgurl = jQuery('img',html).attr('src');
+				imgurl = jQuery(html, 'img').attr('src');
 				uploadID.val(imgurl);
 				tb_remove();
 			}
@@ -457,7 +456,6 @@ function _bootstrap2_settings_field_image($name = 'image', $value = '', $help = 
 	</script>
 
 	<?php
-
 }
 
 
@@ -613,15 +611,16 @@ function bootstrap2_theme_options_validate( $input ) {
 function bootstrap2_admin_scripts() {
 	wp_enqueue_script('media-upload');
 	wp_enqueue_script('thickbox');
-	wp_enqueue_script('jquery');
 }
-add_action('admin_print_scripts', 'bootstrap2_admin_scripts');
-
 
 function bootstrap2_admin_styles() {
 	wp_enqueue_style('thickbox');
 }
-add_action('admin_print_styles', 'bootstrap2_admin_styles');
+
+if (isset($_GET['page']) && $_GET['page'] == 'theme_options') {
+	add_action('admin_print_scripts', 'bootstrap2_admin_scripts');
+	add_action('admin_print_styles', 'bootstrap2_admin_styles');
+}
 
 
 /* eof */

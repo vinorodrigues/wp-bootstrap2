@@ -16,7 +16,7 @@
 get_header();
 get_top_sidebar();
 ?>
-
+<!-- index -->
 <div id="primary" class="site-content span<?php bootstrap2_column_class(); ?>">
 	<?php tha_content_before(); ?>
 	<div id="content" role="main">
