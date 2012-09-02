@@ -20,6 +20,7 @@ $name = apply_filters( 'bootstrap2_get_theme_project_name', bootstrap2_get_theme
 $search = bootstrap2_get_theme_option('search', false);
 
 $has_r_head = is_active_sidebar( 'sidebar-3' ) || has_nav_menu( 'header-menu' );
+$has_l_head = ('blank' != get_header_textcolor()) || (! empty($logo));
 $has_nav_bar = has_nav_menu( 'primary' ) ||
 	( ! bootstrap2_get_theme_option( 'inhibit_default_menu', false ) ) ||
 	$search || $icon || $name;
@@ -86,7 +87,7 @@ $bodyclass = 'navbar-normal';
 <header id="masthead" class="site-header" role="banner">
 	<?php tha_header_top(); ?>
 	<div id="leader" class="row<?php echo $fluid; ?>">
-	<hgroup id="branding" class="site-brand <?php echo $has_r_head ? 'span6' : 'span12'; ?>">
+	<hgroup id="branding" class="site-brand <?php echo $has_r_head ? 'span6' : 'span12'; ?>" <?php if (!$has_l_head && !$has_r_head) echo 'style="display:none;visibility:hidden"' ?>>
 		<?php if (empty($logo)) { ?>
 		<h1 class="site-title"><a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 		<h3 class="site-description"><?php bloginfo( 'description', 'display' ); ?></h3>

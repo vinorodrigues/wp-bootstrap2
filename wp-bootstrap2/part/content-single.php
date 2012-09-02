@@ -5,11 +5,9 @@
  * @since WP-Bootstrap2 0.1 
  */
 
-
 global $multipage, $numpages, $page;
 
 ?>
- 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header page-header">
 		<h1 class="entry-title"><?php the_title(); ?></h1>
