@@ -129,7 +129,7 @@ add_filter( 'comment_reply_link', 'bootstrap2_comment_reply_link' );
  */
 function bootstrap2_check_comment_flood() {
 	if ( ! wp_get_referer() ) {
-		wp_die( __('You cannot post comment at this time, may be you need to enable referrers in your browser.'), 'bootstrap2' );
+		wp_die( __('You cannot post comment at this time, may be you need to enable referrers in your browser.', 'bootstrap2' ) );
 	}
 }
 add_action('check_comment_flood', 'bootstrap2_check_comment_flood');

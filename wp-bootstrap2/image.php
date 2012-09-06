@@ -8,12 +8,10 @@
  */
 
 get_header();
-get_top_sidebar();
 ?>
 <!-- image -->
-<div id="primary" class="site-content image-attachment span<?php bootstrap2_column_class(); ?>">
 	<?php tha_content_before(); ?>
-	<div id="content" role="main">
+	<div id="content" role="main" class="image-attachment">
 		<?php tha_content_top(); ?>
 
 		<?php while ( have_posts() ) : the_post(); ?>
@@ -100,8 +98,7 @@ get_top_sidebar();
 		<?php tha_content_bottom(); ?>
 	</div>
 	<?php tha_content_after(); ?>
-</div>
 
 <?php
-get_bottom_sidebar();
+get_sidebar();
 get_footer();

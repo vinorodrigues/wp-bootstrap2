@@ -112,6 +112,10 @@ small {
 	padding-bottom: 1em;
 }
 
+#branding h1, #branding h2, #branding h3, #branding h4, #branding h5, #branding h6 {
+	margin: 0;
+}
+
 .site-logo img {
 	max-width: 100%;
 }
@@ -299,7 +303,9 @@ ul.commentlist li.comment {
 #header-wrap {
 	padding: 1em 0;
 }
-#header-wrap .navbar { margin-bottom: 0; }
+#header-wrap .navbar,
+#navbar-wrap .navbar { margin-bottom: 0; }
+#navbar-wrap { padding: 0 1em; }
 #home-band { padding: 0 1em; }
 #home-wrap {
 	padding: 1em 0;

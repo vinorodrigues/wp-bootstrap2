@@ -5,10 +5,10 @@ Author: Vino Rodrigues
 Author URI: http://vinorodrigues.com
 Description: A responsive theme based on Twitter's Bootstrap.
 
-Version: 0.2.7
+Version: 0.3.0
 License: GNU General Public License
 License URI: license.txt
-Tags: bootstrap, white
+Tags: white
 
 This theme, like WordPress, is licensed under the GPL.
 Based on the Automattic's starter theme '_s' [underscores](http://github.com/Automattic/_s)
@@ -101,3 +101,6 @@ ul.commentlist li.thread-even {
 	background-color: rgba(0, 0, 128, 0.05);
 }
 ul.commentlist .commentmetadata .btn { float: right; padding-left: 0.5em; }
+
+/* =WP */
+.bypostauthor {}

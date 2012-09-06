@@ -271,11 +271,11 @@ function bootstrap2_set_theme_option_sidebars($value, $default = 'cs') {
 
 	if ( in_array( $value, array('sc', 'ssc', 'scs', 'css', 'cs', 'c') ) ) {
 		if ( $value != 'c' ) {
-			$ns1 = ! is_active_sidebar( 'sidebar-1' );
+			$ns1 = (! is_active_sidebar( 'sidebar-1' )) && bootstrap2_get_theme_option('inhibit_default_sidebar');
 			$ns2 = ! is_active_sidebar( 'sidebar-2' );
 
-			if ($ns1 && $ns2 ) :  // both
-				$value = bootstrap2_get_theme_option('inhibit_default_sidebar') ? 'c' : 'cs';
+			if ($ns1 && $ns2 ) :  // neither
+				$value = 'c';
 			elseif ($ns1 || $ns2) :  // only one
 				switch ($value) :
 					case 'ssc' :
@@ -537,8 +537,12 @@ function bootstrap2_theme_options_render_page() {
 		<?php screen_icon(); ?>
 		<h2><?php printf( __( '%s Theme Options', 'bootstrap2' ), wp_get_theme() ); ?></h2>
 		<?php settings_errors(); ?>
-
-		<p>Version <?php echo BOOTSTRAP2_VERSION; ?></p>
+		<?php
+			$v = get_stylesheet_directory() . '/style.css';
+			$v = get_file_data( $v, array('Version' => 'Version'), 'theme' );
+			if (isset($v['Version'])) $v = $v['Version']; else $v = __('Unknown', 'bootstrap2');
+		?>
+		<p><b>Version <?php echo $v; ?></b></p>
 		<p>Theme based on <a href="http://twitter.github.com/bootstrap/" target="_blank">Bootstrap from Twitter</a>.</p>
 
 		<form method="post" action="options.php">

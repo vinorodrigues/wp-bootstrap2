@@ -223,7 +223,7 @@ function bootstrap2_fallback_page_menu( $args = array() ) {
 	// Include Home first
 	if ( ! empty($args['show_home']) ) {
 		if ( true === $args['show_home'] || '1' === $args['show_home'] || 1 === $args['show_home'] )
-			$text = __('Home');
+			$text = __('Home', 'bootstrap2');
 		else
 			$text = $args['show_home'];
 		$cur = is_front_page() && !is_paged();

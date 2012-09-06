@@ -15,7 +15,7 @@
 /**
  * Custom comment form
  */
-require( get_template_directory() . '/inc/comment-form.php' );
+include( '../inc/comment-form.php' );
 
 
 if ( !function_exists( 'bootstrap2_comment_nav' ) ) :

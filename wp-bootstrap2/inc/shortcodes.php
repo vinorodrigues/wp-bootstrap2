@@ -79,7 +79,7 @@ function bootstrap2_one_half($atts, $content = null) {
 	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row ))
 		return do_shortcode( $content );
 
-	$s = intval( bootstrap2_column_class(true, false) / 2);
+	$s = intval( bootstrap2_get_column_width(1) / 2);
 
 	$atts = _bootstrap2_fix_atts($atts);
 	$class = _bootstrap2_getclass($atts, 'span' . $s);
@@ -91,7 +91,7 @@ function bootstrap2_one_third($atts, $content = null) {
 	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row ))
 		return do_shortcode( $content );
 
-	$s = intval( bootstrap2_column_class(true, false) / 3);
+	$s = intval( bootstrap2_get_column_width(1) / 3);
 	$atts = _bootstrap2_fix_atts($atts);
 	$class = _bootstrap2_getclass($atts, 'span' . $s);
 	return _bootstrap2_do_div($class, $content);
@@ -102,7 +102,7 @@ function bootstrap2_two_thirds($atts, $content = null) {
 	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row ))
 		return do_shortcode( $content );
 
-	$s = intval( bootstrap2_column_class(true, false) / 3) * 2;
+	$s = intval( bootstrap2_get_column_width(1) / 3) * 2;
 	$atts = _bootstrap2_fix_atts($atts);
 	$class = _bootstrap2_getclass($atts, 'span' . $s);
 	return _bootstrap2_do_div($class, $content);
@@ -113,7 +113,7 @@ function bootstrap2_one_fourth($atts, $content = null) {
 	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row ))
 		return do_shortcode( $content );
 
-	$s = intval( bootstrap2_column_class(true, false) / 4);
+	$s = intval( bootstrap2_get_column_width(1) / 4);
 	$atts = _bootstrap2_fix_atts($atts);
 	$class = _bootstrap2_getclass($atts, 'span' . $s);
 	return _bootstrap2_do_div($class, $content);
@@ -124,7 +124,7 @@ function bootstrap2_three_fourths($atts, $content = null) {
 	if (( ! isset($_bootstrap2_in_row) ) || ( ! $_bootstrap2_in_row ))
 		return do_shortcode( $content );
 
-	$s = intval( bootstrap2_column_class(true, false) / 4) * 3;
+	$s = intval( bootstrap2_get_column_width(1) / 4) * 3;
 	$atts = _bootstrap2_fix_atts($atts);
 	$class = _bootstrap2_getclass($atts, 'span' . $s);
 	return _bootstrap2_do_div($class, $content);

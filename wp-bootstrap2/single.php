@@ -8,10 +8,8 @@
  */
 
 get_header();
-get_top_sidebar();
 ?>
 <!-- single -->
-<div id="primary" class="site-content span<?php bootstrap2_column_class(); ?>">
 	<?php tha_content_before(); ?>
 	<div id="content" role="main">
 		<?php tha_content_top(); ?>
@@ -37,8 +35,7 @@ get_top_sidebar();
 		<?php tha_content_bottom(); ?>
 	</div>
 	<?php tha_content_after(); ?>
-</div>
 
 <?php
-get_bottom_sidebar();
+get_sidebar();
 get_footer();

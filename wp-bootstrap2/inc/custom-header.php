@@ -56,7 +56,7 @@ function bootstrap2_custom_header_setup() {
 		define( 'HEADER_IMAGE',        $args['default-image'] );
 		define( 'HEADER_IMAGE_WIDTH',  $args['width'] );
 		define( 'HEADER_IMAGE_HEIGHT', $args['height'] );
-		add_custom_image_header( $args['wp-head-callback'], $args['admin-head-callback'], $args['admin-preview-callback'] );
+		add_custom_image_header( $args['wp-head-callback'], $args['admin-head-callback'], $args['admin-preview-callback'] );  // deprecated
 	}
 }
 add_action( 'after_setup_theme', 'bootstrap2_custom_header_setup' );

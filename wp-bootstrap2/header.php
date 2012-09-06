@@ -25,15 +25,17 @@ $has_nav_bar = has_nav_menu( 'primary' ) ||
 	( ! bootstrap2_get_theme_option( 'inhibit_default_menu', false ) ) ||
 	$search || $icon || $name;
 $bodyclass = 'navbar-normal';
+$sidebars = bootstrap2_get_theme_option_sidebars();
 
 ?><!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" <?php language_attributes(); ?>> <![endif]-->
+<!--[if lt IE 7 ]><html class="ie ie6 lt-ie9 lt-ie8 lt-ie7" <?php language_attributes(); ?>> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7 lt-ie9 lt-ie8" <?php language_attributes(); ?>> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8 lt-ie9" <?php language_attributes(); ?>> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html <?php language_attributes(); ?>> <!--<![endif]-->
 <head>
 <?php tha_head_top(); ?>
 <meta charset="<?php bloginfo( 'charset' ); ?>" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width" />
 <title><?php
 	/*
@@ -127,7 +129,7 @@ $bodyclass = 'navbar-normal';
 	<?php 
 		if ( BOOTSTRAP2_SEPERATE_NAVBAND && ($build != 'p') ) :
 			echo '</header></div></div>';
-			echo '<div id="navbar-band" role="region"><div id="navbar-wrap" class="container"><header>';
+			echo '<div id="navbar-band" role="region"><div id="navbar-wrap" class="container' . $fluid . '"><header>';
 		endif;
 	?>
 	<?php if ( $has_nav_bar ) : ?>
@@ -168,3 +170,4 @@ $bodyclass = 'navbar-normal';
 <div id="main<?php if ($build != 'p') echo '-band'; ?>" class="content hfeed" role="main">
 <?php if ($build != 'p') echo '<div id="main-wrap" class="container' . $fluid . '">'; ?>
 <div class="row<?php echo $fluid; ?>">
+<div id="primary" class="site-content <?php bootstrap2_column_class(1); ?> layout-<?php echo $sidebars; ?>">

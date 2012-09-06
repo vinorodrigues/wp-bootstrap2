@@ -30,37 +30,37 @@ function bootstrap2_comment_form( $args = array(), $post_id = null ) {
 	$req = get_option( 'require_name_email' );
 	$aria_req = ( $req ? ' aria-required="true" required="required"' : '' );
 	$fields =  array(
-		'author' => '<label class="control-label" for="author">' . __( 'Name' ) . ( $req ? ' <span class="required">*</span>' : ' ' ) . '</label>' .
+		'author' => '<label class="control-label" for="author">' . __( 'Name', 'bootstrap2' ) . ( $req ? ' <span class="required">*</span>' : ' ' ) . '</label>' .
 			'<div class="comment-form-author controls">' .
 			'<input class="input-xlarge" id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '"' . $aria_req . ' />' .
 			'</p>',
-		'email' => '<label class="control-label" for="email">' . __( 'Email' ) . ( $req ? ' <span class="required">*</span>' : ' ' ) . '</label>' .
+		'email' => '<label class="control-label" for="email">' . __( 'Email', 'bootstrap2' ) . ( $req ? ' <span class="required">*</span>' : ' ' ) . '</label>' .
 			'<div class="comment-form-email controls">' .
 			'<input class="input-xlarge" id="email" name="email" type="email" value="' . esc_attr(  $commenter['comment_author_email'] ) . '"' . $aria_req . ' />' .
 			'</div>',
-		'url' => '<label class="control-label" for="url">' . __( 'Website' ) . ' </label>' .
+		'url' => '<label class="control-label" for="url">' . __( 'Website', 'bootstrap2' ) . ' </label>' .
 			'<div class="comment-form-url controls">' .
 			'<input class="input-xlarge" id="url" name="url" type="url" value="' . esc_attr( $commenter['comment_author_url'] ) . '" />' .
 			'</div>',
 	);
 
-	$required_text = sprintf( ' ' . __('Required fields are marked %s'), '<span class="required">*</span>' );
+	$required_text = sprintf( ' ' . __('Required fields are marked %s', 'bootstrap2'), '<span class="required">*</span>' );
 	$defaults = array(
 		'fields' => apply_filters( 'comment_form_default_fields', $fields ),
-		'comment_field' => '<label class="control-label" for="comment">' . _x( 'Comment', 'noun' ) . '</label>' .
+		'comment_field' => '<label class="control-label" for="comment">' . _x( 'Comment', 'noun', 'bootstrap2' ) . '</label>' .
 			'<div class="comment-form-comment controls">' .
 			'<textarea class="input-xlarge" id="comment" name="comment" aria-required="true" required="required" rows="5"></textarea>' .
 			'</div>',
 		'must_log_in' => '<span class="must-log-in">' . sprintf( __( 'You must be <a href="%s">logged in</a> to post a comment.' ), wp_login_url( apply_filters( 'the_permalink', get_permalink( $post_id ) ) ) ) . '</span>',
 		'logged_in_as' => '<div class="controls"><p class="logged-in-as help-block">' . sprintf( __( 'Logged in as <i class="icon-user"></i> <a href="%1$s">%2$s</a>. <a class="btn btn-danger btn-mini" href="%3$s" title="Log out of this account">Log out</a>' ), admin_url( 'profile.php' ), $user_identity, wp_logout_url( apply_filters( 'the_permalink', get_permalink( $post_id ) ) ) ) . '</p></div>',
-		'comment_notes_before' => '<div class="controls"><p class="comment-notes help-block">' . __( 'Your email address will not be published.' ) . ( $req ? $required_text : '' ) . '</p></div>',
-		'comment_notes_after' => '<div class="controls"><p class="form-allowed-tags help-block"">' . sprintf( __( 'You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes: %s' ), ' <code>' . allowed_tags() . '</code>' ) . '</p></div>',
+		'comment_notes_before' => '<div class="controls"><p class="comment-notes help-block">' . __( 'Your email address will not be published.', 'bootstrap2' ) . ( $req ? $required_text : '' ) . '</p></div>',
+		'comment_notes_after' => '<div class="controls"><p class="form-allowed-tags help-block"">' . sprintf( __( 'You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes: %s', 'bootstrap2' ), ' <code>' . allowed_tags() . '</code>' ) . '</p></div>',
 		'id_form' => 'commentform',
 		'id_submit' => 'submit',
-		'title_reply' => __( 'Leave a Reply' ),
-		'title_reply_to' => __( 'Leave a Reply to %s' ),
-		'cancel_reply_link' => __( 'Cancel reply' ),
-		'label_submit' => __( 'Post Comment' ),
+		'title_reply' => __( 'Leave a Reply', 'bootstrap2' ),
+		'title_reply_to' => __( 'Leave a Reply to %s', 'bootstrap2' ),
+		'cancel_reply_link' => __( 'Cancel reply', 'bootstrap2' ),
+		'label_submit' => __( 'Post Comment', 'bootstrap2' ),
 	);
 
 	$args = wp_parse_args( $args, apply_filters( 'comment_form_defaults', $defaults ) );

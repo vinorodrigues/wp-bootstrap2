@@ -14,10 +14,9 @@
  */
 
 get_header();
-get_top_sidebar();
 ?>
+
 <!-- index -->
-<div id="primary" class="site-content span<?php bootstrap2_column_class(); ?>">
 	<?php tha_content_before(); ?>
 	<div id="content" role="main">
 		<?php tha_content_top(); ?>
@@ -48,10 +47,9 @@ get_top_sidebar();
 		<?php endif; ?>
 
 		<?php tha_content_bottom(); ?>
-	</div><?php /*<!-- #content -->*/ ?>
+	</div>
 	<?php tha_content_after(); ?>
-</div><?php /*<!-- #primary .site-content -->*/ ?>
 
 <?php
-get_bottom_sidebar();
+get_sidebar();
 get_footer();

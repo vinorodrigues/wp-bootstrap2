@@ -11,11 +11,13 @@
 /**
  * Define the version, in case it becomes useful down the road.
  */
-define( 'BOOTSTRAP2_VERSION', '0.3' );
-
-define( 'BOOTSTRAP_VERSION', '2.1.0' );
+if ( ! defined( 'BOOTSTRAP_VERSION' ) )
+	define( 'BOOTSTRAP_VERSION', '2.1.0' );
 
 define( 'BOOTSTRAP2_SEPERATE_NAVBAND', true );
+
+
+if ( ! isset( $content_width ) ) $content_width = 940;
 
 
 /**
@@ -75,7 +77,7 @@ function bootstrap2_setup() {
 	/**
 	 * Enable support for Post Thumbnails
 	 */
-	add_theme_support( 'post-thumbnails', array( 'post' ) );
+	// add_theme_support( 'post-thumbnails', array( 'post' ) );  // TODO : Use the_post_thumbnail()
 
 	/**
 	 * This theme uses wp_nav_menu() in one location.
@@ -89,7 +91,7 @@ function bootstrap2_setup() {
 	/**
 	 * Add support for the Aside Post Formats
 	 */
-	add_theme_support( 'post-formats', array( 'aside', ) );
+	// add_theme_support( 'post-formats', array( 'aside', ) );  // TODO : see http://codex.wordpress.org/Post_Formats
 }
 endif; // bootstrap2_setup
 add_action( 'after_setup_theme', 'bootstrap2_setup' );
@@ -158,13 +160,17 @@ function bootstrap2_scripts() {
 	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . "/css/bootstrap{$min}.css", array(), BOOTSTRAP_VERSION );
 	wp_enqueue_style( 'bootstrap-responsive', get_template_directory_uri() . "/css/bootstrap-responsive{$min}.css", array('bootstrap'), BOOTSTRAP_VERSION );
 
-	$swatch = bootstrap2_get_theme_option('swatch');
-	if (! empty($swatch))
-		wp_enqueue_style( 'bootstrap-swatch', get_template_directory_uri() . "/css/swatch/{$swatch}.css", array('bootstrap') );
+	$sidebars = bootstrap2_get_theme_option_sidebars();
+	if (in_array($sidebars, array('sc', 'ssc', 'scs')))
+		wp_enqueue_style( 'bootstrap-inset', get_template_directory_uri() . "/css/bootstrap-inset{$min}.css", array('bootstrap'), BOOTSTRAP_VERSION );
 
-	wp_enqueue_style( 'app-style', get_template_directory_uri() . "/css/app.css" );  // TODO : app.min.css
+	/* $swatch = bootstrap2_get_theme_option('swatch');
+	if (! empty($swatch))
+		wp_enqueue_style( 'bootstrap-swatch', get_template_directory_uri() . "/css/swatch/{$swatch}.css", array('bootstrap') ); */
+
+	wp_enqueue_style( 'app-style', get_template_directory_uri() . "/css/app{$min}.css" );
 	wp_enqueue_style( 'style', get_stylesheet_uri(), 'app-style' );
-	wp_enqueue_style( 'print-style', get_template_directory_uri() . "/css/print.css", 'app-style', false, 'print' );
+	wp_enqueue_style( 'print-style', get_template_directory_uri() . "/css/print{$min}.css", 'app-style', false, 'print' );
 
 	
 	if ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG )
@@ -185,6 +191,9 @@ function bootstrap2_scripts() {
 	wp_enqueue_script( 'app-js', get_template_directory_uri() . '/js/app.js', array( 'jquery', 'bootstrap' ), false, true );
 
 	wp_register_script( 'equalheights', get_template_directory_uri() . '/js/jquery.equalheights.js', array( 'jquery' ), false, true );
+	
+	// ---------- editor style
+	add_editor_style('editor-style.css');
 }
 add_action( 'wp_enqueue_scripts', 'bootstrap2_scripts' );
 
@@ -199,24 +208,29 @@ require( get_template_directory() . '/inc/custom-header.php' );
 require( get_template_directory() . '/inc/custom-background.php' );
 
 
-// ----------------------------------------------------------------------------
-// ----- Page Help -----
-
-function get_top_sidebar() {
-	$sidebars = bootstrap2_get_theme_option_sidebars();
-	if (in_array($sidebars, array('sc', 'ssc', 'scs')))
-		get_sidebar();
-	if (in_array($sidebars, array('ssc')))
-		get_sidebar('2');
+/**
+ * Warn about old IE
+ */
+function bootstrap2_footer_after() {
+	// Warn about non-HTML5 browser IE
+?>
+<!--[if lt IE 8]>
+	<br />
+	<p class="alert alert-info"><?php _e('You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> to better experience this site.', 'bootstrap2'); ?></p>
+<![endif]-->
+<?php
 }
+add_action( 'tha_footer_after', 'bootstrap2_footer_after' );
 
-function get_bottom_sidebar() {
-	$sidebars = bootstrap2_get_theme_option_sidebars();
-	if (in_array($sidebars, array('css', 'cs')))
-		get_sidebar();
-	if (in_array($sidebars, array('scs', 'css')))
-		get_sidebar('2');
+
+/**
+ * Custom excerpt ellipses
+ */
+function bootstrap2_excerpt_more($more) {
+	return __('more…', 'bootstrap2');
 }
+add_filter('excerpt_more', 'bootstrap2_excerpt_more');
+
 
 
 // ============================================================================
@@ -224,7 +238,7 @@ function get_bottom_sidebar() {
 // ============================================================================
 
 
-require_once( get_template_directory() . '/inc/raw-scripts.php' );
+require( get_template_directory() . '/inc/raw-scripts.php' );
 require( get_template_directory() . '/inc/equal-heights.php' );
 
 
@@ -236,6 +250,31 @@ require( get_template_directory() . '/inc/equal-heights.php' );
 if (!function_exists('wp_add_inline_style')) :
 function wp_add_inline_style( $handle, $data ) {
 	echo "<!-- {$handle} -->\n<style type=\"text/css\">\n{$data}\n</style>\n";
+}
+endif;
+
+
+/**
+ * See: http://www.wpbeginner.com/wp-tutorials/25-extremely-useful-tricks-for-the-wordpress-functions-file/
+ */
+if (!function_exists('copyright_date')) :
+function copyright_date() {
+	global $wpdb;
+	$copyright_dates = $wpdb->get_results("SELECT " .
+		" YEAR(min(post_date_gmt)) AS firstdate," .
+		" YEAR(max(post_date_gmt)) AS lastdate" .
+		" FROM" .
+		" $wpdb->posts" .
+		" WHERE" .
+		" post_status = 'publish'");
+	$output = '';
+	if ($copyright_dates) {
+		$output .= $copyright_dates[0]->firstdate;
+		if ($copyright_dates[0]->firstdate != $copyright_dates[0]->lastdate) {
+			$output .= '-' . $copyright_dates[0]->lastdate;
+		}
+	}
+	return $output;
 }
 endif;
 

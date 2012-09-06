@@ -15,7 +15,7 @@ if (!isset($sidebars)) $sidebars = bootstrap2_get_theme_option_sidebars();
 
 $has_f_menu = has_nav_menu( 'footer-menu' );
 
-$copyright = '&copy; ' . date('Y') . ' ' . get_bloginfo( 'name' );
+$copyright = '&copy; ' . copyright_date() . ' ' . get_bloginfo( 'name' );
 $copyright = apply_filters( 'bootstrap2_site_info', $copyright );
 
 $generator = '<a href="' . esc_url( __( 'http://wordpress.org/', 'bootstrap2' ) ) .

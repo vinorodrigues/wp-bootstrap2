@@ -212,8 +212,8 @@ function bootstrap2_link_pages($args = '') {
 		'link_before' => '',
 		'link_after' => '',
 		'next_or_number' => 'number',
-		'nextpagelink' => __('Next page'),
-		'previouspagelink' => __('Previous page'),
+		'nextpagelink' => __('Next page', 'bootstrap2'),
+		'previouspagelink' => __('Previous page', 'bootstrap2'),
 		'pagelink' => '%',
 		'echo' => 1,
 	);
@@ -307,6 +307,39 @@ function bootstrap2_category_transient_flusher() {
 add_action( 'edit_category', 'bootstrap2_category_transient_flusher' );
 add_action( 'save_post', 'bootstrap2_category_transient_flusher' );
 
+if (! function_exists('bootstrap2_get_column_width')) :
+function bootstrap2_get_column_width($col = 0) {
+	if (!is_numeric($col) || ($col > 3) || ($col < 0)) return false;
+
+	$sidebars = bootstrap2_get_theme_option_sidebars();
+
+	if ($sidebars == 'c') {
+		$c1 = 12;
+		$c2 = false;
+		$c3 = false;
+	} else {
+		$wide = in_array($sidebars, array('sc','cs'));
+
+		if ($wide) {
+			$c1 = 9;
+			$c2 = 3;
+			$c3 = false;
+		} else {
+			$c1 = 7;
+			$c2 = 3;
+			$c3 = 2;
+		}
+	}
+
+	switch ($col) :
+		case 1: return $c1; break;
+		case 2: return $c2; break;
+		case 3: return $c3; break;
+		default: return array(1 => $c1, 2 => $c2, 3 => $c3); break;
+	endswitch;
+}
+endif;
+
 
 if (! function_exists('bootstrap2_column_class')) :
 /**
@@ -314,28 +347,36 @@ if (! function_exists('bootstrap2_column_class')) :
  * @param boolean $content
  * @param boolean $echo
  */
-function bootstrap2_column_class($content = true, $echo = true) {
-	$sidebars = bootstrap2_get_theme_option_sidebars();
-	if ($sidebars == 'c') {
-		// content only
-		$output = 12;
-	} else {
-		$wide = in_array($sidebars, array('sc','cs'));
+function bootstrap2_column_class($col, $echo = true) {
+	$width = bootstrap2_get_column_width($col);
+	if ($width !== false)
+		$output = 'span' . $width;
+	else
+		$output = '';
 
-		if ($content) {
-			if ($wide) {
-				$output = 9;
-			} else {
-				$output = 6;
-			}
-		} else {
-			if ($wide) {
-				$output = 3;
-			} else {
-				$output = 3;
-			}
-		}
-	}
+	$sidebars = bootstrap2_get_theme_option_sidebars();
+	if (in_array($sidebars, array('sc', 'ssc', 'scs'))) :
+		$widths = bootstrap2_get_column_width(0);
+		switch ($sidebars) :
+			case 'sc':
+			case 'scs':
+				if ($col == 1) :
+					$output .= ' offset' . ($widths[2]);
+				elseif ($col == 2) :
+					$output .= ' inset' . ($widths[1] + $widths[2]);
+				endif;
+				break;
+			case 'ssc':
+				if ($col == 1) :
+					$output .= ' offset' . ($widths[2] + $widths[3]);
+				elseif ($col == 2) :
+					$output .= ' inset' . ($widths[1] + $widths[2] + $widths[3]);
+				else :
+					$output .= ' inset' . ($widths[1] + $widths[3]);
+				endif;
+				break;
+		endswitch;
+	endif;
 
 	if ($echo) { echo $output; } else { return $output; }
 }
