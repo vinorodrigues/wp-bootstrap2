@@ -164,15 +164,16 @@ function bootstrap2_scripts() {
 	if (in_array($sidebars, array('sc', 'ssc', 'scs')))
 		wp_enqueue_style( 'bootstrap-inset', get_template_directory_uri() . "/css/bootstrap-inset{$min}.css", array('bootstrap'), BOOTSTRAP_VERSION );
 
-	/* $swatch = bootstrap2_get_theme_option('swatch');
-	if (! empty($swatch))
-		wp_enqueue_style( 'bootstrap-swatch', get_template_directory_uri() . "/css/swatch/{$swatch}.css", array('bootstrap') ); */
+	if ( ! is_child_theme() ) {
+		$swatch = bootstrap2_get_theme_option('swatch_css');
+		if ( ! empty($swatch) )
+			wp_enqueue_style( 'bootstrap-swatch', $swatch, array('bootstrap'), false, 'screen' );
+	}
 
 	wp_enqueue_style( 'app-style', get_template_directory_uri() . "/css/app{$min}.css" );
 	wp_enqueue_style( 'style', get_stylesheet_uri(), 'app-style' );
 	wp_enqueue_style( 'print-style', get_template_directory_uri() . "/css/print{$min}.css", 'app-style', false, 'print' );
 
-	
 	if ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG )
 		wp_enqueue_style( 'bootstrap2_debug', get_template_directory_uri() . "/css/debug.css" );
 
@@ -191,6 +192,12 @@ function bootstrap2_scripts() {
 	wp_enqueue_script( 'app-js', get_template_directory_uri() . '/js/app.js', array( 'jquery', 'bootstrap' ), false, true );
 
 	wp_register_script( 'equalheights', get_template_directory_uri() . '/js/jquery.equalheights.js', array( 'jquery' ), false, true );
+
+	if ( ! is_child_theme() ) {
+		$swatch = bootstrap2_get_theme_option('swatch_js');
+		if ( ! empty($swatch) )
+			wp_enqueue_script( 'bootstrap-swatch', $swatch, array('bootstrap'), false );
+	}
 	
 	// ---------- editor style
 	add_editor_style('editor-style.css');
@@ -211,16 +218,16 @@ require( get_template_directory() . '/inc/custom-background.php' );
 /**
  * Warn about old IE
  */
-function bootstrap2_footer_after() {
+function bootstrap2_warn_ie() {
 	// Warn about non-HTML5 browser IE
 ?>
 <!--[if lt IE 8]>
 	<br />
-	<p class="alert alert-info"><?php _e('You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> to better experience this site.', 'bootstrap2'); ?></p>
+	<p class="alert alert-error"><?php _e('You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> to better experience this site.', 'bootstrap2'); ?></p>
 <![endif]-->
 <?php
 }
-add_action( 'tha_footer_after', 'bootstrap2_footer_after' );
+add_action( 'tha_header_before', 'bootstrap2_warn_ie' );
 
 
 /**

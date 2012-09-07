@@ -50,7 +50,13 @@ function bootstrap2_theme_options_init() {
 	add_settings_field( 'inhibit_default_sidebar', __( 'Inhibit default Wordpress sidebar', 'bootstrap2' ), 'bootstrap2_settings_field_inhibit_default_sidebar', 'theme_options', 'general' );
 	add_settings_field( 'inhibit_image_comments', __( 'Inhibit image page comments', 'bootstrap2' ), 'bootstrap2_settings_field_inhibit_image_comments', 'theme_options', 'general' );
 
-	// add_settings_field( 'swatch', __( 'Bootstrap Swatch', 'bootstrap2' ), 'bootstrap2_settings_field_swatch', 'theme_options', 'general' );
+	if (!is_child_theme()) {
+		add_settings_section( 'swatch', __( 'Swatch', 'bootstrap2' ), '__return_false', 'theme_options' );
+
+		add_settings_field( 'swatch', __( 'Swatch', 'bootstrap2' ), 'bootstrap2_settings_field_swatch', 'theme_options', 'swatch' );
+		add_settings_field( 'swatch_css', __( 'Bootstrap CSS', 'bootstrap2' ), 'bootstrap2_settings_field_swatch_css', 'theme_options', 'swatch' );
+		add_settings_field( 'swatch_js', __( 'Bootstrap JS', 'bootstrap2' ), 'bootstrap2_settings_field_swatch_js', 'theme_options', 'swatch' );
+	};
 }
 add_action( 'admin_init', 'bootstrap2_theme_options_init' );
 
@@ -89,7 +95,7 @@ function bootstrap2_theme_options_add_page() {
 add_action( 'admin_menu', 'bootstrap2_theme_options_add_page' );
 
 
-/* ------------------------------------------------------------------------ */
+/* ----- SELECTS ---------------------------------------------------------- */
 
 
 /**
@@ -186,32 +192,7 @@ function bootstrap2_well_x() {
 }
 
 
-/**
- *
- */
-/*function bootstrap2_swatch() {
-	$swatch = array(
-		'' => array(
-			'value' => '',
-			'label' => '',
-		),
-		// TODO : parse the css/swatch folder!
-		'cerulean' => array(
-			'value' => 'cerulean',
-			'label' => 'Cerulean',
-		),
-		'slate' => array(
-			'value' => 'slate',
-			'label' => 'Slate',
-		),
-
-	);
-
-	return $swatch;
-}*/
-
-
-/* ------------------------------------------------------------------------ */
+/* ----- OPTION GETS ------------------------------------------------------ */
 
 /**
  * Returns the options array for Bootstrap2.
@@ -232,7 +213,8 @@ function bootstrap2_get_theme_options() {
 		'inhibit_default_menu' => 0,
 		'inhibit_default_sidebar' => 0,
 		'inhibit_image_comments' => 0,
-		//'swatch' => '',
+		'swatch_css' => '',
+		'swatch_js' => '',
 	) );
 
 	$options = wp_parse_args( $saved, $defaults );
@@ -308,7 +290,7 @@ function bootstrap2_get_theme_option_sidebars($default = 'cs') {
 }
 
 
-/* ----- helper ----------------------------------------------------------- */
+/* ----- FIELD HELPERS ---------------------------------------------------- */
 
 
 /**
@@ -339,8 +321,82 @@ function _bootstrap2_settings_field_well_x($name, $description='') {
 }
 
 
+/**
+ * Helper
+ */
+function _bootstrap2_settings_field_image($name, $help = '', $empty = '' ) {
+	$options = bootstrap2_get_theme_options();
+	$value = $options[$name];
 
-/* ------------------------------------------------------------------------ */
+	?><div class="layout"><?php
+	if (!empty($help))
+		echo '<p>' . $help . '</p>';
+
+	?>
+	<label for="<?php echo $name; ?>">
+	<?php
+
+	$_show = empty($value) ? $empty : $value;
+	if (empty($_show)) {
+		?><span class="image-not-found"><?php _e( 'No image set', 'bootstrap2' ); ?></span><?php
+	} else {
+		?><img class="image-preview imgprev-<?php echo $name; ?>" src="<?php echo $_show ?>" /><?php
+	}
+	?><br />
+
+		<span class="description"><?php _e( 'Enter an URL or upload an image', 'bootstrap2' ); ?></span><br />
+		<input type="url" name="bootstrap2_theme_options[<?php echo $name; ?>]" id="<?php echo $name; ?>" value="<?php echo esc_attr( $value ); ?>"
+		       size="50" />
+		<input type="button" id="upload_<?php echo $name; ?>_button" class="button" value="<?php _e( 'Upload Image', 'bootstrap2' ); ?>"
+		       title="<?php _e('Remember to select the \'File URL\' button'); ?>" />
+		<input type="button" class="button" value="<?php _e( 'Clear', 'bootstrap2' ); ?>" onclick="jQuery('#<?php echo $name; ?>').val('')" />
+	</label>
+	<script language="JavaScript">
+		jQuery(document).ready(function() {
+			jQuery('#upload_<?php echo $name; ?>_button').click(function() {
+				uploadID = jQuery('#<?php echo $name; ?>');
+				formfield = uploadID.attr('name');
+				tb_show('', 'media-upload.php?type=image&amp;post_id=0&amp;TB_iframe=true');
+				return false;
+			});
+		});
+	</script><?php
+	?></div><?php
+}
+
+/**
+ * Helper
+ */
+function _bootstrap2_settings_field_file($name) {
+	$options = bootstrap2_get_theme_options();
+	$value = $options[$name];
+
+	?><div class="layout"><?php
+	?>
+	<label for="<?php echo $name; ?>">
+		<span class="description"><?php _e( 'Enter an URL or upload an file', 'bootstrap2' ); ?></span><br />
+		<input id="<?php echo $name; ?>" name="bootstrap2_theme_options[<?php echo $name; ?>]" type="url" value="<?php echo $value; ?>"
+		       size="50" />
+		<input type="button" id="upload_<?php echo $name; ?>_button" class="button" value="<?php _e( 'Upload File', 'bootstrap2' ); ?>"
+		       title="<?php _e('Remember to select the \'File URL\' button'); ?>" />
+		<input type="button" class="button" value="<?php _e( 'Clear', 'bootstrap2' ); ?>" onclick="jQuery('#<?php echo $name; ?>').val('')" />
+	</label>
+	<script language="JavaScript">
+		jQuery(document).ready(function() {
+			jQuery('#upload_<?php echo $name; ?>_button').click(function() {
+				uploadID = jQuery('#<?php echo $name; ?>');
+				formfield = uploadID.attr('name');
+				tb_show('', 'media-upload.php?type=file&post_id=0&TB_iframe=true');
+				return false;
+			});
+		});
+	</script>
+	<?php
+	?></div><?php
+}
+
+
+/* ----- FIELDS ----------------------------------------------------------- */
 
 /**
  *
@@ -414,52 +470,6 @@ function bootstrap2_settings_field_well_s() {
 
 
 /**
- * Helper
- */
-function _bootstrap2_settings_field_image($name = 'image', $value = '', $help = '', $empty = '' ) {
-	if (!empty($help))
-		echo '<p>' . $help . '</p>';
-
-	?>
-	<label for="<?php echo $name; ?>">
-	<?php
-
-	$_show = empty($value) ? $empty : $value;
-	if (empty($_show)) {
-		?><span class="image-not-found"><?php _e( 'No image set', 'bootstrap2' ); ?></span><?php
-	} else {
-		?><img class="image-preview imgprev-<?php echo $name; ?>" src="<?php echo $_show ?>" /><?php
-	}
-	?><br />
-
-		<span class="description"><?php _e( 'Enter an URL or upload an image', 'bootstrap2' ); ?></span><br />
-		<input type="text" name="bootstrap2_theme_options[<?php echo $name; ?>]" id="<?php echo $name; ?>" value="<?php echo esc_attr( $value ); ?>" />
-		<input type="button" id="upload_<?php echo $name; ?>_button" class="button" value="<?php _e( 'Upload Image', 'bootstrap2' ); ?>" />
-		<input type="button" class="button" value="<?php _e( 'Clear', 'bootstrap2' ); ?>" onclick="jQuery('#<?php echo $name; ?>').val('')" />
-	</label>
-	<script language="JavaScript">
-		jQuery(document).ready(function() {
-			jQuery('#upload_<?php echo $name; ?>_button').click(function() {
-				uploadID = jQuery('#<?php echo $name; ?>');
-				formfield = uploadID.attr('name');
-				tb_show('', 'media-upload.php?type=image&amp;post_id=0&amp;TB_iframe=true');
-				return false;
-			});
-
-			window.send_to_editor = function(html) {
-				imgurl = jQuery(html, 'img').attr('src');
-				uploadID.val(imgurl);
-				tb_remove();
-			}
-
-		});
-	</script>
-
-	<?php
-}
-
-
-/**
  *
  */
 function bootstrap2_settings_field_darkbar() {
@@ -472,15 +482,10 @@ function bootstrap2_settings_field_darkbar() {
  *
  */
 function bootstrap2_settings_field_logo() {
-	$options = bootstrap2_get_theme_options();
-
 	$help = __( 'You can upload a custom logo image to be shown at the top of your site instead of the title text.' .
 		' Suggested width is no more than <b>290 pixels</b>. Suggested height is <b>60 pixels</b>.', 'bootstrap2' );
-	?>
-	<div class="layout">
-	<?php _bootstrap2_settings_field_image( 'logo', $options['logo'], $help, apply_filters( 'bootstrap2_get_theme_logo', '' ) ); ?>
-	</div>
-	<?php
+
+	_bootstrap2_settings_field_image( 'logo', $help, apply_filters( 'bootstrap2_get_theme_logo', '' ) );
 }
 
 
@@ -488,15 +493,10 @@ function bootstrap2_settings_field_logo() {
  *
  */
 function bootstrap2_settings_field_icon() {
-	$options = bootstrap2_get_theme_options();
-
 	$help = __( 'You can upload a custom icon image to be shown left-most on your primary menu.' .
 		' Suggested width is <b>20 pixels</b>. Suggested height is <b>20 pixels</b>.', 'bootstrap2' );
-	?>
-	<div class="layout">
-	<?php _bootstrap2_settings_field_image( 'icon', $options['icon'], $help, apply_filters( 'bootstrap2_get_theme_icon', '' ) ); ?>
-	</div>
-	<?php
+
+	_bootstrap2_settings_field_image( 'icon', $help, apply_filters( 'bootstrap2_get_theme_icon', '' ) );
 }
 
 
@@ -520,12 +520,51 @@ function bootstrap2_settings_field_search() {
 		__( 'Search form on the right of the navbar', 'bootstrap2' ) );
 }
 
+
 function bootstrap2_settings_field_inhibit_default_menu() { _bootstrap2_settings_field_checkbox( 'inhibit_default_menu' ); }
 function bootstrap2_settings_field_inhibit_default_sidebar() { _bootstrap2_settings_field_checkbox( 'inhibit_default_sidebar' ); }
 function bootstrap2_settings_field_inhibit_image_comments() { _bootstrap2_settings_field_checkbox( 'inhibit_image_comments' ); }
 
 
-/* ------------------------------------------------------------------------ */
+/**
+ *
+ */
+function bootstrap2_settings_field_swatch() {
+	echo '<p>' . _e('
+A <b>swatch</b> is an alternative Bootstrap CSS that changes the visual elements of the default Bootstrap CSS.
+</p><p>
+You can use one of the many ready made swathes.  Good starting place\'s are:
+<ul>
+	<li><a href="http://bootswatch.com" target="_blank">Bootswatch</a> (CDN at <a href="http://www.bootstrapcdn.com" target="_blank">BootstrapCDN</a>)</li>
+	<li><a href="http://code52.org/metro.css" target="_blank">metro.css</a> <i>(remember to JS file too)</i></li>
+</ul>
+</p><p>
+... or make your own:
+<ul>
+	<li><a href="http://bootswatchr.com" target="_blank">Bootswatchr</a></li>
+	<li><a href="http://stylebootstrap.info" target="_blank">StyleBootstrap.info</a></li>
+	<li><a href="http://www.boottheme.com" target="_blank">BootTheme</a></li>
+</ul>
+	', 'bootstrap2') . '</p>';
+}
+
+/**
+ *
+ */
+function bootstrap2_settings_field_swatch_css() {
+	_bootstrap2_settings_field_file('swatch_css');
+}
+
+
+/**
+ *
+ */
+function bootstrap2_settings_field_swatch_js() {
+	_bootstrap2_settings_field_file('swatch_js');
+}
+
+
+/* ----- RENDER FORM ------------------------------------------------------ */
 
 
 /**
@@ -537,17 +576,44 @@ function bootstrap2_theme_options_render_page() {
 		<?php screen_icon(); ?>
 		<h2><?php printf( __( '%s Theme Options', 'bootstrap2' ), wp_get_theme() ); ?></h2>
 		<?php settings_errors(); ?>
+
 		<?php
 			$v = get_stylesheet_directory() . '/style.css';
 			$v = get_file_data( $v, array('Version' => 'Version'), 'theme' );
 			if (isset($v['Version'])) $v = $v['Version']; else $v = __('Unknown', 'bootstrap2');
+			echo '<p><b>' . sprintf( __('Version %s', 'bootstrap2'), $v) . '</b>';
+			if (is_child_theme()) {
+				$v = get_template_directory() . '/style.css';
+				$v = get_file_data( $v, array('Version' => 'Version'), 'theme' );
+				if (isset($v['Version'])) $v = $v['Version']; else $v = __('Unknown', 'bootstrap2');
+				echo '<br />' . sprintf( __('Child of <b>WP-Bootstrap2</b> Version %s', 'bootstrap2'), $v) . '</p>';
+			}
+			echo '</p>';
 		?>
-		<p><b>Version <?php echo $v; ?></b></p>
-		<p>Theme based on <a href="http://twitter.github.com/bootstrap/" target="_blank">Bootstrap from Twitter</a>.</p>
+		
+		<p>
+		<b>Theme based on <a href="http://twitter.github.com/bootstrap/" target="_blank">Bootstrap from Twitter</a>.</b><br />
+		Designed and built with all the love in the world <a href="http://twitter.com/twitter" target="_blank">@twitter</a> by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>.<br />
+		Code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a>.<br />
+		Icons from <a href="http://glyphicons.com" target="_blank">Glyphicons Free</a>, licensed under <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a>.
+		</p>
 
 		<form method="post" action="options.php">
 			<?php
 				settings_fields( 'bootstrap2_options' );
+			?>
+			<script language="JavaScript">
+				var uploadID = '';
+				jQuery(document).ready(function() {
+					window.send_to_editor = function(html) {
+						fileurl = jQuery(html).attr('href');
+						if (fileurl == '') fileurl = html;
+						uploadID.val(fileurl);
+						tb_remove();
+					}
+				});
+			</script>
+			<?php
 				do_settings_sections( 'theme_options' );
 				submit_button();
 			?>
@@ -601,9 +667,15 @@ function bootstrap2_theme_options_validate( $input ) {
 	$output['inhibit_default_sidebar'] = isset( $input['inhibit_default_sidebar'] ) ? 1 : 0;
 
 	$output['inhibit_image_comments'] = isset( $input['inhibit_image_comments'] ) ? 1 : 0;
+	
+	if (!is_child_theme()) {
 
-	/*if ( isset( $input['swatch'] ) && array_key_exists( $input['swatch'], bootstrap2_swatch() ) )
-		$output['swatch'] = $input['swatch'];*/
+		if ( isset( $input['swatch_css'] ) )
+			$output['swatch_css'] = $input['swatch_css'];
+
+		if ( isset( $input['swatch_js'] ) )
+			$output['swatch_js'] = $input['swatch_js'];
+	}
 
 	return apply_filters( 'bootstrap2_theme_options_validate', $output, $input );
 }

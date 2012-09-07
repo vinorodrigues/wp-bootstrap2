@@ -63,3 +63,8 @@ label.image-radio-option input {
 }
 #theme-options-wrap p.submit {
 }
+
+a[target="_blank"] {
+	background: url('../img/external.png') center right no-repeat;
+	padding-right: 13px;
+}
