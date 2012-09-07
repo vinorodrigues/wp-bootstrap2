@@ -18,6 +18,12 @@ if ( ! defined( 'BOOTSTRAP_VERSION' ) )
 if ( ! defined( 'JQUERY_VERSION' ) )
 	define( 'JQUERY_VERSION', '1' );  // wp3.4 = 1.7.2, latest = 1.8.1, edge = 1
 
+// Don't bother if Jason Penney's plugin is installed
+// see: http://jasonpenney.net/wordpress-plugins/use-google-libraries/
+// or: http://wordpress.org/extend/plugins/use-google-libraries/
+if ( ! defined( 'BOOTSTRAPCDN_JQUERY' ) )
+	define( 'BOOTSTRAPCDN_JQUERY', (! class_exists( 'JCP_UseGoogleLibraries' )) );
+
 
 /*
 // Small fix to work arround windows and virtual paths while in dev env.
@@ -51,10 +57,7 @@ add_action( 'admin_init', 'bootstrapcdn_requires_wordpress_version' ); */
 function bootstrapcdn_enqueue_scripts() {
 	global $wp_scripts, $_bootstrapcdn_fallback;
 
-	// Don't bother if Jason Penney's plugin is installed
-	// see: http://jasonpenney.net/wordpress-plugins/use-google-libraries/
-	// or: http://wordpress.org/extend/plugins/use-google-libraries/
-	if ( ! class_exists( 'JCP_UseGoogleLibraries' ) ) :
+	if ( BOOTSTRAPCDN_JQUERY ) :
 
 		// ----- jQuery fallback -----
 		if ( ! isset($_bootstrapcdn_fallback) && is_a( $wp_scripts, 'WP_Scripts' ) ) :
@@ -116,8 +119,7 @@ function bootstrapcdn_footer() {
 
 if (!is_admin()) :
 	add_action('wp_enqueue_scripts', 'bootstrapcdn_enqueue_scripts', 11);
-	if ( ! class_exists( 'JCP_UseGoogleLibraries' ) )
-		add_action('wp_footer', 'bootstrapcdn_footer', 9);
+	if ( BOOTSTRAPCDN_JQUERY ) add_action('wp_footer', 'bootstrapcdn_footer', 9);
 endif;
 
 /* eof */
