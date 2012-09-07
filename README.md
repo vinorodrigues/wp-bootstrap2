@@ -50,6 +50,12 @@ Releases
 *  0.2
 
   *  A few UI bug fixes
+  
+*  0.3
+
+  *  Implemented code ordering and insetX css hack
+  *  Added support for external swatches
+  
 
 Get Involved
 ------------
