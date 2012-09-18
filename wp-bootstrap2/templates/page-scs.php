@@ -10,4 +10,4 @@
  */
 
 bootstrap2_set_theme_option_sidebars('scs');
-include( '../page.php' );
+include( get_template_directory() . '/page.php' );
