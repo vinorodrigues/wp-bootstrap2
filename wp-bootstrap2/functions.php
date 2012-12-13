@@ -12,7 +12,7 @@
  * Define the version, in case it becomes useful down the road.
  */
 if ( ! defined( 'BOOTSTRAP_VERSION' ) )
-	define( 'BOOTSTRAP_VERSION', '2.1.0' );
+	define( 'BOOTSTRAP_VERSION', '2.2.2' );
 
 define( 'BOOTSTRAP2_SEPERATE_NAVBAND', true );
 
@@ -241,12 +241,18 @@ add_filter('excerpt_more', 'bootstrap2_excerpt_more');
 
 
 // ============================================================================
-// ===== Helper functions =====
+// ===== Addons =====
 // ============================================================================
 
 
 require( get_template_directory() . '/inc/raw-scripts.php' );
 require( get_template_directory() . '/inc/equal-heights.php' );
+// require( get_template_directory() . '/inc/carousel.php' );
+
+
+// ============================================================================
+// ===== Helper functions =====
+// ============================================================================
 
 
 /**

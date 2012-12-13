@@ -376,6 +376,12 @@ body.fixed-top {
 }
 .icon-rss-white { background-position: -14px 0; }
 
+.icon-phone,
+.icon-phone-white {
+	background-image: url('../img/icon-phone.png');
+	background-position: 0 0;
+}
+.icon-phone-white { background-position: -14px 0; }
 
 .navbar {
 	margin-bottom: 0;

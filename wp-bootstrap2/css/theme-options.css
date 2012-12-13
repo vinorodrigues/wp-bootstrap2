@@ -68,3 +68,8 @@ a[target="_blank"] {
 	background: url('../img/external.png') center right no-repeat;
 	padding-right: 13px;
 }
+
+.icon32-posts-carousel {
+	background-position: 0 0 !important;
+	background-image: url('../img/adminpage-carousel.png') !important;
+}

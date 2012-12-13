@@ -165,7 +165,7 @@ $sidebars = bootstrap2_get_theme_option_sidebars();
 <?php if ($build != 'p') echo '</div>'; ?>
 </div>
 
-<?php if ( is_home() ) get_sidebar('home'); ?>
+<?php if ( is_front_page() ) get_sidebar('home'); ?>
 
 <div id="main<?php if ($build != 'p') echo '-band'; ?>" class="content hfeed" role="main">
 <?php if ($build != 'p') echo '<div id="main-wrap" class="container' . $fluid . '">'; ?>
