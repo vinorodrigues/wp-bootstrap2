@@ -4,7 +4,7 @@
  * Plugin URI: http://github.com/vinorodrigues/bootstrap2
  * Description: Load Bootstrap and jQuery from known CDN sources
  * Author: Vino Rodrigues
- * Version: 2.2.2
+ * Version: 2.3.0
  * Author URI: http://vinorodrigues.com
  *
  * Based on code from:
@@ -14,7 +14,7 @@
 
 
 if ( ! defined( 'BOOTSTRAP_VERSION' ) )
-	define( 'BOOTSTRAP_VERSION', '2.2.2' );
+	define( 'BOOTSTRAP_VERSION', '2.3.0' );
 if ( ! defined( 'JQUERY_VERSION' ) )
 	define( 'JQUERY_VERSION', '1' );  // wp3.4 = 1.7.2, latest = 1.8.1, edge = 1
 

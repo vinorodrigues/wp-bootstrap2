@@ -12,7 +12,7 @@
  * Define the version, in case it becomes useful down the road.
  */
 if ( ! defined( 'BOOTSTRAP_VERSION' ) )
-	define( 'BOOTSTRAP_VERSION', '2.2.2' );
+	define( 'BOOTSTRAP_VERSION', '2.3.0' );
 
 define( 'BOOTSTRAP2_SEPERATE_NAVBAND', true );
 
