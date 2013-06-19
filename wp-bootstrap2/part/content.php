@@ -28,8 +28,15 @@ if ( is_sticky() ) {
 	</div>
 	<?php else : ?>
 	<div class="entry-content">
-		<?php the_content( __( 'more...', 'bootstrap2' ) ); ?>
-		<?php bootstrap2_link_pages( array('before' => '<div class="pagination pagination-centered"><ul>') ); ?>
+	<?php
+		if (has_post_thumbnail()) :
+	?><div class="post-thumbnail"><?php
+		the_post_thumbnail( 'post-thumbnail' );
+	?></div><?php
+		endif;
+	?>
+	<?php the_content( __( 'more...', 'bootstrap2' ) ); ?>
+	<?php bootstrap2_link_pages( array('before' => '<div class="pagination pagination-centered"><ul>') ); ?>
 	</div>
 	<?php endif; ?>
 

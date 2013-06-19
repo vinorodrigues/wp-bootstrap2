@@ -12,7 +12,7 @@
  * Define the version, in case it becomes useful down the road.
  */
 if ( ! defined( 'BOOTSTRAP_VERSION' ) )
-	define( 'BOOTSTRAP_VERSION', '2.3.0' );
+	define( 'BOOTSTRAP_VERSION', '2.3.2' );
 
 define( 'BOOTSTRAP2_SEPERATE_NAVBAND', true );
 
@@ -77,7 +77,8 @@ function bootstrap2_setup() {
 	/**
 	 * Enable support for Post Thumbnails
 	 */
-	// add_theme_support( 'post-thumbnails', array( 'post' ) );  // TODO : Use the_post_thumbnail()
+	add_theme_support( 'post-thumbnails', array( 'post' ) );
+	add_image_size( 'post-thumbnail', 160, 120 );
 
 	/**
 	 * This theme uses wp_nav_menu() in one location.
@@ -248,6 +249,7 @@ add_filter('excerpt_more', 'bootstrap2_excerpt_more');
 require( get_template_directory() . '/inc/raw-scripts.php' );
 require( get_template_directory() . '/inc/equal-heights.php' );
 // require( get_template_directory() . '/inc/carousel.php' );
+require( get_template_directory() . '/inc/feeds.php' );
 
 
 // ============================================================================

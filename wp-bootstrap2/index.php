@@ -36,6 +36,7 @@ get_header();
 					get_template_part( 'part/content', get_post_format() );
 				?>
 				<?php tha_entry_after(); ?>
+
 			<?php endwhile; ?>
 
 			<?php bootstrap2_content_nav( 'nav-below' ); ?>
