@@ -16,18 +16,18 @@ class Bootstrap2_Nav_Walker extends Walker_Nav_Menu {
 	/**
 	 * @see Walker_Nav_Menu::start_lvl()
 	 */
-	function start_lvl( &$output, $depth ) {
+	function start_lvl( &$output, $depth = 0, $args = array() ) {
 		$output .= '<ul class="dropdown-menu">';
 	}
 
-	function end_lvl( &$output, $depth ) {
+	function end_lvl( &$output, $depth = 0, $args = array() ) {
 		$output .= '</ul>';
 	}
 
 	/**
 	 * @see Walker_Nav_Menu::start_el()
 	 */
-	function start_el( &$output, $item, $depth, $args ) {
+	function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 		$class_names = $value = '';
 		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
 		$classes[] = 'menu-item-' . $item->ID;
