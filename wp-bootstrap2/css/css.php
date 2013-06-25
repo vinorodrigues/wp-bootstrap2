@@ -1,7 +1,18 @@
 <?php
-/* INLINE LESS COMPILER AND/OR FILTER
+/**
+ * INLINE LESS COMPILER AND/OR FILTER
  * Can also be used as a filter in .htaccess as:
  *   RewriteRule ^(.*)\.(css)$ css.php?f=$1.$2 [NC,L]
+ * 
+ * Copyleft (c) 2013 Vino Rodrigues
+ * 
+ * This work is Public Domain.
+ *
+ * **********************************************************************
+ *   This code is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ * **********************************************************************
  */
 
 if ('cli' === PHP_SAPI) {
@@ -29,7 +40,7 @@ function css_compress($buffer)
 
 header('Content-Type: text/css');
 
-echo '/* compiled from css.php */' . PHP_EOL;
+// echo '/* compiled from css.php */' . PHP_EOL;
 
 $filename = isset($_REQUEST['f']) ? $_REQUEST['f'] : '';
 if ($filename != '') {

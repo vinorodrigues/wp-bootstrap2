@@ -36,7 +36,6 @@ $sidebars = bootstrap2_get_theme_option_sidebars();
 <?php tha_head_top(); ?>
 <meta charset="<?php bloginfo( 'charset' ); ?>" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width" />
 <title><?php
 	/*
 	 * Print the <title> tag based on what is being viewed.
@@ -60,7 +59,8 @@ $sidebars = bootstrap2_get_theme_option_sidebars();
 	?></title>
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="<?php echo apply_filters( 'apple_mobile_web_app_status_bar_style', 'black' ) ?>" />
-<meta name="viewport" content="initial-scale= 1.0, width=device-width" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="format-detection" content="telephone=no" />
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 <!--[if lt IE 9]>

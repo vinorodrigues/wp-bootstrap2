@@ -16,6 +16,11 @@ if ( ! defined( 'BOOTSTRAP_VERSION' ) )
 
 define( 'BOOTSTRAP2_SEPERATE_NAVBAND', true );
 
+if ( ! defined( 'WP35UP' ) ) :
+	global $wp_version;
+	define( 'WP35UP', !version_compare($wp_version, "3.5", "<" ) );
+endif;
+
 
 if ( ! isset( $content_width ) ) $content_width = 940;
 
@@ -180,19 +185,19 @@ function bootstrap2_scripts() {
 
 	// ---------- JS
 
-	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.js', array( 'jquery' ), BOOTSTRAP_VERSION, true );
+	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . "/js/bootstrap{$min}.js", array( 'jquery' ), BOOTSTRAP_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 
 	if ( is_singular() && isset($post->ID) && wp_attachment_is_image( $post->ID ) ) {
-		wp_enqueue_script( 'keyboard-image-navigation', get_template_directory_uri() . '/js/keyboard-image-navigation.js', array( 'jquery' ), '20120202' );
+		wp_enqueue_script( 'keyboard-image-navigation', get_template_directory_uri() . "/js/keyboard-image-navigationremysharp.com/html5-enabling-script{$min}.js", array( 'jquery' ), '20120202' );
 	}
 
 	wp_enqueue_script( 'app-js', get_template_directory_uri() . '/js/app.js', array( 'jquery', 'bootstrap' ), false, true );
 
-	wp_register_script( 'equalheights', get_template_directory_uri() . '/js/jquery.equalheights.js', array( 'jquery' ), false, true );
+	wp_register_script( 'equalheights', get_template_directory_uri() . "/js/jquery.equalheights{$min}.js", array( 'jquery' ), false, true );
 
 	if ( ! is_child_theme() ) {
 		$swatch = bootstrap2_get_theme_option('swatch_js');
@@ -235,7 +240,7 @@ add_action( 'tha_header_before', 'bootstrap2_warn_ie' );
  * Custom excerpt ellipses
  */
 function bootstrap2_excerpt_more($more) {
-	return __('more…', 'bootstrap2');
+	return __('more...', 'bootstrap2');
 }
 add_filter('excerpt_more', 'bootstrap2_excerpt_more');
 
@@ -293,5 +298,19 @@ function copyright_date() {
 }
 endif;
 
+
+/**
+ * Add feed icons
+ * @see http://www.feedicons.com/
+ */
+function bootstrap2_feed_icons() {
+	echo '<span class="feeds">';
+	echo '<a type="application/rss+xml" class="rss-feed" href="' . 
+		get_bloginfo('rss2_url') . '" title="' .
+		sprintf(__('RSS feed for %s', 'bootstrap2'), get_bloginfo('name')) .
+		'" >' . __('RSS', 'bootstrap2') . '</a>';
+	echo '</span>';
+}
+add_action('bootstrap2_feed_icons', 'bootstrap2_feed_icons', 10);
 
 /* eof */

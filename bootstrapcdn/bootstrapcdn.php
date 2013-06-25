@@ -16,7 +16,7 @@
 if ( ! defined( 'BOOTSTRAP_VERSION' ) )
 	define( 'BOOTSTRAP_VERSION', '2.3.2' );
 if ( ! defined( 'JQUERY_VERSION' ) )
-	define( 'JQUERY_VERSION', '1' );  // wp3.4 = 1.7.2, latest = 1.8.1, edge = 1
+	define( 'JQUERY_VERSION', '1' );  // wp3.4 = 1.7.2, latest = 1.10.1, edge = 1, edge for "no ie 6" version = 2
 
 // Don't bother if Jason Penney's plugin is installed
 // see: http://jasonpenney.net/wordpress-plugins/use-google-libraries/
@@ -41,10 +41,10 @@ if ( ! defined('BOOTSTRAPCDN_PLUGIN_SLUG') )
 	$plugin = BOOTSTRAPCDN_PLUGIN_SLUG;
 	$plugin_data = get_plugin_data( __FILE__, false );
 
-	if ( version_compare($wp_version, "2.7", "<" ) ) {
+	if ( version_compare($wp_version, "3.0", "<" ) ) {
 		if( is_plugin_active($plugin) ) {
 			deactivate_plugins( $plugin );
-			wp_die( "'".$plugin_data['Name']."' requires WordPress 2.7 or higher, and has been deactivated!" );
+			wp_die( "'".$plugin_data['Name']."' requires WordPress 3.0 or higher, and has been deactivated!" );
 		}
 	}
 }

@@ -8,14 +8,15 @@
 header('Content-Type: ' . feed_content_type('rss-http') . '; charset=' . get_option('blog_charset'), true);
 
 echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
-echo PHP_EOL;
-echo '<?xml-stylesheet href="' . get_template_directory_uri() . '/rss2-xsl.php" type="text/xsl" media="screen"?>';
+echo '<?xml-stylesheet href="' . get_template_directory_uri() . '/css/xsl.php?f=rss2.xsl" type="text/xsl" media="screen"?>';
 ?>
 <rss version="2.0"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
 	xmlns:atom="http://www.w3.org/2005/Atom"
 	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
 	<?php do_action('rss2_ns'); do_action('rss2_comments_ns'); ?>
 	>
 <channel>

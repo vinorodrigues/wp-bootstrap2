@@ -18,12 +18,12 @@ $has_f_menu = has_nav_menu( 'footer-menu' );
 $copyright = '&copy; ' . copyright_date() . ' ' . get_bloginfo( 'name' );
 $copyright = apply_filters( 'bootstrap2_site_info', $copyright );
 
-$generator = '<a href="' . esc_url( __( 'http://wordpress.org/', 'bootstrap2' ) ) .
+$generator = '<a href="' . esc_url( __( 'http://wordpress.org', 'bootstrap2' ) ) .
 	'" title="' . esc_attr( 'Semantic Personal Publishing Platform', 'bootstrap2' ) .
 	'" rel="generator" class="wordpress">' . sprintf( __( 'Proudly powered by %s', 'bootstrap2' ), 'WordPress' ) .
 	'</a>';
 $generator .= ' ' . __( 'and', 'bootstrap2' ) . ' ';
-$generator .= '<a href="' . esc_url( __( 'http://twitter.github.com/bootstrap/', 'bootstrap2' ) ) .
+$generator .= '<a href="' . esc_url( __( 'http://getbootstrap.com', 'bootstrap2' ) ) .
 	'" rel="generator" class="bootstrap">Bootstrap</a>';
 $generator = apply_filters( 'bootstrap2_site_generator', $generator );
 
@@ -49,8 +49,8 @@ $generator = apply_filters( 'bootstrap2_site_generator', $generator );
 			<?php
 				echo '<span class="copyright">' . 
 					$copyright .
-					'</span> <a class="to-top" href="#" title="' . __( 'Top of Page', 'bootstrap2' ) . '">&uarr;</a>';
-	
+					'</span><a class="to-top" href="#" title="' . __( 'Top of Page', 'bootstrap2' ) . '">&uarr;</a>';
+				do_action('bootstrap2_feed_icons');
 				if ($has_f_menu) :
 					wp_nav_menu( array(
 						'container' => 'nav',

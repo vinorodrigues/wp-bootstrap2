@@ -194,18 +194,19 @@ function bootstrap2_well_x() {
 
 /* ----- OPTION GETS ------------------------------------------------------ */
 
+
 /**
- * Returns the options array for Bootstrap2.
+ * Defaults
+ * @return array
  */
-function bootstrap2_get_theme_options() {
-	$saved = (array) get_option( 'bootstrap2_theme_options' );
-	$defaults = apply_filters( 'bootstrap2_default_theme_options', array(
+function bootstrap2_default_theme_options() {
+	return apply_filters( 'bootstrap2_default_theme_options', array(
 		'fluid' => 0,
 		'page' => 'fp',
 		'sidebars' => 'cs',
 		'well_w' => 'unwell',
 		'well_s' => 'unwell',
-		'darkbar' => 0,
+		'darkbar' => 1,
 		'logo' => '',
 		'icon' => '',
 		'name' => '',
@@ -215,13 +216,38 @@ function bootstrap2_get_theme_options() {
 		'inhibit_image_comments' => 0,
 		'swatch_css' => '',
 		'swatch_js' => '',
-	) );
+		) );
+}
 
+
+/**
+ * Returns the options array for Bootstrap2.
+ */
+function bootstrap2_get_theme_options() {
+	$saved = (array) get_option( 'bootstrap2_theme_options' );
+	$defaults = bootstrap2_default_theme_options();
 	$options = wp_parse_args( $saved, $defaults );
 	$options = array_intersect_key( $options, $defaults );
-
 	return $options;
 }
+
+
+/**
+ * Load defaults / Init Options in DB
+ */
+function bootstrap2_after_setup_theme() {
+	$options = get_option( 'bootstrap2_theme_options' );
+
+	// Are our options saved in the DB?
+	if ( false === $options ) {
+		// If not, we'll save our default options
+		$options = bootstrap2_default_theme_options();
+		add_option( 'bootstrap2_theme_options', $options );
+	}
+
+	// In other case we don't need to update the DB
+}
+add_action( 'after_setup_theme', 'bootstrap2_after_setup_theme' );
 
 
 /**
@@ -347,52 +373,34 @@ function _bootstrap2_settings_field_image($name, $help = '', $empty = '' ) {
 		<span class="description"><?php _e( 'Enter an URL or upload an image', 'bootstrap2' ); ?></span><br />
 		<input type="url" name="bootstrap2_theme_options[<?php echo $name; ?>]" id="<?php echo $name; ?>" value="<?php echo esc_attr( $value ); ?>"
 		       size="50" />
-		<input type="button" id="upload_<?php echo $name; ?>_button" class="button" value="<?php _e( 'Upload Image', 'bootstrap2' ); ?>"
-		       title="<?php _e('Remember to select the \'File URL\' button'); ?>" />
+
+		<input class="ts-open-media button" type="button" value="<?php echo _e('Upload Image');?>" style="display:none" />
+
 		<input type="button" class="button" value="<?php _e( 'Clear', 'bootstrap2' ); ?>" onclick="jQuery('#<?php echo $name; ?>').val('')" />
 	</label>
-	<script language="JavaScript">
-		jQuery(document).ready(function() {
-			jQuery('#upload_<?php echo $name; ?>_button').click(function() {
-				uploadID = jQuery('#<?php echo $name; ?>');
-				formfield = uploadID.attr('name');
-				tb_show('', 'media-upload.php?type=image&amp;post_id=0&amp;TB_iframe=true');
-				return false;
-			});
-		});
-	</script><?php
-	?></div><?php
+	</div><?php
 }
 
 /**
  * Helper
+ * @see http://wp.tutsplus.com/tutorials/creative-coding/how-to-integrate-the-wordpress-media-uploader-in-theme-and-plugin-options/
+ * @see http://www.webmaster-source.com/2010/01/08/using-the-wordpress-uploader-in-your-plugin-or-theme/
  */
 function _bootstrap2_settings_field_file($name) {
 	$options = bootstrap2_get_theme_options();
 	$value = $options[$name];
 
-	?><div class="layout"><?php
-	?>
+	?><div class="layout">
 	<label for="<?php echo $name; ?>">
 		<span class="description"><?php _e( 'Enter an URL or upload an file', 'bootstrap2' ); ?></span><br />
 		<input id="<?php echo $name; ?>" name="bootstrap2_theme_options[<?php echo $name; ?>]" type="url" value="<?php echo $value; ?>"
 		       size="50" />
-		<input type="button" id="upload_<?php echo $name; ?>_button" class="button" value="<?php _e( 'Upload File', 'bootstrap2' ); ?>"
-		       title="<?php _e('Remember to select the \'File URL\' button'); ?>" />
+
+		<input class="ts-open-media button" type="button" value="<?php echo _e('Upload File');?>" style="display:none" />
+
 		<input type="button" class="button" value="<?php _e( 'Clear', 'bootstrap2' ); ?>" onclick="jQuery('#<?php echo $name; ?>').val('')" />
 	</label>
-	<script language="JavaScript">
-		jQuery(document).ready(function() {
-			jQuery('#upload_<?php echo $name; ?>_button').click(function() {
-				uploadID = jQuery('#<?php echo $name; ?>');
-				formfield = uploadID.attr('name');
-				tb_show('', 'media-upload.php?type=file&post_id=0&TB_iframe=true');
-				return false;
-			});
-		});
-	</script>
-	<?php
-	?></div><?php
+	</div><?php
 }
 
 
@@ -574,7 +582,10 @@ function bootstrap2_theme_options_render_page() {
 	?>
 	<div id="theme-options-wrap" class="wrap">
 		<?php screen_icon(); ?>
-		<h2><?php printf( __( '%s Theme Options', 'bootstrap2' ), wp_get_theme() ); ?></h2>
+		<h2><?php
+			$t = (function_exists('wp_get_theme') ? wp_get_theme() : 'Bootstrap2');
+			printf( __( '%s Theme Options', 'bootstrap2' ), $t );
+		?></h2>
 		<?php settings_errors(); ?>
 
 		<?php
@@ -590,30 +601,17 @@ function bootstrap2_theme_options_render_page() {
 			}
 			echo '</p>';
 		?>
-		
-		<p>
-		<b>Theme based on <a href="http://twitter.github.com/bootstrap/" target="_blank">Bootstrap from Twitter</a></b> <small>(Version <?php echo BOOTSTRAP_VERSION; ?>).</small><br />
+
+		<?php if (!is_child_theme()) { ?><p>
+		<b>Theme based on <a href="http://getbootstrap.com" target="_blank">Bootstrap from Twitter</a></b> <small>(Version <?php echo BOOTSTRAP_VERSION; ?>).</small><br />
 		Designed and built with all the love in the world <a href="http://twitter.com/twitter" target="_blank">@twitter</a> by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>.<br />
-		Code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a>.<br />
-		Icons from <a href="http://glyphicons.com" target="_blank">Glyphicons Free</a>, licensed under <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a>.
-		</p>
+		Code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0" target="_blank">CC BY 3.0</a>.<br />
+		Icons from <a href="http://glyphicons.com" target="_blank">Glyphicons Free</a>, licensed under <a href="http://creativecommons.org/licenses/by/3.0" target="_blank">CC BY 3.0</a>.
+		</p><?php } ?>
 
 		<form method="post" action="options.php">
 			<?php
 				settings_fields( 'bootstrap2_options' );
-			?>
-			<script language="JavaScript">
-				var uploadID = '';
-				jQuery(document).ready(function() {
-					window.send_to_editor = function(html) {
-						fileurl = jQuery(html).attr('href');
-						if (fileurl == '') fileurl = html;
-						uploadID.val(fileurl);
-						tb_remove();
-					}
-				});
-			</script>
-			<?php
 				do_settings_sections( 'theme_options' );
 				submit_button();
 			?>
@@ -682,21 +680,39 @@ function bootstrap2_theme_options_validate( $input ) {
 
 
 /**
- * @see: http://wordpress.org/support/topic/howto-integrate-the-media-library-into-a-plugin
+ * @see http://wordpress.org/support/topic/howto-integrate-the-media-library-into-a-plugin
  */
-function bootstrap2_admin_scripts() {
-	wp_enqueue_script('media-upload');
-	wp_enqueue_script('thickbox');
+function bootstrap2_admin_enqueue_scripts() {
+	wp_enqueue_script('jquery');  // just in case
+
+	if (WP35UP) {
+		wp_enqueue_media();  // *new in WP3.5+
+
+		wp_register_script( 'ts-nmp-media', get_template_directory_uri() . '/js/ts-media' .
+			((defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '.min' : '') .
+			'.js', array( 'jquery' ), '1.0.0', true );
+		wp_localize_script( 'ts-nmp-media', 'ts_nmp_media', array(
+			'title' => __( 'Upload File or Select from Media Library', 'bootstrap2' ),  // This will be used as the default title
+			'button' => __( 'Insert', 'bootstrap2' ),  // This will be used as the default button text
+			) );
+		wp_enqueue_script( 'ts-nmp-media' );
+	} else {
+		wp_enqueue_script('thickbox');
+		wp_enqueue_script('media-upload');
+
+		wp_register_script( 'ts-upload', get_template_directory_uri() . '/js/ts-upload' .
+			((defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '.min' : '') .
+			'.js', array( 'jquery' ), '1.0.0', true );
+		wp_localize_script( 'ts-upload', 'ts_upload', array(
+			'title' => __( 'Upload File or Select from Media Library', 'bootstrap2' ),  // This will be used as the default title
+			'referer' => 'bootstrap2',
+			) );
+		wp_enqueue_script( 'ts-upload' );
+
+		wp_enqueue_style('thickbox');
+	}
 }
-
-function bootstrap2_admin_styles() {
-	wp_enqueue_style('thickbox');
-}
-
-if (isset($_GET['page']) && $_GET['page'] == 'theme_options') {
-	add_action('admin_print_scripts', 'bootstrap2_admin_scripts');
-	add_action('admin_print_styles', 'bootstrap2_admin_styles');
-}
+add_action( 'admin_enqueue_scripts', 'bootstrap2_admin_enqueue_scripts' );
 
 
-/* eof */
+/* eof */ ?>

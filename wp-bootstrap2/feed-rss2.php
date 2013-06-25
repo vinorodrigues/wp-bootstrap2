@@ -9,8 +9,7 @@ header('Content-Type: ' . feed_content_type('rss-http') . '; charset=' . get_opt
 $more = 1;
 
 echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
-echo PHP_EOL;
-echo '<?xml-stylesheet href="' . get_template_directory_uri() . '/rss2-xsl.php" type="text/xsl" media="screen"?>';
+echo '<?xml-stylesheet href="' . get_template_directory_uri() . '/css/xsl.php?f=rss2.xsl" type="text/xsl" media="screen"?>';
 ?>
 
 <rss version="2.0"
@@ -21,8 +20,7 @@ echo '<?xml-stylesheet href="' . get_template_directory_uri() . '/rss2-xsl.php" 
 	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
 	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
 	<?php do_action('rss2_ns'); ?>
->
-
+	>
 <channel>
 	<title><?php bloginfo_rss('name'); wp_title_rss(); ?></title>
 	<atom:link href="<?php self_link(); ?>" rel="self" type="application/rss+xml" />

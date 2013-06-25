@@ -10,10 +10,11 @@ if ( is_sticky() ) {
 	$well_s = bootstrap2_get_theme_option('well_s', $well_s);
 	if ($well_s == 'unwell') $well_s = '';
 }
+$h = (is_singular() || is_front_page() ? 'h1' : 'h2');
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( $well_s ); ?>>
 	<header class="entry-header page-header">
-		<h1 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr__( 'Permalink to %s', 'bootstrap2' ), the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a></h1>
+		<<?php echo $h; ?> class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr__( 'Permalink to %s', 'bootstrap2' ), the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a></<?php echo $h; ?>>
 
 		<?php if ( 'post' == get_post_type() ) : ?>
 		<div class="entry-meta">

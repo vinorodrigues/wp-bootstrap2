@@ -148,8 +148,23 @@ small {
 	padding-top: 0.5em;
 }
 
-#citation .to-top {
-	padding: 0 1em;
+#citation .to-top,
+#citation .rss-feed {
+	vertical-align: text-top;
+	margin: 0 1em;
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	background: url('../img/totop.png') 0 0  no-repeat;
+
+	/* hide text */
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+#citation .rss-feed {
+	background-image: url('../img/feed.png');
+	margin-left: 0;
 }
 
 #citation nav.centered {
@@ -368,6 +383,8 @@ body.fixed-top {
 
 /* =Bootstrap overrides
 ------------------------------------------------ */
+
+code { white-space: pre-line; }
 
 .icon-rss,
 .icon-rss-white {
