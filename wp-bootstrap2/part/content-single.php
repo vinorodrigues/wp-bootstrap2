@@ -8,7 +8,9 @@
 global $multipage, $numpages, $page;
 
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<!-- <?= basename(__FILE__, '.php') ?> -->
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'item-singular item-1 first last' ); ?>>
+	<?php if (!has_post_format( 'aside' )) { ?>
 	<header class="entry-header page-header">
 		<h1 class="entry-title"><?php the_title(); ?></h1>
 
@@ -17,9 +19,10 @@ global $multipage, $numpages, $page;
 			<?php if ($multipage) printf( __('<span class="meta-pages"><i class="icon-file"></i> Page %d of %d</span>', 'bootstrap2'), $page, $numpages ); ?>
 		</div>
 	</header>
+	<?php } ?>
 
 	<div class="entry-content">
-		<?php the_content( __( 'more...', 'bootstrap2' ) ); ?>
+		<?php the_content( __( '(more&hellip;)' ) ); ?>
 		<?php bootstrap2_link_pages( array('before' => '<div class="pagination pagination-centered"><ul>') ); ?>
 	</div>
 

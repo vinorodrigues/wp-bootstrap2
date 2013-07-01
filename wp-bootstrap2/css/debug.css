@@ -5,9 +5,10 @@
 .span1, .span2, .span3, .span4, .span5, .span6, .span7, .span8, .span9, .span10, .span11, .span12 { outline: 1px dotted blue; }
 .row, .row-fluid { outline: 1px dotted red; }
 #header-band, #main-band, #footer-band { outline: 1px dotted green; }
+/* */
 
+/* */
 .widget-area { outline: 1px dashed orange; }
 .widget { outline: 1px dotted olive; }
-
 /* */
 

@@ -98,12 +98,12 @@ add_filter( 'spam_comment_link', 'bootstrap2_spam_comment_link' );
 
 
 /**
- *
+ *  <a class="rss-feed" href="http://192.168.1.8/wordpress/?feed=rss2" title="RSS feed for Site Title">RSS</a>
  */
 function bootstrap2_post_comments_feed_link_html( $html ) {
 	return str_replace(
 		array("<a href='", "'>"),
-		array("<a title='" . __('Subscribe to Comments via RSS', 'bootstrap2') . "' class='btn btn-mini btn-info' href='", "'><i class='icon-rss-white'></i> "),
+		array("<a class='rss-feed' type='application/rss+xml' title='" . __('RSS Feed for these Comments', 'bootstrap2') . "' href='", "'>"),
 		$html);
 }
 add_filter( 'post_comments_feed_link_html', 'bootstrap2_post_comments_feed_link_html' );

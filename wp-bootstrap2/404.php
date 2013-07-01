@@ -14,18 +14,16 @@ get_header();
 ?>
 <!-- 404 -->
 <?php tha_content_before(); ?>
-<div id="content" role="main" class="page404 well">
+<div id="content" role="main" class="page404">
 	<?php tha_content_top(); ?>
-	<article id="post-0" class="post error404 not-found">
+	<article id="post-0" class="post error404 not-found well">
 		<header class="entry-header page-header">
 			<h1 class="entry-title"><?php _e( 'Oops! That page can&rsquo;t be found.', 'bootstrap2' ); ?></h1>
 		</header>
-		<div class="row<?php echo $fluid; ?>"><div class="span6 offset3">
-			<div class="entry-content">
-				<p><?php _e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'bootstrap2' ); ?></p>
-					<?php get_search_form(); ?>
-			</div>
-		</div><div class="span3"></div></div>
+		<div class="entry-content">
+			<p><?php _e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'bootstrap2' ); ?></p>
+			<?php get_search_form(); ?>
+		</div>
 	</article>
 	<?php tha_content_bottom(); ?>
 </div>
@@ -40,8 +38,8 @@ get_header();
 		$args = array(
 			'before_widget' => '<aside class="widget">',
 			'after_widget' => "</aside>",
-			'before_title' => '<h2 class="widget-title">',
-			'after_title' => '</h2>',
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
 		);
 	?>
 	<div id="banner-1" class="widget-area span4" role="complementary">

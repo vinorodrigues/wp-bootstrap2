@@ -44,7 +44,7 @@ endif;
 	if ( post_password_required() )
 		return;
 ?>
-
+	<!-- comments -->
 	<div id="comments" class="comments-area">
 
 	<?php // You can start editing here -- including this comment! ?>
@@ -60,7 +60,7 @@ endif;
 
 		<?php bootstrap2_comment_nav(); ?>
 
-		<ul class="commentlist">
+		<ul class="commentlist media-list">
 			<?php
 				/* Loop through and list the comments. Tell wp_list_comments()
 				 * to use bootstrap2_comment() to format the comments.
@@ -71,7 +71,7 @@ endif;
 				wp_list_comments( array(
 				    'callback' => 'bootstrap2_comment',
 				    'style' => 'ul',
-				    'avatar_size' => 14,
+				    'avatar_size' => 48,
 				) );
 			?>
 		</ul>

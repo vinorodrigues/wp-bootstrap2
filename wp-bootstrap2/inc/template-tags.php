@@ -34,6 +34,7 @@ function bootstrap2_content_nav( $nav_id ) {
 	<?php if ( is_single() ) : // navigation links for single posts ?>
 
 		<?php previous_post_link( '<span class="nav-previous">%link</span>', _x( '<i class="icon-chevron-left"></i>', 'Previous post link', 'bootstrap2' ) . ' %title' ); ?>
+		<span class="nav-space"><?php _ex( '<i class="icon-stop"></i>', 'Post link separator', 'bootstrap2' ); ?></span>
 		<?php next_post_link( '<span class="nav-next">%link</span>', '%title ' . _x( '<i class="icon-chevron-right"></i>', 'Next post link', 'bootstrap2' ) ); ?>
 
 	<?php elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search() ) ) : // navigation links for home, archive, and search pages ?>
@@ -42,6 +43,8 @@ function bootstrap2_content_nav( $nav_id ) {
 		<div class="nav-previous"><?php next_posts_link( __( '<i class="icon-chevron-left"></i> Older posts', 'bootstrap2' ) ); ?></div>
 		<?php endif; ?>
 
+		<?php _ex( '<i class="icon-stop"></i>', 'Post link separator', 'bootstrap2' ); ?>
+		
 		<?php if ( get_previous_posts_link() ) : ?>
 		<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <i class="icon-chevron-right"></i>', 'bootstrap2' ) ); ?></div>
 		<?php endif; ?>
@@ -97,6 +100,9 @@ endif; */
 
 
 if ( ! function_exists( 'bootstrap2_comment' ) ) :
+function bootstrap2_get_avatar_comment( $avatar ) {
+	return str_replace('class=\'', 'class=\'media-object comment-author vcard', $avatar);
+}
 /**
  * Template for comments and pingbacks.
  *
@@ -116,28 +122,38 @@ function bootstrap2_comment( $comment, $args, $depth ) {
 			break;
 		default :
 	?>
-	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
-		<article id="comment-<?php comment_ID(); ?>" class="comment">
-			<footer>
-				<div class="comment-author vcard">
-					<?php echo get_avatar( $comment, $args['avatar_size'] ); ?>
-					<?php printf( __( '%s <span class="says">says:</span>', 'bootstrap2' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
-				</div>
-				<?php if ( $comment->comment_approved == '0' ) : ?>
-					<span class="label label-warning"><?php _e( 'Your comment is awaiting moderation.', 'bootstrap2' ); ?></span>
-					<br />
-				<?php endif; ?>
+	<li <?php comment_class('media comment'); ?> id="comment-<?php comment_ID(); ?>">
+		<?php
+			add_filter( 'get_avatar', 'bootstrap2_get_avatar_comment' );
+			$avatar = get_avatar( $comment, $args['avatar_size'], get_template_directory_uri() . '/img/gravatar.png' );
+			remove_filter( 'get_avatar', 'bootstrap2_get_avatar_comment' );
 
-				<div class="comment-meta commentmetadata">
-					<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><i class="icon-calendar"></i> <time pubdate datetime="<?php comment_time( 'c' ); ?>">
-					<?php
-						/* translators: 1: date, 2: time */
-						printf( __( '%1$s at %2$s', 'bootstrap2' ), get_comment_date(), get_comment_time() ); ?>
-					</time></a>
-				</div>
-			</footer>
+			$url = get_comment_author_url();
+			$auth = get_comment_author();
+			if ( !empty( $url ) && 'http://' !== $url ) {
+				printf('<a href="%s" class="pull-left" title="%s">%s</a>', $url, $auth, $avatar);
+			} else {
+				printf('<span class="pull-left" title="%s">%s</span>', $auth, $avatar);
+			}
+		?>
+		<div class="comment-content media-body">
+			<?php comment_text(); ?>
 
-			<div class="comment-content"><?php comment_text(); ?></div>
+			<?php /* <div class="">
+				<?php printf( __( '%s', 'bootstrap2' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
+			</div> */ ?>
+			<?php if ( $comment->comment_approved == '0' ) : ?>
+				<span class="label label-warning"><?php _e( 'Your comment is awaiting moderation.', 'bootstrap2' ); ?></span>
+				<br />
+			<?php endif; ?>
+
+			<span class="comment-meta commentmetadata">
+				<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><i class="icon-calendar"></i> <time pubdate datetime="<?php comment_time( 'c' ); ?>">
+				<?php
+					/* translators: 1: date, 2: time */
+					printf( __( '%1$s at %2$s', 'bootstrap2' ), get_comment_date(), get_comment_time() ); ?>
+				</time></a>
+			</span>
 
 			<div class="reply">
 				<?php comment_reply_link( array_merge( $args, array(
@@ -150,7 +166,7 @@ function bootstrap2_comment( $comment, $args, $depth ) {
 					/* bootstrap2_delete_and_spam_comment_link( __( 'Trash', 'bootstrap2' ),  __( 'Spam', 'bootstrap2' ), ' ' ); */
 				?>
 			</div>
-		</article>
+		</div>
 
 	<?php
 			break;
@@ -160,8 +176,8 @@ endif; // ends check for bootstrap2_comment()
 
 
 if ( ! function_exists( 'bootstrap2_posted_on' ) ) :
-function bootstrap2_get_avatar( $avatar ) {
-	return str_replace("class='", "class='icon--avatar ", $avatar);
+function bootstrap2_get_avatar_posted_on( $avatar ) {
+	return str_replace('class=\'', 'class=\'icon-avatar ', $avatar);
 }
 /**
  * Prints HTML with meta information for the current post-date/time and author.
@@ -172,9 +188,9 @@ function bootstrap2_posted_on() {
 	global $authordata;
 
 	if ( get_option('show_avatars') && is_object($authordata) ) {
-		add_filter( 'get_avatar', 'bootstrap2_get_avatar' );
+		add_filter( 'get_avatar', 'bootstrap2_get_avatar_posted_on' );
 		$avatar = get_avatar( $authordata->ID, 14 );
-		remove_filter( 'get_avatar', 'bootstrap2_get_avatar' );
+		remove_filter( 'get_avatar', 'bootstrap2_get_avatar_posted_on' );
 	} else
 		$avatar = '<i class="icon-user"></i>';
 	printf( __( '<i class="icon-calendar"></i> <a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a><span class="byline"> %8$s <span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span></span>', 'bootstrap2' ),

@@ -689,7 +689,7 @@ function bootstrap2_admin_enqueue_scripts() {
 		wp_enqueue_media();  // *new in WP3.5+
 
 		wp_register_script( 'ts-nmp-media', get_template_directory_uri() . '/js/ts-media' .
-			((defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '.min' : '') .
+			((defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min') .
 			'.js', array( 'jquery' ), '1.0.0', true );
 		wp_localize_script( 'ts-nmp-media', 'ts_nmp_media', array(
 			'title' => __( 'Upload File or Select from Media Library', 'bootstrap2' ),  // This will be used as the default title
@@ -701,7 +701,7 @@ function bootstrap2_admin_enqueue_scripts() {
 		wp_enqueue_script('media-upload');
 
 		wp_register_script( 'ts-upload', get_template_directory_uri() . '/js/ts-upload' .
-			((defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '.min' : '') .
+			((defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min') .
 			'.js', array( 'jquery' ), '1.0.0', true );
 		wp_localize_script( 'ts-upload', 'ts_upload', array(
 			'title' => __( 'Upload File or Select from Media Library', 'bootstrap2' ),  // This will be used as the default title

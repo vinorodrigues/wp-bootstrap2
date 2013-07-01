@@ -9,13 +9,14 @@
 */
 
 if ( ! defined( 'TS_RAW_SCRIPTS' ) ) :
-	define( 'TS_RAW_SCRIPTS', '1.0' );
+	define( 'TS_RAW_SCRIPTS', '1.1' );
 
 global $ts_scripts;
 
 class TS_Scripts extends WP_Dependencies {
 
 	function do_items( $handles = false, $group = false ) {
+		echo '<!-- TS_Scripts -->' . PHP_EOL;
 		echo "<script type=\"text/javascript\">\n";
 		parent::do_items($handles, $group);
 		echo "</script>\n";
@@ -31,6 +32,12 @@ class TS_Scripts extends WP_Dependencies {
 
 }
 
+function ts_print_scripts() {
+	global $ts_scripts;
+	if ( ! is_a( $ts_scripts, 'TS_Scripts' ) ) return;
+	else return $ts_scripts->do_items(false);
+}
+
 function _ts_check_ts_scripts() {
 	global $ts_scripts;
 	if ( ! is_a( $ts_scripts, 'TS_Scripts' ) ) {
@@ -38,12 +45,6 @@ function _ts_check_ts_scripts() {
 		add_action( 'wp_footer', 'ts_print_scripts', 72 );
 	}
 	return $ts_scripts;
-}
-
-function ts_print_scripts() {
-	global $ts_scripts;
-	_ts_check_ts_scripts();
-	return $ts_scripts->do_items(false);
 }
 
 function ts_register_script( $handle, $src, $deps = array() ) {
@@ -75,4 +76,5 @@ function ts_dequeue_script( $handle ) {
 }
 
 endif;  // defined TS_RAW_SCRIPTS
+
 /* eof */

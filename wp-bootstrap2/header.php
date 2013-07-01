@@ -81,7 +81,7 @@ $sidebars = bootstrap2_get_theme_option_sidebars();
  * http://www1.sherzod.me/bootstrap/
  */ ?>
 
-<?php if ($build == 'p') echo '<div id="wrapper' . $fluid . '" class="page container' . $fluid . '" role="region">'; ?>
+<?php if ($build == 'p') echo '<div id="wrapper' . $fluid . '" class="container' . $fluid . '" role="region">'; ?>
 
 <div id="header<?php if ($build != 'p') echo '-band'; ?>" role="region">
 <?php if ($build != 'p') echo '<div id="header-wrap" class="container' . $fluid . '">'; ?>

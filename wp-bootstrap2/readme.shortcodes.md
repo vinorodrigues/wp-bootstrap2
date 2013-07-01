@@ -1,19 +1,29 @@
-## Bootstrap shortcodes
+Bootstrap shortcodes
+====================
 
 Shortcodes for specific Bootstrap UI Scaffolding and Components are included.
 
 
- * See: (http://twitter.github.com/bootstrap/scaffolding.html)
- * See: (http://twitter.github.com/bootstrap/components.html)
+ * See: [Bootstrap scaffolding](http://twitter.github.io/bootstrap/scaffolding.html)
+ * See: [Bootstrap components](http://twitter.github.io/bootstrap/components.html)
 
-### Nesting columns
+_(If you code your content in HTML then you can skip these and just use the Bootstrap examples above.)_
 
-use `[row]` to start a nested column group
+Nesting columns
+---------------
+
+Use `[row]` to start a nested column group
+
 Use `[one_half]`, `[one_third]`, `[two_thirds]`, `[one_fourth]` & `[three_fourth]` to generate nested columns.
 
- - _Opptional_ attribute `class="yourownclass"` allows one to set a custom css class
+ - _Opptional_ attribute `class="yourownclass"` allows you to set a custom css class
+ - _Opptional_ attribute `box` creates an inner box. You can also set the inner class with `box="yourownclass"` 
 
-Example:
+You can also use `[column]` to generate a custom width column.
+
+ - _Required_ attribute `span{x}`, where _'{x}'_ is 1, 2, 3 ... 12 
+
+Example 1:
 	
 	[row]
 	[one_fourth]
@@ -26,15 +36,20 @@ Example:
 	Content for wide middle
 
 	[/one_half]
-	[one_fourth last]
+	[one_fourth]
 
 	Content narrow right
 
 	[/one_fourth]
 	[/row]
 
+ - Whitespaces between the shortcodes will also output, so place your rows and columns flush: _e.g._ <code>[row][one_half] xxx</code>
+ - Bootstrap works in 12 column segments, so you may see a _gap_ when your column widths plus the side bar do not sum up to a divisor of 12
 
-### Responsive visibility
+
+
+Responsive visibility
+---------------------
 
 Use `[hide]` & `[show]` for showing and hiding content by device.
 
@@ -49,7 +64,8 @@ Example:
 	[\show]
 
 
-### Buttons and Button Groups
+Buttons and Button Groups
+-------------------------
 
 Use `[button]` to display a A (anchor) or BUTTON html components.  Use `button_group` to join multiple buttons together as one composite component.
 
@@ -89,12 +105,14 @@ Example
 	[/tab_group]
 
 
-### Breaks
+Breaks
+------
 
 Use `[break]` to break
 
 
-### Typographic components
+Typographic components
+----------------------
 
 Use `[hero]` for a flexible component called a hero unit to showcase content on your site.
 
@@ -107,11 +125,13 @@ Example:
 	[/hero]
 
 	
-### Miscellaneous
+Miscellaneous
+-------------
 
 Use a `well` as a simple effect on an element to give it an inset effect.
 
-### Inline labels and badges
+Inline labels and badges
+------------------------
 
 Use `[label]` to label and annotate text and a `[badge]` for displaying an indicator or count of some sort.
 

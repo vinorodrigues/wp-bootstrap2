@@ -18,13 +18,16 @@ $has_f_menu = has_nav_menu( 'footer-menu' );
 $copyright = '&copy; ' . copyright_date() . ' ' . get_bloginfo( 'name' );
 $copyright = apply_filters( 'bootstrap2_site_info', $copyright );
 
-$generator = '<a href="' . esc_url( __( 'http://wordpress.org', 'bootstrap2' ) ) .
+$generator = '<a href="' . esc_url( _x( 'http://wordpress.org', 'generator', 'bootstrap2' ) ) .
 	'" title="' . esc_attr( 'Semantic Personal Publishing Platform', 'bootstrap2' ) .
-	'" rel="generator" class="wordpress">' . sprintf( __( 'Proudly powered by %s', 'bootstrap2' ), 'WordPress' ) .
+	'" rel="generator" class="wordpress">' . sprintf( _x( 'Proudly powered by %s', 'generator', 'bootstrap2' ), 'WordPress' ) .
 	'</a>';
-$generator .= ' ' . __( 'and', 'bootstrap2' ) . ' ';
-$generator .= '<a href="' . esc_url( __( 'http://getbootstrap.com', 'bootstrap2' ) ) .
-	'" rel="generator" class="bootstrap">Bootstrap</a>';
+$generator .= _x( ', ', 'generator', 'bootstrap2' );
+$generator .= '<a href="' . esc_url( _x( 'http://jquery.com', 'generator', 'bootstrap2' ) ) .
+	'" rel="generator" class="jquery">' . _x('jQuery', 'generator', 'bootstrap2') . '</a>';
+$generator .= _x( ' and ', 'generator', 'bootstrap2' );
+$generator .= '<a href="' . esc_url( _x( 'http://getbootstrap.com', 'generator', 'bootstrap2' ) ) .
+	'" rel="generator" class="bootstrap">' . _x('Bootstrap', 'generator', 'bootstrap2') . '</a>';
 $generator = apply_filters( 'bootstrap2_site_generator', $generator );
 
 ?>

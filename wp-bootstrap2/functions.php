@@ -43,28 +43,24 @@ if ( ! function_exists( 'bootstrap2_setup' ) ):
  */
 function bootstrap2_setup() {
 
-	/**
-	 * Custom template tags for this theme.
-	 */
+	/** @see http://core.trac.wordpress.org/changeset/24417 */
+	add_theme_support( 'html5', array( 'comment-list', 'search-form', 'comment-form' ) );
+
+	/** Custom template tags for this theme. */
 	require( get_template_directory() . '/inc/template-tags.php' );
 
-	/**
-	 * Custom functions that act independently of the theme templates
-	 */
+	/** Custom functions that act independently of the theme templates */
 	require( get_template_directory() . '/inc/tweaks.php' );
 
-	/**
-	 * Custom Theme Options
-	 */
+	/** Custom Theme Options */
 	require( get_template_directory() . '/inc/theme-options/theme-options.php' );
 
-	/**
-	 * WordPress.com-specific functions and definitions
-	 */
+	/** WordPress.com-specific functions and definitions */
 	//require( get_template_directory() . '/inc/wpcom.php' );
 
 	require( get_template_directory() . '/inc/menu-walker.php' );
 	require( get_template_directory() . '/inc/shortcodes.php' );
+	require( get_template_directory() . '/inc/gallery.php' );
 
 	/**
 	 * Make theme available for translation
@@ -74,20 +70,14 @@ function bootstrap2_setup() {
 	 */
 	load_theme_textdomain( 'bootstrap2', get_template_directory() . '/lang' );
 
-	/**
-	 * Add default posts and comments RSS feed links to head
-	 */
+	/** Add default posts and comments RSS feed links to head */
 	add_theme_support( 'automatic-feed-links' );
 
-	/**
-	 * Enable support for Post Thumbnails
-	 */
+	/** Enable support for Post Thumbnails */
 	add_theme_support( 'post-thumbnails', array( 'post' ) );
-	add_image_size( 'post-thumbnail', 160, 120 );
+	add_image_size( 'post-thumbnail', 140, 140 );
 
-	/**
-	 * This theme uses wp_nav_menu() in one location.
-	 */
+	/** This theme uses wp_nav_menu() in one location. */
 	register_nav_menus( array(
 		'primary' => __( 'Primary Menu', 'bootstrap2' ),
 		'header-menu' => __( 'Header Menu', 'bootstrap2' ),
@@ -96,8 +86,12 @@ function bootstrap2_setup() {
 
 	/**
 	 * Add support for the Aside Post Formats
+	 * @see http://codex.wordpress.org/Post_Formats
+	 * @see http://wp.tutsplus.com/articles/news/what-theme-authors-need-to-know-about-post-formats-in-wordpress-3-6/
 	 */
-	// add_theme_support( 'post-formats', array( 'aside', ) );  // TODO : see http://codex.wordpress.org/Post_Formats
+	add_theme_support( 'post-formats', array( 'gallery', 'aside' ) );
+	// add_theme_support( 'structured-post-formats', array( 'video' ) );
+
 }
 endif; // bootstrap2_setup
 add_action( 'after_setup_theme', 'bootstrap2_setup' );
@@ -238,11 +232,12 @@ add_action( 'tha_header_before', 'bootstrap2_warn_ie' );
 
 /**
  * Custom excerpt ellipses
+ * @see http://dylanized.com/the-ultimate-guide-to-wordpress-post-excerpts/
  */
-function bootstrap2_excerpt_more($more) {
+/* function bootstrap2_excerpt_more($more) {
 	return __('more...', 'bootstrap2');
 }
-add_filter('excerpt_more', 'bootstrap2_excerpt_more');
+add_filter('excerpt_more', 'bootstrap2_excerpt_more'); */
 
 
 
@@ -253,7 +248,7 @@ add_filter('excerpt_more', 'bootstrap2_excerpt_more');
 
 require( get_template_directory() . '/inc/raw-scripts.php' );
 require( get_template_directory() . '/inc/equal-heights.php' );
-// require( get_template_directory() . '/inc/carousel.php' );
+require( get_template_directory() . '/inc/carousel.php' );
 require( get_template_directory() . '/inc/feeds.php' );
 
 
@@ -312,5 +307,35 @@ function bootstrap2_feed_icons() {
 	echo '</span>';
 }
 add_action('bootstrap2_feed_icons', 'bootstrap2_feed_icons', 10);
+
+
+/** Default gravatar */
+function bootstrap2_avatar_defaults($avatars) {
+	$gravatar = get_template_directory_uri() . '/img/gravatar.png';
+	$avatars[$gravatar] = __('Theme Default', 'bootstrap2');
+	return $avatars;
+}
+add_filter( 'avatar_defaults', 'bootstrap2_avatar_defaults' );
+
+
+/**
+ * More relevant contact methods
+ * @see http://codex.wordpress.org/Plugin_API/Filter_Reference/user_contactmethods
+ */
+function bootstrap2_user_contactmethods( $user_contact ) {
+	/* Add user contact methods */
+	$user_contact['facebook'] = __('Facebook page', 'bootstrap2');
+	$user_contact['gplus'] = __('Google+ page', 'bootstrap2');
+	$user_contact['twitter'] = __('Twitter username', 'bootstrap2');
+	$user_contact['linkedin'] = __('LinkedIn username', 'bootstrap2');
+
+	unset($user_contact['yim']);
+	unset($user_contact['aim']);
+	unset($user_contact['jabber']);
+
+	return $user_contact;
+}
+
+add_filter('user_contactmethods', 'bootstrap2_user_contactmethods');
 
 /* eof */

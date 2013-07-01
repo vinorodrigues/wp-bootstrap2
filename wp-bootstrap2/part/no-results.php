@@ -9,8 +9,8 @@
  * @since WP-Bootstrap2 0.1 
  */
 ?>
-
-<article id="post-0" class="post no-results not-found">
+<!-- <?= basename(__FILE__, '.php') ?> -->
+<article id="post-0" class="post no-results error404 not-found well">
 	<header class="entry-header page-header">
 		<h1 class="entry-title"><?php _e( 'Nothing Found', 'bootstrap2' ); ?></h1>
 	</header><!-- .entry-header -->

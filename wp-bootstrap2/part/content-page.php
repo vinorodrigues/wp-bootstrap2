@@ -7,7 +7,8 @@
  * @since WP-Bootstrap2 0.1 
  */
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<!-- <?= basename(__FILE__, '.php') ?> -->
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'item-singular item-1 first last' ); ?>>
 	<?php
 		$title = get_the_title();
 		if (!empty($title)) :
