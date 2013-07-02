@@ -1,6 +1,6 @@
 <?php
 /**
- * Usage of the jquery.equalheights.js
+ * Usage of equalheights.js
  *
  * @author Vino Rodrigues
  * @package WP-Bootstrap2
@@ -19,7 +19,7 @@ function ts_equal_heights( $what = false, $interval = 100 ) {
 		$h = str_replace( array('.', '#'), array('dot-', 'hash-'), $what );
 		if ( ! wp_script_is( 'equalheights', 'registered' ) )
 			_doing_it_wrong(__FUNCTION__,
-				'You need to <code>wp_register_script( "equalheights", "jquery.equalheights.js")</code> first',
+				'You need to <code>wp_register_script( "equalheights", "equalheights.js")</code> first',
 				'0.2');
 
 		if ($_ts_equalheights_count <= 1)

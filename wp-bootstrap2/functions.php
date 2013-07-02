@@ -191,7 +191,7 @@ function bootstrap2_scripts() {
 
 	wp_enqueue_script( 'app-js', get_template_directory_uri() . '/js/app.js', array( 'jquery', 'bootstrap' ), false, true );
 
-	wp_register_script( 'equalheights', get_template_directory_uri() . "/js/jquery.equalheights{$min}.js", array( 'jquery' ), false, true );
+	wp_register_script( 'equalheights', get_template_directory_uri() . "/js/equalheights{$min}.js", array( 'jquery' ), false, true );
 
 	if ( ! is_child_theme() ) {
 		$swatch = bootstrap2_get_theme_option('swatch_js');

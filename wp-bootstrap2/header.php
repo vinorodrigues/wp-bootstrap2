@@ -170,4 +170,4 @@ $sidebars = bootstrap2_get_theme_option_sidebars();
 <div id="main<?php if ($build != 'p') echo '-band'; ?>" class="content hfeed" role="main">
 <?php if ($build != 'p') echo '<div id="main-wrap" class="container' . $fluid . '">'; ?>
 <div class="row<?php echo $fluid; ?>">
-<div id="primary" class="site-content <?php bootstrap2_column_class(1); ?> layout-<?php echo $sidebars; ?>">
+<div id="primary" class="site-content <?php bootstrap2_column_class(1); ?> layout-<?php echo $sidebars; ?> column">
