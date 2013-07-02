@@ -63,7 +63,13 @@ function child_bootstrap2_site_generator( $text ) {
 	$text = '<a href="http://google.com?q=Tecsmith" rel="generator">Your company</a>';
 	return $text;
 }
-add_filter( 'bootstrap2_site_generator', 'child_bootstrap2_site_generator');
+add_filter( 'bootstrap2_site_generator', 'child_bootstrap2_site_generator' );
+
+
+function child_bootstrap2_widget_tag( $tag ) {
+	return 'h4';
+}
+add_filter( 'bootstrap2_widget_tag', 'child_bootstrap2_widget_tag' );
 
 
 /* eof */

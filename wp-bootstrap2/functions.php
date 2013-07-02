@@ -102,11 +102,12 @@ add_action( 'after_setup_theme', 'bootstrap2_setup' );
  * @since Bootstrap2 1.0
  */
 function bootstrap2_widgets_init() {
+	$wtag = apply_filters('bootstrap2_widget_tag', 'h3');
 	$default = array(
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget' => "</aside>",
-		'before_title' => '<h2 class="widget-title">',
-		'after_title' => '</h2>',
+		'before_title' => '<' . $wtag . ' class="widget-title">',
+		'after_title' => '</' . $wtag . '>',
 	);
 
 	register_sidebar( array_merge( $default, array(

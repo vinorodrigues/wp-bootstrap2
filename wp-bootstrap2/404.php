@@ -35,11 +35,12 @@ get_header();
 <div id="banner" class="row<?php echo $fluid; ?> clearfix" role="banner">
 	<?php do_action( 'tha_banner_top' ); ?>
 	<?php
+		$wtag = apply_filters('bootstrap2_widget_tag', 'h3');
 		$args = array(
 			'before_widget' => '<aside class="widget">',
 			'after_widget' => "</aside>",
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'before_title' => '<' . $wtag . ' class="widget-title">',
+			'after_title' => '</' . $wtag . '>',
 		);
 	?>
 	<div id="banner-1" class="widget-area span4" role="complementary">

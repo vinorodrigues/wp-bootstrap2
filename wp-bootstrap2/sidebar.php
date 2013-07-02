@@ -27,12 +27,12 @@ $class .= ' ' . bootstrap2_get_theme_option('well_w');
 			tha_sidebar_top();
 			if ( ! dynamic_sidebar( 'sidebar-1' ) ) :
 				if ( ! bootstrap2_get_theme_option('inhibit_default_sidebar') ) :
-				
+					$wtag = apply_filters('bootstrap2_widget_tag', 'h3');
 					$args = array(
 						'before_widget' => '<aside class="widget">',
 						'after_widget' => "</aside>",
-						'before_title' => '<h2 class="widget-title">',
-						'after_title' => '</h2>',
+						'before_title' => '<' . $wtag . ' class="widget-title">',
+						'after_title' => '</' . $wtag . '>',
 					);
 
 					the_widget( 'WP_Widget_Search', array( 'title' => __('Search', 'bootstrap2') ), $args );
