@@ -33,8 +33,7 @@ get_header();
 					add_filter( 'get_avatar', 'bootstrap2_get_avatar_comment' );
 					$avatar = get_avatar(
 						get_the_author_meta( 'user_email' ),
-						apply_filters( 'bootstrap2_author_bio_avatar_size', 96 ),
-						get_template_directory_uri() . '/img/gravatar.png' );
+							apply_filters( 'bootstrap2_author_bio_avatar_size', 96 ) );
 					remove_filter( 'get_avatar', 'bootstrap2_get_avatar_comment' );
 					echo $avatar;
 					?>

@@ -715,4 +715,4 @@ function bootstrap2_admin_enqueue_scripts() {
 add_action( 'admin_enqueue_scripts', 'bootstrap2_admin_enqueue_scripts' );
 
 
-/* eof */ ?>
+/* eof */

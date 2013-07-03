@@ -233,4 +233,4 @@ function bootstrap2_get_gallery_images($post_id = 0) {
 	return $images;
 }
 
-/* eof */ ?>
+/* eof */

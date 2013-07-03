@@ -129,7 +129,13 @@ function bootstrap2_carousel_item( $atts, $content = NULL, $tag = '' ) {
 
 function bootstrap2_carousel_caption( $atts, $content = NULL, $tag = '' ) {
 	global $_bootstrap2_carousel_caps;
-	if (!isset($_bootstrap2_carousel_caps)) return do_shortcode( $content );
+
+	// if not in a carousel then call WP's caption shortcode
+	if (!isset($_bootstrap2_carousel_caps)) {
+		if (function_exists('img_caption_shortcode')) 
+			return img_caption_shortcode($atts, $content);
+		else return do_shortcode( $content );
+	}
 
 	$atts = _bootstrap2_fix_atts($atts);
 
@@ -147,7 +153,7 @@ function bootstrap2_carousel_caption( $atts, $content = NULL, $tag = '' ) {
 }
 
 add_shortcode( 'carousel', 'bootstrap2_carousel' );
-add_shortcode( 'carousel-item', 'bootstrap2_carousel_item' );
-add_shortcode( 'carousel-caption', 'bootstrap2_carousel_caption' );
+add_shortcode( 'item', 'bootstrap2_carousel_item' );
+add_shortcode( 'caption', 'bootstrap2_carousel_caption' );
 
-/* eof */ ?>
+/* eof */

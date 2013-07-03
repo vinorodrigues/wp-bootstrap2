@@ -18,10 +18,13 @@ get_header();
 	<?php tha_content_top(); ?>
 	<article id="post-0" class="post error404 not-found well">
 		<header class="entry-header page-header">
-			<h1 class="entry-title"><?php _e( 'Oops! That page can&rsquo;t be found.', 'bootstrap2' ); ?></h1>
+			<h1 class="entry-title"><?php echo apply_filters('bootstrap2_404_heading',
+				__( 'Page not Found.', 'bootstrap2' ) ); ?></h1>
 		</header>
 		<div class="entry-content">
-			<p><?php _e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'bootstrap2' ); ?></p>
+			<p><?php echo apply_filters('bootstrap2_404_text',
+				__( 'Sorry, but the page you are looking for has not been found.', 'bootstrap2' ) ); ?></p>
+			<p><?php _e( 'Other things to try:', 'bootstrap2' ); ?></p>
 			<?php get_search_form(); ?>
 		</div>
 	</article>

@@ -51,8 +51,8 @@ get_header();
 
 			<div class="entry-content">
 
-				<div class="entry-attachment">
-					<figure class="attachment">
+				<div class="entry-attachment row-fluid">
+					<figure class="attachment span12">
 							<?php
 							echo '<a href="' . wp_get_attachment_url() . '" rel="attachment" class="thumbnail">';
 							$id = $post->ID;
@@ -60,7 +60,6 @@ get_header();
 							$sizeclass = is_array($size) ? join('x', $size) : $size;
 							echo wp_get_attachment_image( $id, $size, false, array(
 								'class' => "{$sizeclass} wp-image-{$id} attachment-image",
-								'style' => "max-width: 100%;",  // make sure it does not overflow
 							) );
 							echo '</a>';
 						?>

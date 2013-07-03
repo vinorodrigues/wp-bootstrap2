@@ -338,7 +338,6 @@ object {
 ------------------------------------------------ */
 
 .entry-attachment figure {
-	display: table;
 	/* center */
 	margin-left: auto;
 	margin-right: auto;
@@ -438,19 +437,15 @@ body.fixed-top {
 
 code { white-space: pre-line; }
 
-.icon-rss,
-.icon-rss-white {
+.icon-rss {
 	background-image: url('../img/icon-rss.png');
 	background-position: 0 0;
 }
-.icon-rss-white { background-position: -14px 0; }
-
-.icon-phone,
-.icon-phone-white {
+.icon-phone {
 	background-image: url('../img/icon-phone.png');
 	background-position: 0 0;
 }
-.icon-phone-white { background-position: -14px 0; }
+.icon-rss.icon-white, .icon-phone.icon-white { background-position: -14px 0; }
 
 .navbar {
 	margin-bottom: 0;

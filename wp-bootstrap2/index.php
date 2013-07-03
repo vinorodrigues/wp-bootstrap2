@@ -45,7 +45,7 @@ get_header();
 
 		<?php bootstrap2_content_nav( 'nav-below' ); ?>
 
-	<?php elseif ( current_user_can( 'edit_posts' ) ) : ?>
+	<?php else : ?>
 
 		<?php get_template_part( 'part/no-results', 'index' ); ?>
 

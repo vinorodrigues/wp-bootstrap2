@@ -427,4 +427,41 @@ add_shortcode('label', 'bootstrap2_label');
 add_shortcode('badge', 'bootstrap2_badge');
 
 
+/*
+ * Alert's
+ */
+
+
+function bootstrap2_alert( $atts, $content = null, $tag = '' ) {
+	$atts = _bootstrap2_fix_atts($atts, array(
+		'type' => 'warning',  // warning, error, success, info
+		'dismiss' => false,  // add dismiss button
+		'block' => false,  // add more top-bottom padding for longer messages
+		));
+	$class = 'alert';
+	switch (strtolower($atts['type'])) {
+		case 'error': $class .= ' alert-error'; break;
+		case 'success': $class .= ' alert-success'; break;
+		case 'info': $class .= ' alert-info'; break;
+		default: ;  // is warining
+	}
+	if ($atts['dismiss']) $content = '<button type="button" class="close"' .
+		' data-dismiss="alert">&times;</button>' . $content;
+	if ($atts['block']) $class .= ' alert-block';
+
+	return _bootstrap2_do_div(_bootstrap2_getclass($atts, $class), $content);
+}
+
+add_shortcode('alert', 'bootstrap2_alert');
+
+
+/** Enable shortcodes in Widget */
+add_filter('widget_text', 'do_shortcode');
+// add_filter( 'the_excerpt', 'do_shortcode');
+
+
+/** Add help */
+@include( get_template_directory() . '/inc/shortcode-help.php' );
+
+
 /* eof */

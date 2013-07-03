@@ -56,6 +56,12 @@ Releases
   *  Implemented code ordering and insetX css hack
   *  Added support for external swatches
   
+*  0.4
+
+  *  Gallery support
+  *  Bootstrap Carousel
+  *  More shortcodes
+  
 
 Get Involved
 ------------

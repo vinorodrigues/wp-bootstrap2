@@ -27,7 +27,7 @@ if ( ! isset( $content_width ) ) $content_width = 940;
 
 /**
  * Application of Theme Hook Aliance
- * See: https://github.com/zamoose/themehookalliance 
+ * @see https://github.com/zamoose/themehookalliance
  */
 require( get_template_directory() . '/inc/tha-theme-hooks.php' );
 
@@ -39,7 +39,7 @@ if ( ! function_exists( 'bootstrap2_setup' ) ):
  * before the init hook. The init hook is too late for some features, such as indicating
  * support post thumbnails.
  *
- * @since Bootstrap2 1.0
+ * @since Bootstrap2 0.1
  */
 function bootstrap2_setup() {
 
@@ -96,10 +96,11 @@ function bootstrap2_setup() {
 endif; // bootstrap2_setup
 add_action( 'after_setup_theme', 'bootstrap2_setup' );
 
+
 /**
  * Register widgetized area and update sidebar with default widgets
  *
- * @since Bootstrap2 1.0
+ * @since Bootstrap2 0.1
  */
 function bootstrap2_widgets_init() {
 	$wtag = apply_filters('bootstrap2_widget_tag', 'h3');
@@ -175,7 +176,8 @@ function bootstrap2_scripts() {
 	wp_enqueue_style( 'style', get_stylesheet_uri(), 'app-style' );
 	wp_enqueue_style( 'print-style', get_template_directory_uri() . "/css/print{$min}.css", 'app-style', false, 'print' );
 
-	if ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG )
+	/** Add CSS that will aid in *all* debug */
+	if ( defined('WP_DEBUG') && WP_DEBUG )
 		wp_enqueue_style( 'bootstrap2_debug', get_template_directory_uri() . "/css/debug.css" );
 
 	// ---------- JS
@@ -217,21 +219,6 @@ require( get_template_directory() . '/inc/custom-background.php' );
 
 
 /**
- * Warn about old IE
- */
-function bootstrap2_warn_ie() {
-	// Warn about non-HTML5 browser IE
-?>
-<!--[if lt IE 8]>
-	<br />
-	<p class="alert alert-error"><?php _e('You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> to better experience this site.', 'bootstrap2'); ?></p>
-<![endif]-->
-<?php
-}
-add_action( 'tha_header_before', 'bootstrap2_warn_ie' );
-
-
-/**
  * Custom excerpt ellipses
  * @see http://dylanized.com/the-ultimate-guide-to-wordpress-post-excerpts/
  */
@@ -251,6 +238,9 @@ require( get_template_directory() . '/inc/raw-scripts.php' );
 require( get_template_directory() . '/inc/equal-heights.php' );
 require( get_template_directory() . '/inc/carousel.php' );
 require( get_template_directory() . '/inc/feeds.php' );
+
+if ( defined('WP_DEBUG') && WP_DEBUG )
+	@include( get_template_directory() . '/inc/debug.php' );
 
 
 // ============================================================================
