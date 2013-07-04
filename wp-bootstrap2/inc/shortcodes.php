@@ -62,7 +62,12 @@ function _bootstrap2_do_span($class, $content) {
 
 
 function _bootstrap2_get_row($columns, $fixed_atts, $rgroup = false) {
-	$class = _bootstrap2_getclass($fixed_atts, 'row');
+	global $_bootstrap2_row_fluid;
+	if (isset($_bootstrap2_row_fluid) && $_bootstrap2_row_fluid) {
+		$class = _bootstrap2_getclass($fixed_atts, 'row-fluid');
+		$_bootstrap2_row_fluid = false;
+	} else
+		$class = _bootstrap2_getclass($fixed_atts, 'row');
 
 	$content = '';
 	foreach ($columns as $col) $content .= $col;
@@ -73,32 +78,34 @@ function _bootstrap2_get_row($columns, $fixed_atts, $rgroup = false) {
 function bootstrap2_row($atts, $content = null, $tag = '') {
 	global $_bootstrap2_row_array;
 	if (!isset($_bootstrap2_row_array)) $_bootstrap2_row_array = array();
-	else return '';  // nested row's ignored
+	// else return '';  // nested row's ignored
 
 	$content = do_shortcode($content);
 
 	$atts = _bootstrap2_fix_atts($atts);
 	$out = _bootstrap2_get_row($_bootstrap2_row_array, $atts);
 
-	unset($_bootstrap2_row_array);
+	$_bootstrap2_row_array = array();  // empty out the array
 
 	return $out;
 }
 
 function bootstrap2_column($atts, $content = null, $tag = '', $span = false) {
-	global $_bootstrap2_row_array;
+	global $_bootstrap2_row_array, $_bootstrap2_row_fluid;
 	if ( !isset($_bootstrap2_row_array) ) return do_shortcode( $content );
 
 	$atts = _bootstrap2_fix_atts($atts);
 	$class = false;
 	if ('column' === strtolower($tag)) {
 		$atts = _bootstrap2_fix_atts($atts);
+		$_bootstrap2_row_fluid = true;
 		for ($i = 1; $i <= 12; $i++) {
 			if (isset($atts['span'.$i]) && $atts['span'.$i]) {
 				$class = 'span' . $i;
 				break;
 			}
 		}
+		if (isset($atts['span'])) $class = 'span' . intval($atts['span']);
 		if (!$class) $class = 'span1';
 	} else if ($span) {
 		$class = $span;
@@ -458,10 +465,6 @@ add_shortcode('alert', 'bootstrap2_alert');
 /** Enable shortcodes in Widget */
 add_filter('widget_text', 'do_shortcode');
 // add_filter( 'the_excerpt', 'do_shortcode');
-
-
-/** Add help */
-@include( get_template_directory() . '/inc/shortcode-help.php' );
 
 
 /* eof */

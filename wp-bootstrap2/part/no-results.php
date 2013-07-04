@@ -11,9 +11,10 @@
 ?>
 <!-- <?= basename(__FILE__, '.php') ?> -->
 <article id="post-0" class="post no-results not-found <?php echo apply_filters('bootstrap2_no_results_class','well well-small'); ?>">
+	<a href="#" class="close" data-dismiss="alert">&times;</a>
 	<header class="entry-header page-header">
 		<h1 class="entry-title"><?php echo apply_filters('bootstrap2_no_results_heading',
-			__( 'Ummm&hellip; Nothing here.', 'bootstrap2' ) ); ?></h1>
+			__( 'Content not Found.', 'bootstrap2' ) ); ?></h1>
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
@@ -30,7 +31,7 @@
 
 				?>
 				<p><?php echo apply_filters('bootstrap2_no_results_text',
-					__( 'Sorry&hellip; no posts yet.', 'bootstrap2' ) ); ?></p>
+					__( 'Sorry, but the content you are looking for has not been found.', 'bootstrap2' ) ); ?></p>
 				<?php
 
 

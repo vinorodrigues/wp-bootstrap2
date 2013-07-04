@@ -27,7 +27,10 @@ define('CSS_EXT', '.css');
 
 function css_compress($buffer)
 {
-	/* Derived from http://davidwalsh.name/css-compression-php */
+	/**
+	 * Derived from David Walsh
+	 * @see http://davidwalsh.name/css-compression-php
+	 */
 	return str_replace(': ',':',
 		str_replace(';}','}',
 		str_replace('; ',';',
@@ -43,12 +46,19 @@ header('Content-Type: text/css');
 // echo '/* compiled from css.php */' . PHP_EOL;
 
 $filename = isset($_REQUEST['f']) ? $_REQUEST['f'] : '';
-if ($filename != '') {
+if (!empty($filename)) {
+
 	$lessfile = pathinfo($filename, PATHINFO_FILENAME) . LESS_EXT;
+	if (file_exists($lessfile)) {
+		/**
+		 * Include uses lessphp from 'leaf corcoran' <twitter.com/moonscript>
+		 * @see http://leafo.net/lessphp
+		 */
+		@include('lessc.inc.php');
+		$go = class_exists('lessc');
+	} else $go = false;
 
-	// uses php less compiler from http://leafo.net/lessphp
-
-	if (file_exists('lessc.inc.php') && file_exists($lessfile)) {
+	if ($go) {
 		$filename = FILE_PREFIX . pathinfo($filename, PATHINFO_FILENAME) . CSS_EXT;
 		$go = false;
 
@@ -61,7 +71,6 @@ if ($filename != '') {
 		}
 
 		if ($go) {
-			include_once 'lessc.inc.php';
 			$lessc = new lessc($lessfile);
 			if (file_exists($filename)) unlink($filename);
 

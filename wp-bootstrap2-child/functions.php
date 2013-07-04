@@ -59,17 +59,39 @@ function child_bootstrap2_get_theme_icon( $icon_url ) {
 add_filter( 'bootstrap2_get_theme_icon', 'child_bootstrap2_get_theme_icon' );
 
 
+/** Change the company tag line in the footer */
 function child_bootstrap2_site_generator( $text ) {
-	$text = '<a href="http://google.com?q=Tecsmith" rel="generator">Your company</a>';
+	$text = '<a href="http://duckduckgo.com?q=Tecsmith" rel="generator">Your company</a>';
 	return $text;
 }
 add_filter( 'bootstrap2_site_generator', 'child_bootstrap2_site_generator' );
 
 
+/** Change the Widget heading html tag */
 function child_bootstrap2_widget_tag( $tag ) {
 	return 'h4';
 }
 add_filter( 'bootstrap2_widget_tag', 'child_bootstrap2_widget_tag' );
+
+
+/** Change not found and 404 behaviour */
+function child_bootstrap2_no_results_class($class) { return 'alert alert-error'; }
+add_filter( 'bootstrap2_no_results_class', 'child_bootstrap2_no_results_class');
+function child_bootstrap2_no_results_heading($text) { return '<strong>BUGGER!</strong>'; }
+add_filter( 'bootstrap2_no_results_heading', 'child_bootstrap2_no_results_heading' );
+function child_bootstrap2_no_results_text($text) { return 'This is not the page you\'re looking for.'; }
+add_filter( 'bootstrap2_no_results_text', 'child_bootstrap2_no_results_text' );
+function child_bootstrap2_404_heading($text) { return '%$#@! - ' . $text; }
+add_filter( 'bootstrap2_404_heading', 'child_bootstrap2_404_heading' );
+function child_bootstrap2_404_text($text) { return 'Someone here has ended up where they\'re not meant to be.'; }
+add_filter( 'bootstrap2_404_text' ,'child_bootstrap2_404_text' );
+
+
+/** and if you're using the TS-Contact-Form plugin */
+function my_contact_form_send_text( $text ) {
+	return '<i class="icon-envelope icon-white"></i> ' . $text;
+}
+add_filter('ts_contact_form_send_text', 'my_contact_form_send_text');
 
 
 /* eof */

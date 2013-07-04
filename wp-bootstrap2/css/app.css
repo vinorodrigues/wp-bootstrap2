@@ -72,10 +72,12 @@ small {
 }
 .entry-meta span {
 	display: inline-block;
-	margin: 0.25em;
 }
-.byline {
-	display: none;
+.entry-meta .byline {
+	margin: 0 0.5em;
+}
+footer.entry-meta {
+	margin-top: 30px;
 }
 .single .byline,
 .group-blog .byline {

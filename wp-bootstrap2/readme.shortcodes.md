@@ -1,8 +1,7 @@
-Bootstrap shortcodes
-====================
+WP-Bootstrap2 shortcodes
+========================
 
-Shortcodes for specific Bootstrap UI Scaffolding and Components are included.
-
+Shortcodes for specific Bootstrap UI Scaffolding and Components are included with the WP-Bootstrap2 theme.
 
  * See: [Bootstrap scaffolding](http://twitter.github.io/bootstrap/scaffolding.html)
  * See: [Bootstrap components](http://twitter.github.io/bootstrap/components.html)
@@ -14,14 +13,10 @@ Nesting columns
 
 Use `[row]` to start a nested column group
 
-Use `[one_half]`, `[one_third]`, `[two_thirds]`, `[one_fourth]` & `[three_fourth]` to generate nested columns.
+Use `[one_half]`, `[one_third]`, `[two_thirds]`, `[one_fourth]` & `[three_fourths]` to generate nested columns.
 
- - _Opptional_ attribute `class="yourownclass"` allows you to set a custom css class
- - _Opptional_ attribute `box` creates an inner box. You can also set the inner class with `box="yourownclass"` 
-
-You can also use `[column]` to generate a custom width column.
-
- - _Required_ attribute `span{x}`, where _'{x}'_ is 1, 2, 3 ... 12 
+ - _Optional_ attribute `class="{yourownclass}"` allows you to set a custom css class
+ - _Optional_ attribute `box` creates an inner box. You can also set the inner class with `box="yourownclass"` 
 
 Example 1:
 	
@@ -43,25 +38,40 @@ Example 1:
 	[/one_fourth]
 	[/row]
 
- - Whitespaces between the shortcodes will also output, so place your rows and columns flush: _e.g._ <code>[row][one_half] xxx</code>
- - Bootstrap works in 12 column segments, so you may see a _gap_ when your column widths plus the side bar do not sum up to a divisor of 12
+You can also use `[column]` to generate a custom width column in a fluid row.
 
+ - *Required* attribute `span{x}`, where _'{x}'_ is 1, 2, 3 ... 12 
+ - Bootstrap works in 12 column segments, so work to a sum up to 12
+
+Example 2:
+	
+	[row]
+	[column span7]
+
+	Wide column left
+
+	[/column][column span5]
+
+	Narrow column right
+
+	[/column]
+	[/row]
 
 
 Responsive visibility
 ---------------------
 
-Use `[hide]` & `[show]` for showing and hiding content by device.
+Use `[hidden]` & `[visible]` for showing and hiding content by device.
 
- - *Required* attribute `on="_device_"` sets devise visability, where _device_ is one of; `phone`, `tablet`, `desktop`, `all` or `none`
+ - *Required* attribute `on="{device}"` sets devise viability, where _'{device}'_ is one of; `phone`, `tablet`, `desktop`, `all` or `none`
 
 Example:
 
-	[show on="tablet"]
+	[visible on="tablet"]
 
 	This content will only display on a tablet
 
-	[\show]
+	[\visible]
 
 
 Buttons and Button Groups
@@ -69,15 +79,17 @@ Buttons and Button Groups
 
 Use `[button]` to display a A (anchor) or BUTTON html components.  Use `button_group` to join multiple buttons together as one composite component.
 
- - _Opptional_ attribute `link="_yoururl_"` sets the button as an anchor.
- - _Opptional_ attribute `size="_size_"` sets the button size, where _size_ is one of: `mini`, `small` or `large`
- - _Opptional_ attribute `type="_type_"` sets the button type (color), where _type_ is one of: `primary`, `danger`, `warning`, `success`, `info` & `inverse`
- - _Opptional_ attribute `id="_yourownif_"` allows one to set a custom tag id
- - _Opptional_ attribute `title="_yourtitle_"` allows one to set a custom tag title
+ - _Optional_ `link="{yoururl}"` sets the button as an anchor.
+ - _Optional_ attribute `size="{size}"` sets the button size, where _'{size}'_ is one of: `mini`, `small` or `large`
+ - _Optional_ attribute `type="{type}"` sets the button type (color), where _'{type}'_ is one of: `primary`, `danger`, `warning`, `success`, `info` & `inverse`
+ - _Optional_ attribute `id="{yourownid}"` allows one to set a custom tag id
+ - _Optional_ attribute `title="{yourtitle}"` allows one to set a custom tag title
 
 Example:
 
 	[button link="http://en.wp.obenland.it/the-bootstrap/" size="large" type="success"] Visit this site! [/button]
+
+	<hr/>
 
 	[button_group]
 	[button] 1 [/button]
@@ -87,11 +99,11 @@ Example:
 
 ### Tabbable navigation
 
-Use `[tab_group]` and `[tab]` to build tabbable sections
+Use `[tabs]` and `[tab]` to build tabbable sections
 
 Example
 
-	[tab_group]
+	[tabs]
 	[tab caption="One"]
 	
 	Content of first tab
@@ -102,13 +114,13 @@ Example
 	Content of second tab
 	
 	[/tab]
-	[/tab_group]
+	[/tabs]
 
 
 Breaks
 ------
 
-Use `[break]` to break
+Use `[break]` to break content cleanly.  This is the same as a `<br/>` HTML tag, but Bootstrap safe.
 
 
 Typographic components
@@ -124,11 +136,22 @@ Example:
 	
 	[/hero]
 
-	
+
 Miscellaneous
 -------------
-
+	
 Use a `well` as a simple effect on an element to give it an inset effect.
+
+ - _Optional_ attribute `size="{size}"` allows one to set a size.  Acceptable sizes are `small` and `large`
+
+Example:
+
+	[well]
+	
+	This content will be in a inset, shaded box
+	
+	[/well]
+
 
 Inline labels and badges
 ------------------------
@@ -137,3 +160,93 @@ Use `[label]` to label and annotate text and a `[badge]` for displaying an indic
 
  - _Opptional_ attribute `type="_type_"` sets the button type (color), where _type_ is one of: `primary`, `danger`, `warning`, `success`, `info` & `inverse`
  
+Example:
+
+	[label type="success"]We won't be beaten on price![/label]
+
+	[badge type="info"]1[/badge] First step is to ...
+
+
+Alerts
+------
+
+Example:
+
+	[alert]This is an alert[/alert]
+
+
+
+Advanced Shortcodes
+===================
+
+There are also some additional shortcodes, including:
+
+
+Equal Heights
+-------------
+
+The WP-Bootstrap2 theme includes a jQuery script to aid in equalizing the height of adjoining columns.
+
+The `[equalheights]` shortcode activates this feature.
+
+ - *Required* attribute `class="{tag_class}"` or `id="{tag_id}"` identifies which components to equalize.
+ - _Optional_ attribute `wait="{milli_seconds}"` tells equalheights to wait a few milliseconds before calculating heights.  Use full if you have content that takes some time to load.  Default is _100_.
+
+
+Example:
+
+	[row]
+	[column span4 class="well eq123"]
+
+	This will be a long column. Lorem ipsum dolor sit amet,
+	consectetur adipiscing elit. Nullam et pellentesque tortor,
+	quis suscipit diam.
+
+	[/column]
+	[column span4 class="well eq123"]
+
+	But this one is short.
+
+	[/column]
+	[column span4 class="well eq123"]
+
+	But all three will be the same height
+
+	[/column]
+	[/row]
+
+	[equalheights class="eq123"]
+
+
+Carousel
+--------
+
+Example:
+
+	[carousel]
+	[item]<img src="/wordpress/wp-content/uploads/2013/07/chloe.jpg" width="100%" />[/item]
+	[item]<img src="/wordpress/wp-content/uploads/2013/07/adriana.jpg" width="100%" />[/item]
+	[caption]<h4>This is caption one</h4>[/caption]
+	[caption]<h4>This is caption two</h4>[/caption]
+	[/carousel]
+
+
+Gallery
+-------
+
+WP-Bootstrap2 overrides the gallery shortcode, but keeps most of its functionality.
+
+See [Gallery Shortcode on Wordpress Codex](http://codex.wordpress.org/Gallery_Shortcode)
+	
+In addition it adds:
+
+ - _Optional_ attribute `singular="{0|1}"` sets the display mode
+   - `singular="1"` displays the gallery as a table.
+   - `singular="0"` displays the gallery as a carousel.   
+ - _Optional_ wait `wait="{milli_seconds}"` tells the inner equalheights to wait a few milliseconds before calculating heights.  Default is _100_.
+ - _Optional_ wait `interval="{milli_seconds}"` sets the delay between swipes.  Default is _10,000_ _(10 Seconds)_.
+
+
+
+~
+-

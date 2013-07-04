@@ -60,7 +60,10 @@ function bootstrap2_setup() {
 
 	require( get_template_directory() . '/inc/menu-walker.php' );
 	require( get_template_directory() . '/inc/shortcodes.php' );
+	require( get_template_directory() . '/inc/equal-heights.php' );
+	require( get_template_directory() . '/inc/carousel.php' );
 	require( get_template_directory() . '/inc/gallery.php' );
+	@include( get_template_directory() . '/inc/shortcode-help.php' );
 
 	/**
 	 * Make theme available for translation
@@ -235,8 +238,6 @@ add_filter('excerpt_more', 'bootstrap2_excerpt_more'); */
 
 
 require( get_template_directory() . '/inc/raw-scripts.php' );
-require( get_template_directory() . '/inc/equal-heights.php' );
-require( get_template_directory() . '/inc/carousel.php' );
 require( get_template_directory() . '/inc/feeds.php' );
 
 if ( defined('WP_DEBUG') && WP_DEBUG )

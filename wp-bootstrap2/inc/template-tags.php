@@ -148,11 +148,10 @@ function bootstrap2_comment( $comment, $args, $depth ) {
 			<?php endif; ?>
 
 			<span class="comment-meta commentmetadata">
-				<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><i class="icon-calendar"></i> <time pubdate datetime="<?php comment_time( 'c' ); ?>">
-				<?php
+				<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><i class="icon-calendar"></i> <time pubdate datetime="<?php comment_time( 'c' ); ?>"><?php
 					/* translators: 1: date, 2: time */
-					printf( __( '%1$s at %2$s', 'bootstrap2' ), get_comment_date(), get_comment_time() ); ?>
-				</time></a>
+					printf( __( '%1$s at %2$s', 'bootstrap2' ), get_comment_date(), get_comment_time() );
+				?></time></a>
 			</span>
 
 			<div class="reply">
@@ -193,7 +192,7 @@ function bootstrap2_posted_on() {
 		remove_filter( 'get_avatar', 'bootstrap2_get_avatar_posted_on' );
 	} else
 		$avatar = '<i class="icon-user"></i>';
-	printf( __( '<i class="icon-calendar"></i> <a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a><span class="byline"> %8$s <span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span></span>', 'bootstrap2' ),
+	printf( __( '<span class="entry-date"><i class="icon-calendar"></i> <a href="%1$s" title="%2$s" rel="bookmark"><time datetime="%3$s" pubdate>%4$s</time></a></span><span class="byline author vcard"> %8$s <a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span>', 'bootstrap2' ),
 		esc_url( get_permalink() ),
 		esc_attr( get_the_time() ),
 		esc_attr( get_the_date( 'c' ) ),
