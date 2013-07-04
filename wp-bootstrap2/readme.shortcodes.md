@@ -77,9 +77,11 @@ Example:
 Buttons and Button Groups
 -------------------------
 
-Use `[button]` to display a A (anchor) or BUTTON html components.  Use `button_group` to join multiple buttons together as one composite component.
+Use `[button]` to display a A (anchor) or BUTTON html components.  Use `buttons` to join multiple buttons together as one composite component.
 
- - _Optional_ `link="{yoururl}"` sets the button as an anchor.
+ - Either `link` or `action` is _required_
+   - Attribute `link="{yoururl}"` sets the button as an anchor.
+   - Attribute `action="{yourcode}"` sets the button to execute JavaScript.
  - _Optional_ attribute `size="{size}"` sets the button size, where _'{size}'_ is one of: `mini`, `small` or `large`
  - _Optional_ attribute `type="{type}"` sets the button type (color), where _'{type}'_ is one of: `primary`, `danger`, `warning`, `success`, `info` & `inverse`
  - _Optional_ attribute `id="{yourownid}"` allows one to set a custom tag id
@@ -87,17 +89,19 @@ Use `[button]` to display a A (anchor) or BUTTON html components.  Use `button_g
 
 Example:
 
-	[button link="http://en.wp.obenland.it/the-bootstrap/" size="large" type="success"] Visit this site! [/button]
+	[button link="http://vinorodrigues.com" size="large" type="success"] Visit this site! [/button]
 
-	<hr/>
+	<br/>&nbsp;<br/>
 
-	[button_group]
-	[button] 1 [/button]
-	[button] 2 [/button]
-	[button] 3 [/button]
-	[/button_group]
+	[buttons]
+	[button link="#"] 1 [/button]
+	[button link="#"] 2 [/button]
+	[button link="#"] 3 [/button]
+	[/buttons]
 
-### Tabbable navigation
+
+Tabbable navigation
+-------------------
 
 Use `[tabs]` and `[tab]` to build tabbable sections
 
@@ -248,5 +252,5 @@ In addition it adds:
 
 
 
-~
+*
 -

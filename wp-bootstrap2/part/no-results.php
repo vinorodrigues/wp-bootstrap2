@@ -8,9 +8,13 @@
  * @package WP-Bootstrap2
  * @since WP-Bootstrap2 0.1 
  */
+
+$_class = 'alert';
+if (is_search()) $_class .= ' alert-info';
+
 ?>
 <!-- <?= basename(__FILE__, '.php') ?> -->
-<article id="post-0" class="post no-results not-found <?php echo apply_filters('bootstrap2_no_results_class','well well-small'); ?>">
+<article id="post-0" class="post no-results not-found <?php echo apply_filters('bootstrap2_no_results_class', $_class); ?>">
 	<a href="#" class="close" data-dismiss="alert">&times;</a>
 	<header class="entry-header page-header">
 		<h1 class="entry-title"><?php echo apply_filters('bootstrap2_no_results_heading',

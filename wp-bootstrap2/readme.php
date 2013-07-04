@@ -41,16 +41,22 @@ if (empty($filename))
   <title></title>
   <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style>
+    body { padding-top: 60px; }
+    h1 { padding-bottom: 0.125em; border-bottom: 3px solid #DDD;}
+    h2 { padding-bottom: 0.125em; border-bottom: 2px solid #CCC;}
+    h3 { padding-bottom: 0.125em; border-bottom: 1px solid #BBB;}
+  </style>
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
-    <div class="container">
-      <span class="brand">&nbsp;<i class="icon-eye-open"></i> <?php echo $filename; ?></span>
+    <div class="container-fluid">
+      <span class="brand"><i class="icon-eye-open"></i> <?php echo $filename; ?></span>
     </div>
   </div>
 </div>	
-<div style="padding:0.5em;padding-top:60px">
+<div class="container-fluid">
 <?php
 
 if (empty($filename)) {

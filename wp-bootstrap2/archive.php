@@ -20,20 +20,20 @@ get_header();
 	<?php if ( have_posts() ) : ?>
 
 		<header class="page-header">
-			<h1 class="page-title">
+			<h3 class="page-title">
 				<?php
 					if ( is_category() ) {
-						printf( __( '<span class="category-archive">%s</span>', 'bootstrap2' ), single_cat_title( '', false ) );
+						printf( __( '<span class="category-archive">%s category</span>', 'bootstrap2' ), ucwords(single_cat_title( '', false )) );
 
 					} elseif ( is_tag() ) {
-						printf( __( '<span class="tag-archive">%s</span>', 'bootstrap2' ), single_tag_title( '', false ) );
+						printf( __( '<span class="tag-archive">%s tag</span>', 'bootstrap2' ), ucwords(single_tag_title( '', false )) );
 
 					} elseif ( is_author() ) {
 						/* Queue the first post, that way we know
 						 * what author we're dealing with (if that is the case).
 						*/
 						the_post();
-						printf( __( '<span class="vcard author-archive">%s</span>', 'bootstrap2' ), '<a class="url fn n" href="' . get_author_posts_url( get_the_author_meta( "ID" ) ) . '" title="' . esc_attr( get_the_author() ) . '" rel="me">' . get_the_author() . '</a>' );
+						printf( __( '<span class="vcard author-archive">By %s</span>', 'bootstrap2' ), '<a class="url fn n" href="' . get_author_posts_url( get_the_author_meta( "ID" ) ) . '" title="' . esc_attr( get_the_author() ) . '" rel="me">' . get_the_author() . '</a>' );
 						/* Since we called the_post() above, we need to
 						 * rewind the loop back to the beginning that way
 						 * we can run the loop properly, in full.
@@ -41,20 +41,20 @@ get_header();
 						rewind_posts();
 
 					} elseif ( is_day() ) {
-						printf( __( '<span class="daily-archive date-archive">%s</span>', 'bootstrap2' ), get_the_date() );
+						printf( __( '<span class="daily-archive date-archive">In %s</span>', 'bootstrap2' ), get_the_date() );
 
 					} elseif ( is_month() ) {
-						printf( __( '<span class="monthly-archive date-archive">%s</span>', 'bootstrap2' ), get_the_date( 'F Y' ) );
+						printf( __( '<span class="monthly-archive date-archive">In %s</span>', 'bootstrap2' ), get_the_date( 'F Y' ) );
 
 					} elseif ( is_year() ) {
-						printf( __( '<span class="yearly-archive date-archive">%s</span>', 'bootstrap2' ), get_the_date( 'Y' ) );
+						printf( __( '<span class="yearly-archive date-archive">In %s</span>', 'bootstrap2' ), get_the_date( 'Y' ) );
 
 					} else {
 						_e( 'Archives', 'bootstrap2' );
 
 					}
 				?>
-			</h1>
+			</h3>
 			<?php
 				if ( is_category() ) {
 					// show an optional category description

@@ -108,6 +108,10 @@ hr.soft {
 	border: 0;
 }
 
+.nav-space {
+	visibility: hidden;
+}
+
 /* =Asides
 ----------------------------------------------- */
 

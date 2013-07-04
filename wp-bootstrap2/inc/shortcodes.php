@@ -61,13 +61,13 @@ function _bootstrap2_do_span($class, $content) {
  */
 
 
-function _bootstrap2_get_row($columns, $fixed_atts, $rgroup = false) {
+function _bootstrap2_get_row($columns, $fixed_outer_atts, $rgroup = false) {
 	global $_bootstrap2_row_fluid;
 	if (isset($_bootstrap2_row_fluid) && $_bootstrap2_row_fluid) {
-		$class = _bootstrap2_getclass($fixed_atts, 'row-fluid');
+		$class = _bootstrap2_getclass($fixed_outer_atts, 'row-fluid');
 		$_bootstrap2_row_fluid = false;
 	} else
-		$class = _bootstrap2_getclass($fixed_atts, 'row');
+		$class = _bootstrap2_getclass($fixed_outer_atts, 'row');
 
 	$content = '';
 	foreach ($columns as $col) $content .= $col;
@@ -76,23 +76,27 @@ function _bootstrap2_get_row($columns, $fixed_atts, $rgroup = false) {
 }
 
 function bootstrap2_row($atts, $content = null, $tag = '') {
-	global $_bootstrap2_row_array;
+	global $_bootstrap2_in_row, $_bootstrap2_row_array;
+
 	if (!isset($_bootstrap2_row_array)) $_bootstrap2_row_array = array();
-	// else return '';  // nested row's ignored
 
+	$_bootstrap2_in_row = true;
 	$content = do_shortcode($content);
+	$_bootstrap2_in_row = false;
 
-	$atts = _bootstrap2_fix_atts($atts);
-	$out = _bootstrap2_get_row($_bootstrap2_row_array, $atts);
+	$out = _bootstrap2_get_row($_bootstrap2_row_array,
+		_bootstrap2_fix_atts($atts));
 
-	$_bootstrap2_row_array = array();  // empty out the array
+	$_bootstrap2_row_array = array();  // empty out the global
 
 	return $out;
 }
 
-function bootstrap2_column($atts, $content = null, $tag = '', $span = false) {
-	global $_bootstrap2_row_array, $_bootstrap2_row_fluid;
-	if ( !isset($_bootstrap2_row_array) ) return do_shortcode( $content );
+function _bootstrap2_column($atts, $content, $tag, $span) {
+	global $_bootstrap2_in_row, $_bootstrap2_row_array, $_bootstrap2_row_fluid;
+
+	if ( !isset($_bootstrap2_in_row) && !$_bootstrap2_in_row )
+		return "[{$tag}]" . do_shortcode( $content ) . "[/{$tag}]";
 
 	$atts = _bootstrap2_fix_atts($atts);
 	$class = false;
@@ -105,7 +109,7 @@ function bootstrap2_column($atts, $content = null, $tag = '', $span = false) {
 				break;
 			}
 		}
-		if (isset($atts['span'])) $class = 'span' . intval($atts['span']);
+		if (!$class && isset($atts['span'])) $class = 'span' . intval($atts['span']);
 		if (!$class) $class = 'span1';
 	} else if ($span) {
 		$class = $span;
@@ -113,34 +117,38 @@ function bootstrap2_column($atts, $content = null, $tag = '', $span = false) {
 	$class = _bootstrap2_getclass($atts, $class);
 
 	if (isset($atts['box']) && $atts['box'])
-		$content = _bootstrap2_do_div('box ' . $atts['box'], $content);
+		$content = _bootstrap2_do_div('box ' . $class, $content);
 	$_bootstrap2_row_array[] = _bootstrap2_do_div($class, $content);
 	return '';
 }
 
+function bootstrap2_column($atts, $content = null, $tag = '') {
+	return _bootstrap2_column($atts, $content, $tag, false);
+}
+
 function bootstrap2_one_half($atts, $content = null, $tag = '') {
 	$span = 'span' . intval( bootstrap2_get_column_width(1) / 2);
-	return bootstrap2_column($atts, $content, $tag, $span);
+	return _bootstrap2_column($atts, $content, $tag, $span);
 }
 
 function bootstrap2_one_third($atts, $content = null, $tag = '') {
 	$span = 'span' . intval( bootstrap2_get_column_width(1) / 3);
-	return bootstrap2_column($atts, $content, $tag, $span);
+	return _bootstrap2_column($atts, $content, $tag, $span);
 }
 
 function bootstrap2_two_thirds($atts, $content = null, $tag = '') {
 	$span = 'span' . intval( bootstrap2_get_column_width(1) / 3) * 2;
-	return bootstrap2_column($atts, $content, $tag, $span);
+	return _bootstrap2_column($atts, $content, $tag, $span);
 }
 
 function bootstrap2_one_fourth($atts, $content = null, $tag = '') {
 	$span = 'span' . intval( bootstrap2_get_column_width(1) / 4);
-	return bootstrap2_column($atts, $content, $tag, $span);
+	return _bootstrap2_column($atts, $content, $tag, $span);
 }
 
 function bootstrap2_three_fourths($atts, $content = null, $tag = '') {
 	$span = 'span' . intval( bootstrap2_get_column_width(1) / 4) * 3;
-	return bootstrap2_column($atts, $content, $tag, $span);
+	return _bootstrap2_column($atts, $content, $tag, $span);
 }
 
 add_shortcode( 'row', 'bootstrap2_row' );
@@ -197,13 +205,33 @@ add_shortcode( 'hidden', 'bootstrap2_hidden' );
  * Buttons
  */
 
+function bootstrap2_buttons( $atts, $content = null, $tag = '' ) {
+	global $_bootstrap2_in_buttons, $_bootstrap2_button_array;
 
-function bootstrap2_button_grp( $atts, $content = null, $tag = '' ) {
+	if (!isset($_bootstrap2_button_array)) $_bootstrap2_button_array = array();
+
+	$_bootstrap2_in_buttons = true;
+	do_shortcode($content);
+	$_bootstrap2_in_buttons = false;
+
+	$content = '';
+	foreach ($_bootstrap2_button_array as $button)
+		$content .= $button;
+
+	$_bootstrap2_button_array = array();  // empty global
+
 	$class = _bootstrap2_getclass(_bootstrap2_fix_atts($atts), 'btn-group');
 	return _bootstrap2_do_div($class, $content);
 }
 
+function bootstrap2_button_grp( $atts, $content = null, $tag = '' ) {
+	_deprecated_function( __FUNCTION__, '0.4.2', 'bootstrap2_buttons()' );
+	return bootstrap2_buttons($atts, $content, $tag);
+}
+
 function bootstrap2_button( $atts, $content = null, $tag = '' ) {
+	global $_bootstrap2_in_buttons, $_bootstrap2_button_array;
+
 	$atts = _bootstrap2_fix_atts($atts, array(
 		'link' => '',  // create a->href
 		'action' => '',  // create onclick event
@@ -238,10 +266,16 @@ function bootstrap2_button( $atts, $content = null, $tag = '' ) {
 	$button .= ' class="' . _bootstrap2_getclass($atts, $class) . '"';
 	if ($atts['title'] != '') $button .= ' title="' . $atts['title'] . '"';
 	$button .= '>' . do_shortcode($content) . '</' . $element . '>';
-	return $button;
+
+	if (isset($_bootstrap2_in_buttons) && $_bootstrap2_in_buttons) {
+		$_bootstrap2_button_array[] = $button;
+		return '';
+	} else
+		return $button;
 }
 
-add_shortcode( 'button_group', 'bootstrap2_button_grp' );
+add_shortcode( 'buttons', 'bootstrap2_buttons' );
+add_shortcode( 'button_group', 'bootstrap2_button_grp' );  // deprecated
 add_shortcode( 'button', 'bootstrap2_button' );
 
 
@@ -249,20 +283,23 @@ add_shortcode( 'button', 'bootstrap2_button' );
  * Tabbable nav
  *
  * Uses a few globals:
- *   $_bootstrap2_tabs_count
+ *   $_bootstrap2_in_tabs
  *   $_bootstrap2_tab_array
+ *   $_bootstrap2_tabs_count
  */
 
 
-// TODO : extend code to allow tabbable tabs-below, tabs-right & tabs-below
+function _bootstrap2_get_tabs($tabs, $fixed_outer_atts = false) {
 
-function _bootstrap2_get_tabs($tabs, $fixed_atts = false, $tgroup = false) {
 	if (count($tabs) == 0) return '';
-	if (!$tgroup) {
+
+	if (!isset($fixed_outer_atts['id']) || !$fixed_outer_atts['id']) {
 		global $_bootstrap2_tabs_count;
 		if (!isset($_bootstrap2_tabs_count)) $_bootstrap2_tabs_count = 0;
 		$_bootstrap2_tabs_count++;
-		$tgroup = 'tabs' . $_bootstrap2_tabs_count;
+		$tab_id = 'myTab' . $_bootstrap2_tabs_count;
+	} else {
+		$tab_id = $fixed_outer_atts['id'];
 	}
 
 	// find active tab
@@ -276,52 +313,95 @@ function _bootstrap2_get_tabs($tabs, $fixed_atts = false, $tgroup = false) {
 	if (!$fndactive) $tabs[0]['active'] = true;
 
 	$class = 'nav nav-tabs';
-	if ($fixed_atts) $class = _bootstrap2_getclass($fixed_atts, $class);
+	if ($fixed_outer_atts['stacked']) $class .= ' nav-stacked';
+	if ($fixed_outer_atts) $class = _bootstrap2_getclass($fixed_outer_atts, $class);
 
-	// render un-orderd list
-	$out = '<ul class="' . $class . '" id="' . $tgroup . '">';
-	foreach ($tabs as $id -> $tab) {
-		$out .= '<li' . (($tab['active']) ? ' class="active"' : '') . '>';
-		$out .= '<a href="#' . $tgroup . '_' . $id+1 . '" data-toggle="">';
-		$out .= $tab['caption'];
-		$out .= '</a>';
-		$out .= '</li>';
+	$outer_class = 'tabbable';
+	$where = false;
+	if (isset($fixed_outer_atts['where'])) {
+		switch (strtolower($fixed_outer_atts['where'])) {
+			case 2:
+			case 'right': $where = 2; break;
+			case 3:
+			case 'below':
+			case 'bottom': $where = 3; break;
+			case 4:
+			case 'left': $where = 4; break;
+			default: $where = 1;
+		}
+	} else {
+		if (isset($fixed_outer_atts['top']) && $fixed_outer_atts['top']) $where = 1;
+		else if (isset($fixed_outer_atts['right']) && $fixed_outer_atts['right']) $where = 2;
+		else if (isset($fixed_outer_atts['below']) && $fixed_outer_atts['below']) $where = 3;
+		else if (isset($fixed_outer_atts['left']) && $fixed_outer_atts['left']) $where = 4;
 	}
-	$out .= '</ul>';
+	if ($where) {
+		if ($where === 2) $outer_class .= ' tabs-right';
+		else if ($where === 3) $outer_class .= ' tabs-below';
+		else if ($where === 4) $outer_class .= ' tabs-left';
+	}
+
+	$out = '<div class="' . $outer_class . '">';
+
+	// render tabs
+	$out_t = '<ul class="' . $class . '" id="' . $tab_id . '">';
+	foreach ($tabs as $id => $tab) {
+		$id++;
+		$class = '';
+		if ($tab['active']) $class .= ' active';
+		if ($tab['disabled']) $class .= ' disabled';
+		$out_t .= '<li class="' . $class . '">';
+		$out_t .= '<a href="#' . $tab_id . '_' . $id . '">';
+		$out_t .= ( $tab['caption'] ? $tab['caption'] : sprintf(__('Tab %d'), $id) );
+		$out_t .= '</a>';
+		$out_t .= '</li>';
+	}
+	$out_t .= '</ul>';
 
 	// render tab content
-	$out .= '<div class="tab-content">';
-	foreach ($tabs as $id -> $tab) {
+	$out_c = '<div class="tab-content">';
+	foreach ($tabs as $id => $tab) {
 		$class = 'tab-pane';
 		$class .= $tab['active'] ? ' active' : '';
+		if ($tab['class']) $class .= ' ' . $tab['class'];
 
-		$out .= '<div class="' . $class . '" id="' . $tgroup . '_' . $id+1 . '">';
-		$out .= do_shortcode($tab['content']);
-		$out .= '</div>';
+		$out_c .= '<div class="' . $class . '" id="' . $tab_id . '_' . ($id+1) . '">';
+		$out_c .= '<!-- [ -->' . $tab['content'] . '<!-- ] -->';
+		$out_c .= '</div>';
 	}
+	$out_c .= '</div>';
+
+	if ($where === 3) $out .= $out_c . $out_t;
+	else $out .= $out_t . $out_c;
+
 	$out .= '</div>';
 
 	// Enable via jQuery
 	$src = '(function ($) {';
-	$src .= "$('#" . $tgroup . " a').click(function (e) { e.preventDefault(); $(this).tab('show'); })";
+	$src .= "$('#" . $tab_id . " a').click(function (e) { e.preventDefault(); $(this).tab('show'); })";
 	$src .= '})(jQuery);';
-	ts_enqueue_script('tabs-' . $tgroup, $src, 'jQuery');
+	ts_enqueue_script('tabs-' . $tab_id, $src, 'jQuery');
 
-
-
-	return $out;
+	return $out;  /* */
 }
 
 function bootstrap2_tabs( $atts, $content = null, $tag = '' ) {
-	global $_bootstrap2_tab_array;
+	global $_bootstrap2_in_tabs, $_bootstrap2_tab_array;
+
 	if (!isset($_bootstrap2_tab_array)) $_bootstrap2_tab_array = array();
-	else return '';  // nested tabs ignored
 
+	$_bootstrap2_in_tabs = true;
 	do_shortcode( $content );  // render inner tabs et. al.
+	$_bootstrap2_in_tabs = false;
 
-	$out = _bootstrap2_get_tabs($_bootstrap2_tab_array, _bootstrap2_fix_atts($atts));
+	$out = _bootstrap2_get_tabs( $_bootstrap2_tab_array,
+		_bootstrap2_fix_atts($atts, array(
+		    'id' => false,
+		    'stacked' => false,
+		    )) );
 
-	unset($_bootstrap2_tab_array);  // kill the global
+	$_bootstrap2_tab_array = array();  // empty out the global
+
 	return $out;
 }
 
@@ -331,15 +411,23 @@ function bootstrap2_tab_grp( $atts, $content = null, $tag = '' ) {
 }
 
 function bootstrap2_tab( $atts, $content = null, $tag = '' ) {
-	global $_bootstrap2_tab_array;
-	if (!isset($_bootstrap2_tab_array)) return do_shortcode ($content);
+	global $_bootstrap2_in_tabs, $_bootstrap2_tab_array;
+	if (!isset($_bootstrap2_in_tabs) && !$_bootstrap2_in_tabs)
+		return "[{$tag}]" . do_shortcode ($content) . "[/{$tag}]";
 
-	$atts = _bootstrap2_fix_atts($atts, array('title' => '', 'active' => false));
+	$atts = _bootstrap2_fix_atts($atts, array('caption' => false, 'active' => false));
+
+	// legacy
+	if (!$atts['caption'] && isset($atts['title']) && !empty($atts['title'])) {
+		$atts['caption'] = $atts['title'];
+		unset($atts['title']);
+	}
 
 	$_bootstrap2_tab_array[] = array(
-		'caption' => $atts['title'],
+		'caption' => $atts['caption'],
 		'active' => $atts['active'],
-		'content' => $content,
+		'disabled' => (isset($atts['disabled']) && $atts['disabled']),
+		'content' => shortcode_unautop( do_shortcode($content) ),
 		'class' => _bootstrap2_getclass($atts),
 		);
 
@@ -403,14 +491,7 @@ function bootstrap2_label( $atts, $content = null, $tag = '' ) {
 		default: ;
 	}
 
-	/*switch ($atts['container']) :
-		case 'span' :
-			return _bootstrap2_do_span(_bootstrap2_getclass($atts, $class), $content); break;
-		case 'div' :
-			return _bootstrap2_do_div(_bootstrap2_getclass($atts, $class), $content); break;
-		default :*/
-			return '<' . $atts['container'] . ' class="' . $class . '">' . do_shortcode($content) . '</' . $atts['container'] . '>'; /* break;
-	endswitch; */
+	return '<' . $atts['container'] . ' class="' . $class . '">' . do_shortcode($content) . '</' . $atts['container'] . '>';
 }
 
 function bootstrap2_badge( $atts, $content = null, $tag = '' ) {

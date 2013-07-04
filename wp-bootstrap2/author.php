@@ -27,6 +27,10 @@ get_header();
 		?>
 
 		<header class="page-header vcard">
+			<?php
+				$desc = get_the_author_meta('description');
+				if (!empty($desc)) :
+			?>
 			<div class="media author-info">
 				<div class="author-avatar pull-left">
 					<?php
@@ -41,7 +45,6 @@ get_header();
 				<div class="media-body author-description">
 					<h3 class="media-heading author-title"><?php printf( __( 'About %s', 'bootstrap2' ), get_the_author() ); ?></h3>
 					<?php
-					$desc = get_the_author_meta('description');
 					if (!empty($desc)) echo '<p>' . $desc . '</p>';
 
 					$url = trim(get_the_author_meta('user_url'));
@@ -92,8 +95,11 @@ get_header();
 				</div>
 			</div>
 			<hr class="soft" />
+			<?php
+				endif;
+			?>
 			<h3 class="page-title author-archive">
-				<?php printf( __( 'Posts by %s', 'bootstrap2' ), get_the_author() ); ?>
+				<?php printf( __( 'By %s', 'bootstrap2' ), get_the_author() ); ?>
 			</h3>
 		</header>
 
