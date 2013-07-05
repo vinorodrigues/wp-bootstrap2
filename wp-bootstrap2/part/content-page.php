@@ -10,13 +10,18 @@
 <!-- <?= basename(__FILE__, '.php') ?> -->
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'item-singular item-1 first last' ); ?>>
 	<?php
-		$title = get_the_title();
-		if (!empty($title)) :
+		// should we show the title?
+		$_title = get_the_title();
+		$_show_t = (!empty($_title));
+		if ($_show_t && is_front_page() && bootstrap2_get_theme_option('inhibit_static_home_title')) $_show_t = false;
+		if ( $_show_t ) :
 	?>
 	<header class="entry-header page-header">
-		<h1 class="entry-title"><?php the_title(); ?></h1>
+		<h1 class="entry-title"><?php echo $_title; ?></h1>
 	</header>
-	<?php endif; ?>
+	<?php
+		endif;
+	?>
 	<div class="entry-content">
 		<?php the_content(); ?>
 		<?php bootstrap2_link_pages( array('before' => '<div class="pagination pagination-centered"><ul>') ); ?>

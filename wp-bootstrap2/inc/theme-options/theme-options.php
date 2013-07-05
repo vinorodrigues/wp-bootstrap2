@@ -49,6 +49,8 @@ function bootstrap2_theme_options_init() {
 	add_settings_field( 'inhibit_default_menu', __( 'Inhibit default Wordpress menu', 'bootstrap2' ), 'bootstrap2_settings_field_inhibit_default_menu', 'theme_options', 'general' );
 	add_settings_field( 'inhibit_default_sidebar', __( 'Inhibit default Wordpress sidebar', 'bootstrap2' ), 'bootstrap2_settings_field_inhibit_default_sidebar', 'theme_options', 'general' );
 	add_settings_field( 'inhibit_image_comments', __( 'Inhibit image page comments', 'bootstrap2' ), 'bootstrap2_settings_field_inhibit_image_comments', 'theme_options', 'general' );
+	add_settings_field( 'inhibit_static_home_title', __( 'Inhibit static front page title', 'bootstrap2' ), 'bootstrap2_settings_field_inhibit_static_home_title', 'theme_options', 'general' );
+
 
 	if (!is_child_theme()) {
 		add_settings_section( 'swatch', __( 'Swatch', 'bootstrap2' ), '__return_false', 'theme_options' );
@@ -214,6 +216,7 @@ function bootstrap2_default_theme_options() {
 		'inhibit_default_menu' => 0,
 		'inhibit_default_sidebar' => 0,
 		'inhibit_image_comments' => 0,
+		'inhibit_static_home_title' => 1,
 		'swatch_css' => '',
 		'swatch_js' => '',
 		) );
@@ -532,6 +535,7 @@ function bootstrap2_settings_field_search() {
 function bootstrap2_settings_field_inhibit_default_menu() { _bootstrap2_settings_field_checkbox( 'inhibit_default_menu' ); }
 function bootstrap2_settings_field_inhibit_default_sidebar() { _bootstrap2_settings_field_checkbox( 'inhibit_default_sidebar' ); }
 function bootstrap2_settings_field_inhibit_image_comments() { _bootstrap2_settings_field_checkbox( 'inhibit_image_comments' ); }
+function bootstrap2_settings_field_inhibit_static_home_title() { _bootstrap2_settings_field_checkbox( 'inhibit_static_home_title' ); }
 
 
 /**
@@ -665,6 +669,8 @@ function bootstrap2_theme_options_validate( $input ) {
 	$output['inhibit_default_sidebar'] = isset( $input['inhibit_default_sidebar'] ) ? 1 : 0;
 
 	$output['inhibit_image_comments'] = isset( $input['inhibit_image_comments'] ) ? 1 : 0;
+
+	$output['inhibit_static_home_title'] = isset( $input['inhibit_static_home_title'] ) ? 1 : 0;
 	
 	if (!is_child_theme()) {
 
