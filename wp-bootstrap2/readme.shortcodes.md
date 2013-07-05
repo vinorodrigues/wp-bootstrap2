@@ -91,7 +91,7 @@ Example:
 
 	[button link="http://vinorodrigues.com" size="large" type="success"] Visit this site! [/button]
 
-	<br/>&nbsp;<br/>
+	[break]
 
 	[buttons]
 	[button link="#"] 1 [/button]
@@ -124,7 +124,7 @@ Example
 Breaks
 ------
 
-Use `[break]` to break content cleanly.  This is the same as a `<br/>` HTML tag, but Bootstrap safe.
+Use `[break]` to break content cleanly.  This is the same as a `br` HTML tag, but Bootstrap safe.
 
 
 Typographic components
@@ -228,10 +228,10 @@ Carousel
 Example:
 
 	[carousel]
-	[item]<img src="/wordpress/wp-content/uploads/2013/07/chloe.jpg" width="100%" />[/item]
-	[item]<img src="/wordpress/wp-content/uploads/2013/07/adriana.jpg" width="100%" />[/item]
-	[caption]<h4>This is caption one</h4>[/caption]
-	[caption]<h4>This is caption two</h4>[/caption]
+	[item] &lt; img src="/wordpress/wp-content/uploads/2013/07/chloe.jpg" width="100%" /&gt; [/item]
+	[item] &lt; img src="/wordpress/wp-content/uploads/2013/07/adriana.jpg" width="100%" /&gt; [/item]
+	[caption]This is caption one[/caption]
+	[caption]This is caption two[/caption]
 	[/carousel]
 
 
