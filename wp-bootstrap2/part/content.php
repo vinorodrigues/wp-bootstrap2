@@ -8,7 +8,7 @@
 $_class = '';
 if ( is_sticky() ) {
 	$_uw = bootstrap2_get_theme_option('well_s', $_class);
-	if ('unwell' == $_uw) $_class .= $_uw . ' ';
+	if ('no-well' == $_uw) $_class .= $_uw . ' ';
 }
 if (is_singular()) $_class .= 'item-singular ';
 if (isset($wp_query)) {

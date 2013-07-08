@@ -291,12 +291,15 @@ endif;
  * @see http://www.feedicons.com/
  */
 function bootstrap2_feed_icons() {
-	echo '<span class="feeds">';
-	echo '<a type="application/rss+xml" class="rss-feed" href="' . 
-		get_bloginfo('rss2_url') . '" title="' .
-		sprintf(__('RSS feed for %s', 'bootstrap2'), get_bloginfo('name')) .
-		'" >' . __('RSS', 'bootstrap2') . '</a>';
-	echo '</span>';
+	$cnt = wp_count_posts();
+	if ($cnt->publish > 0) {
+		echo '<span class="feeds">';
+		echo '<a type="application/rss+xml" class="rss-feed" href="' .
+			get_bloginfo('rss2_url') . '" title="' .
+			sprintf(__('RSS feed for %s', 'bootstrap2'), get_bloginfo('name')) .
+			'" >' . __('RSS', 'bootstrap2') . '</a>';
+		echo '</span>';
+	}
 }
 add_action('bootstrap2_feed_icons', 'bootstrap2_feed_icons', 10);
 

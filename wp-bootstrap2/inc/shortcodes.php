@@ -40,19 +40,19 @@ function _bootstrap2_fix_atts($atts, $defaults = false) {
 function _bootstrap2_getclass($atts, $class = false) {
 	if (!$class) $class = '';
 	if (isset($atts['class'])) $class = $atts['class'] . ' ' . $class;
-	return ltrim($class, ' ');
+	return esc_attr(trim($class));
 }
 
-function _bootstrap2_do_($element, $class, $content) {
+function _bootstrap2_do_tag($tag, $class, $content) {
 	if (is_null($content)) $content = '';
-	return '<' . $element . ' class="' . $class . '">' . do_shortcode($content) . '</' . $element . '>';
+	return '<' . $tag . ' class="' . $class . '">' . do_shortcode($content) . '</' . $tag . '>';
 }
 function _bootstrap2_do_div($class, $content) {
-	return _bootstrap2_do_( 'div', $class, $content );
+	return _bootstrap2_do_tag( 'div', $class, $content );
 }
 
 function _bootstrap2_do_span($class, $content) {
-	return _bootstrap2_do_( 'span', $class, $content );
+	return _bootstrap2_do_tag( 'span', $class, $content );
 }
 
 
@@ -114,7 +114,7 @@ function _bootstrap2_column($atts, $content, $tag, $span) {
 	} else if ($span) {
 		$class = $span;
 	}
-	$class = _bootstrap2_getclass($atts, $class);
+	$class = _bootstrap2_getclass($atts, $class . ' col');
 
 	if (isset($atts['box']) && $atts['box'])
 		$content = _bootstrap2_do_div('box ' . $class, $content);
@@ -452,7 +452,7 @@ add_shortcode('break', 'bootstrap2_break');
 
 
 /*
- * Hero unit & well
+ * Hero, Well & Box
  */
 
 
@@ -463,13 +463,50 @@ function bootstrap2_hero( $atts, $content = null, $tag = '' ) {
 function bootstrap2_well( $atts, $content = null, $tag = '' ) {
 	$atts = _bootstrap2_fix_atts($atts, array('size' => ''));
 	$class = 'well';
-	if (!empty($atts['size'])) $class .= ' well-' . $atts['size'];
+	if (!empty($atts['size'])) {
+		$size = strtolower($atts['size']);
+		if (('large' == $size) || ('small' == $size))
+			$class .= ' well-' . $size;
+	}
 	return _bootstrap2_do_div(_bootstrap2_getclass($atts, $class), $content);
+}
+
+function bootstrap2_box( $atts, $content = null, $tag = '' ) {
+	extract( _bootstrap2_fix_atts( $atts, array(
+		'class' => '',
+		'rounded' => true,
+		'carbon' => false,
+		'inset' => false,
+		'raised' => false,
+		'shadow'=> false,
+		'title' => false,
+		'href' => false,
+		) ) );
+
+	$class = (($title) ? 'box-wrap' : 'box') . ' ' . $class;
+	if ($rounded) $class .= 'rounded ';
+	if ($carbon) $class .= 'carbon ';
+	if ($inset) $class .= 'inset';
+	else if ($raised) $class .= 'raised';
+	else if ($shadow) $class .= 'shadow';
+	$class = _bootstrap2_getclass($atts, rtrim($class));
+
+	if (!is_null($content)) $content = do_shortcode($content);
+	else $content = '';
+
+	if ($title) {
+		$title = esc_attr($title);
+		if ($href) $title = '<a href="' . esc_url($href) . '">' . $title . '</a>';
+		$content = _bootstrap2_do_tag('h4', 'box-title', $title) .
+		_bootstrap2_do_div('box-inner', $content);
+		return _bootstrap2_do_div($class, $content);
+	} else
+		return _bootstrap2_do_div($class, $content);
 }
 
 add_shortcode('hero', 'bootstrap2_hero');
 add_shortcode('well', 'bootstrap2_well');
-
+add_shortcode('box', 'bootstrap2_box');
 
 /*
  * Inline labels & Badges

@@ -59,11 +59,11 @@ get_header();
 							$size = apply_filters( 'bootstrap2_attachment_size', 'size-full' ); // Filterable image size.
 							$sizeclass = is_array($size) ? join('x', $size) : $size;
 							echo wp_get_attachment_image( $id, $size, false, array(
-								'class' => "{$sizeclass} wp-image-{$id} attachment-image",
+								'class' => "{$sizeclass} wp-image-{$id} attachment-image aligncenter",
 							) );
 							echo '</a>';
 						?>
-						<figcaption class="aligncenter entry-caption">
+						<figcaption class="entry-caption">
 							<?php
 								if ( empty( $post->post_excerpt ) ) :
 									echo esc_attr( get_the_title() );

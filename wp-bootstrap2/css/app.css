@@ -11,7 +11,7 @@ Your custom CSS should not be written into this file - rather edit ../style.css
 
 figure { margin: 0; display: table; }
 figure img, figure figcaption { display: table-row; }
-figure figcaption { background-color: rgba(0, 0, 0, 0.1); padding: 0.5em }
+figure figcaption { background-color: rgba(0, 0, 0, 0.1); padding: 0.5em; display: block; text-align: center; }
 figure img { padding: 0; }
 figure figcaption p { margin: 0; }
 
@@ -254,7 +254,6 @@ img.size-full {
 	padding: 0;
 }
 .wp-caption {
-	border: 1px solid #ccc;
 	max-width: 100%;
 }
 .wp-caption.aligncenter,
@@ -264,14 +263,24 @@ img.size-full {
 }
 .wp-caption img {
 	display: block;
-	margin: 1.2% auto 0;
-	max-width: 98%;
+	margin: 0 auto 0.25em;
+
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
 }
 .wp-caption-text {
 	text-align: center;
 }
 .wp-caption .wp-caption-text {
-	margin: 0.8075em 0;
+	margin-top: 4px;
+	border-top: inherit;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
 
 /* Make sure embeds and iframes fit their containers */
@@ -529,5 +538,71 @@ ul.commentlist .commentmetadata .btn {}
 .author-description .author-link { text-decoration: none; }
 .author-description .author-link img { margin-right: 0.5em; vertical-align: middle; }
 .author-description .space { margin-left: 0.5em; margin-right: 0.5em; }
+
+
+/* =Box
+------------------------------------------------ */
+
+.box, .box-wrap {
+	margin: 0 0 1em 0;
+	position: relative;
+	clear: both;
+	overflow: hidden !important;
+	border: 1px solid #CCC;
+	display: block;
+}
+
+.box, .box-title, .box-inner {
+	padding: 0.5em;
+}
+
+.box-title {
+	background-color: #EEE;
+	background-color: rgba(0,0,0,0.075);
+	border-bottom: 1px solid #CCC;
+	padding: 0.4em 0.5em;
+}
+h2.box-title, h3.box-title, h4.box-title { margin: 0; }
+.box-title a { display: block; color: inherit; }
+.box-title a:hover, .box-title a:active { text-decoration: none; }
+
+.box img, .box-inner img { /* images inside box get expanded */
+	display: block;
+	clear: both;
+	width: 100%;
+	height: auto;
+}
+
+.inset {
+	background-color: rgba(0, 0, 0, 0.05) !important;
+	-webkit-box-shadow: inset 1px 1px 1px 0px #999, 1px 1px 1px 0px #EEE;
+	-moz-box-shadow: inset 1px 1px 1px 0px #999, 1px 1px 1px 0px #EEE;
+	box-shadow: inset 1px 1px 1px 0px #999, 1px 1px 1px 0px #EEE;
+}
+
+.raised {
+	background-color: rgba(255, 255, 255, 0.15) !important;
+	-webkit-box-shadow: inset 1px 1px 1px 0px #EEE, 1px 1px 1px 0px #999;
+	-moz-box-shadow: inset 1px 1px 1px 0px #EEE, 1px 1px 1px 0px #999;
+	box-shadow: inset 1px 1px 1px 0px #EEE, 1px 1px 1px 0px #999;
+}
+
+.rounded {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.shadow {
+	-webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	-moz-box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+}
+
+.carbon {
+	background-position: 0 0;
+	background-image: url('../img/carbon.png');
+	background-repeat: repeat;
+}
 
 /* eof */

@@ -51,7 +51,6 @@ function bootstrap2_theme_options_init() {
 	add_settings_field( 'inhibit_image_comments', __( 'Inhibit image page comments', 'bootstrap2' ), 'bootstrap2_settings_field_inhibit_image_comments', 'theme_options', 'general' );
 	add_settings_field( 'inhibit_static_home_title', __( 'Inhibit static front page title', 'bootstrap2' ), 'bootstrap2_settings_field_inhibit_static_home_title', 'theme_options', 'general' );
 
-
 	if (!is_child_theme()) {
 		add_settings_section( 'swatch', __( 'Swatch', 'bootstrap2' ), '__return_false', 'theme_options' );
 
@@ -59,6 +58,7 @@ function bootstrap2_theme_options_init() {
 		add_settings_field( 'swatch_css', __( 'Bootstrap CSS', 'bootstrap2' ), 'bootstrap2_settings_field_swatch_css', 'theme_options', 'swatch' );
 		add_settings_field( 'swatch_js', __( 'Bootstrap JS', 'bootstrap2' ), 'bootstrap2_settings_field_swatch_js', 'theme_options', 'swatch' );
 	};
+	do_action('bootstrap2_theme_options_init', 'theme_options', 'bootstrap2_theme_options');  // args = $page, $option_name
 }
 add_action( 'admin_init', 'bootstrap2_theme_options_init' );
 
@@ -172,8 +172,8 @@ function bootstrap2_sidebars() {
  */
 function bootstrap2_well_x() {
 	$well = array(
-		'unwell' => array(
-			'value' => 'unwell',
+		'no-well' => array(
+			'value' => 'no-well',
 			'label' => __( '(No well)', 'bootstrap2' ),
 		),
 		'well' => array(
@@ -206,8 +206,8 @@ function bootstrap2_default_theme_options() {
 		'fluid' => 0,
 		'page' => 'fp',
 		'sidebars' => 'cs',
-		'well_w' => 'unwell',
-		'well_s' => 'unwell',
+		'well_w' => 'no-well',
+		'well_s' => 'no-well',
 		'darkbar' => 1,
 		'logo' => '',
 		'icon' => '',
@@ -517,8 +517,8 @@ function bootstrap2_settings_field_icon() {
 function bootstrap2_settings_field_name() {
 	$options = bootstrap2_get_theme_options();
 	?>
-	<input type="text" name="bootstrap2_theme_options[name]" id="sample-text-input" value="<?php echo esc_attr( $options['name'] ); ?>" />
-	<label class="description" for="sample-text-input"><?php _e( 'Leave blank to disable', 'bootstrap2' ); ?></label>
+	<input type="text" name="bootstrap2_theme_options[name]" id="name" value="<?php echo esc_attr( $options['name'] ); ?>" />
+	<label for="name"><span class="description"><?php _e( 'Leave blank to disable', 'bootstrap2' ); ?></span></label>
 	<?php
 }
 

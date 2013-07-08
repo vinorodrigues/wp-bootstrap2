@@ -87,11 +87,13 @@ function _bootstrap2_get_carousel($carousel, $captions, $fixed_atts = false, $cg
 }
 
 function bootstrap2_carousel( $atts, $content = NULL, $tag = '' ) {
-	global $_bootstrap2_carousel_items, $_bootstrap2_carousel_caps;
+	global $_bootstrap2_in_carousel, $_bootstrap2_carousel_items, $_bootstrap2_carousel_caps;
 	if (!isset($_bootstrap2_carousel_items)) $_bootstrap2_carousel_items = array();
 	if (!isset($_bootstrap2_carousel_caps)) $_bootstrap2_carousel_caps = array();
 
+	$_bootstrap2_in_carousel = true;
 	do_shortcode( $content );  // render inner carousel et. al.
+	$_bootstrap2_in_carousel = false;
 
 	$atts = _bootstrap2_fix_atts($atts, array(
 	    'id' => false,
@@ -102,14 +104,15 @@ function bootstrap2_carousel( $atts, $content = NULL, $tag = '' ) {
 		$_bootstrap2_carousel_caps,
 		$atts, $atts['id']);
 
-	unset($_bootstrap2_carousel_caps);  // kill the globals
-	unset($_bootstrap2_carousel_items);  
+	$_bootstrap2_carousel_items = array();
+	$_bootstrap2_carousel_caps = array();
 	return $out;
 }
 
 function bootstrap2_carousel_item( $atts, $content = NULL, $tag = '' ) {
-	global $_bootstrap2_carousel_items;
-	if (!isset($_bootstrap2_carousel_items)) return do_shortcode( $content );
+	global $_bootstrap2_in_carousel, $_bootstrap2_carousel_items;
+	if (!isset($_bootstrap2_in_carousel) || !$_bootstrap2_in_carousel)
+		return "[{$tag}]" . do_shortcode( $content ) . "[/{$tag}]";
 
 	$atts = _bootstrap2_fix_atts($atts, array('active' => false, 'id' => false));
 
@@ -128,13 +131,14 @@ function bootstrap2_carousel_item( $atts, $content = NULL, $tag = '' ) {
 }
 
 function bootstrap2_carousel_caption( $atts, $content = NULL, $tag = '' ) {
-	global $_bootstrap2_carousel_caps;
+	global $_bootstrap2_in_carousel, $_bootstrap2_carousel_caps;
 
 	// if not in a carousel then call WP's caption shortcode
-	if (!isset($_bootstrap2_carousel_caps)) {
-		if (function_exists('img_caption_shortcode')) 
+	if (!isset($_bootstrap2_in_carousel) || !$_bootstrap2_in_carousel) {
+		/* if (function_exists('img_caption_shortcode'))
 			return img_caption_shortcode($atts, $content);
-		else return do_shortcode( $content );
+		else  */ // redundant code
+			return "[{$tag}]" . do_shortcode( $content ) . "[/{$tag}]";
 	}
 
 	$atts = _bootstrap2_fix_atts($atts);
@@ -152,8 +156,41 @@ function bootstrap2_carousel_caption( $atts, $content = NULL, $tag = '' ) {
 	return '';
 }
 
+/** @see http://joostkiens.com/improving-wp-caption-shortcode/ */
+function bootstrap2_img_caption_shortcode( $output, $atts, $content = '' ) {
+	global $_bootstrap2_in_carousel;
+	if (isset($_bootstrap2_in_carousel) && $_bootstrap2_in_carousel)
+		return bootstrap2_carousel_caption( $atts, $content, 'caption' );
+
+	 extract( _bootstrap2_fix_atts($atts, array(
+		'id' => '',
+		'align' => 'aligncenter',
+		'width' => '100%',
+		'caption' => '',
+		'class' => false,
+		) ) );
+
+	// No caption, no go, but why do you have a width?
+	if ( 1 > (int) $width || empty($caption) )
+		return $output;
+
+	if ( $id ) $id = esc_attr( $id );
+	if (!empty($class)) $class .= ' ';
+	$class .= $align;
+	$class = _bootstrap2_getclass($atts, $class);
+
+	$output = '<figure id="' . $id . '" class="wp-caption ' . $class . '" style="width: ' . (0 + (int) $width) . 'px">';
+	$output .= do_shortcode( $content );
+	$output .= '<figcaption class="wp-caption-text" itemprop="description">' . $caption . '</figcaption>';
+	$output .= '</figure>';
+
+	return $output;
+}
+
 add_shortcode( 'carousel', 'bootstrap2_carousel' );
 add_shortcode( 'item', 'bootstrap2_carousel_item' );
-add_shortcode( 'caption', 'bootstrap2_carousel_caption' );
+if (function_exists('img_caption_shortcode'))
+	add_filter( 'img_caption_shortcode', 'bootstrap2_img_caption_shortcode', 10, 3 );
+else add_shortcode( 'caption', 'bootstrap2_carousel_caption' );
 
 /* eof */
