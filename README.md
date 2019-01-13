@@ -1,4 +1,7 @@
-![DEPRECATED](DEPRECATED-728x90.png)
+
+
+![DEPRECATED](DEPRECATED-728x90.png "DEPRECATED")
+
 
 WP-Bootstrap2 Theme
 ===================
