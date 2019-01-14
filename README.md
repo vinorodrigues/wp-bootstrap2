@@ -1,4 +1,4 @@
-<img src="_img/deprecated-728x90.png" width="100%">
+<img src="https://github.com/vinorodrigues/wp-bootstrap2/raw/master/_img/deprecated-728x90.png" width="100%">
 
 WP-Bootstrap2 Theme
 ===================
