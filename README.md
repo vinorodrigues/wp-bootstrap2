@@ -1,7 +1,4 @@
-
-
-![](_img/deprecated-728x90.png "DEPRECATED")
-
+<img src="_img/deprecated-728x90.png" width="100%">
 
 WP-Bootstrap2 Theme
 ===================
