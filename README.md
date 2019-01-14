@@ -1,6 +1,6 @@
 
 
-![DEPRECATED](deprecated_728x90.png "DEPRECATED")
+![](_img/deprecated-728x90.png "DEPRECATED")
 
 
 WP-Bootstrap2 Theme
