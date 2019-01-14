@@ -1,7 +1,11 @@
-![DEPRECATED](_img/deprecated-728x90.png?raw=true)
-
 WP-Bootstrap2 Theme
 ===================
+
+---
+
+** [ _ This theme code has been deprecated. The theme has been replaced with the [WP-Bootstrap4](https://github.com/vinorodrigues/wp-bootstrap4) theme. _ ] **
+
+---
 
 Introduction
 ------------
