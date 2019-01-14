@@ -1,4 +1,4 @@
-![](//github.com/vinorodrigues/wp-bootstrap2/raw/master/_img/deprecated-728x90.png)
+![DEPRECATED](_img/deprecated-728x90.png)
 
 WP-Bootstrap2 Theme
 ===================
